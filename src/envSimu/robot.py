@@ -1,8 +1,13 @@
 class Robot:
-	def __init__(self,posx, posy, dirr):
-		self.posx = posx					#position du robot sur l'axe des abscisse 
-		self.posy = posy					#position du robot sur l'axe des abscisse 
+	def __init__(self,ident, posx, posy, dirr):
+		self.ident = ident				#id du robot
+		self.posx  = posx					#position du robot sur l'axe des abscisse 
+		self.posy  = posy					#position du robot sur l'axe des abscisse 
 		self.dirr  = dirr					#direction du robot (1 pour haut, 2 pour droite, 3 pour bas, 4 pour gauche)
+		
+	
+	def getId(self):						#retourne l'id du robot
+		return self.ident	
 	
 	def getPos(self):						#retourne la position
 		return (self.posx, self.posy)
@@ -51,15 +56,14 @@ class Robot:
 				print("Mauvais argument, le robot n'a pas tourne. Les parametres possibles sont: 'd' ou 'g'")
 			
 	
-	def detecter(self, tabPoints):					#verifie si le robot detecte un objet devant lui. tabPoints est un tableau de tuple
-	                                                        	#regarde si position du robot est dans le tableau de points
-		for p in tabPoints: 
-			if (p == self.getPos()):
-				print("Robot est sur un obstacle. Suite des operations impossible")
-				return True
+	def detecter(self, ensPoints):					#verifie si le robot detecte un objet devant lui. tabPoints est un tableau de tuple
+	                                                        		#regarde si position du robot est dans le tableau de points
+		if (self.getPos() in ensPoints):
+			print("Robot est sur un obstacle.")
+			return True
 			
 			
-		if(self.dirr==1):										#regarder direction du robot et prend la valeur de la position apres un avancement (l'avancement n'est pas realise)
+		if(self.dirr==1):											#regarde si le prochain deplacement vers l'avant resultera en une collision
 			testPos = (self.posx, self.posy+1)
 		elif(self.dirr==2):
 			testPos = (self.posx+1, self.posy)
@@ -68,9 +72,8 @@ class Robot:
 		else:
 			testPos = (self.posx-1, self.posy)
 		
-		for p in tabPoints:										#regarde si la position est dans le tableau de points
-			if (p == testPos):
-				print("Obstacle devant le robot.")
-				return True
+		if (testPos in ensPoints):	
+			print("Obstacle devant le robot.")
+			return True
 		print("pas d'obstacle devant")
 		return False
