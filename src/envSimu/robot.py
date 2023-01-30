@@ -53,9 +53,13 @@ class Robot:
 		x, y      = math.cos(direction), math.sin(direction) 
 		x         = x*cos-y*sin
 		y         = x*sin+y*cos
+		print(angle+self.dirr)
+		print(math.degrees(math.acos(x)))
 		if(((math.degrees(angle)+self.dirr)%360 > 180)):
+			print("a")
 			self.dirr = 360 - math.degrees(math.acos(x))
-		elif(((math.degrees(angle)+self.dirr)%(-360) < -180)):
+		elif((math.degrees(angle)+self.dirr)%360 < (-180)):
+			print("b")
 			self.dirr = 360 - math.degrees(math.acos(x))
 		else:
 			self.dirr = math.degrees(math.acos(x))
@@ -67,21 +71,7 @@ def angleVecteur(vecteur):							#calcul l'angle positif du vecteur (par rapport
 	norme2     = math.sqrt(x2**2 + y2**2)
 	scalaire   = x1*x2 + y1*y2
 	angle      = math.degrees(math.acos(scalaire / (norme1*norme2)))
-	if(x1>0 and y1>0):								#permet de calculer l'angle positif
-		return angle
-	elif(x1>0 and y1<0):
-		return 360-angle
-	elif(x1>0 and y1==0):
-		return angle
-	elif(x1<0 and y1>0):
-		return angle
-	elif(x1<0 and y1<0):
-		return 360-angle
-	elif(x1<0 and y1==0):
-		return angle
-	elif(x1==0 and y1>0):
-		return angle
-	elif(x1==0 and y1<0):
+	if(y1<0):										#permet de calculer l'angle positif
 		return 360-angle
 	else:
 		return angle
@@ -90,10 +80,11 @@ def angleVecteur(vecteur):							#calcul l'angle positif du vecteur (par rapport
 
 #TEST 
 robot = Robot(2,2,90)
+
 print("direction robot: ",robot.getDirr())
 print("position robot: ",robot.getPos())
-robot.deplacement((1,-1))
-print("angle du vecteur: ",angleVecteur((1,-1)))
+robot.deplacement((1,1))
+print("angle du vecteur: ",angleVecteur((1,1)))
 print("apres deplacement:")
 print("dir: ",robot.getDirr())
 print("pos: ",robot.getPos())
