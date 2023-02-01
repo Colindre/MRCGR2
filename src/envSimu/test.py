@@ -9,28 +9,10 @@ robot2 = Robot(96,13,1,20)
 o = Obstacle(3,4,2,1)
 monde = Environnement(100,100)  
 print("\n")
-monde.afficherEnv()
 print("\n")
 print("Robot1 initialisé dans la case",robot1.getPos(),"\n")
 print("Robot2 initialisé dans la case",robot1.getPos(),"\n")
-print("Obstacle occupe ces cases :",o.listePoints(),"\n")
-
-
-#Test Methodes ENV
-print("------------Add Robot & Update du monde------------\n")
-monde.add(robot2)
-print("\n")
-print("le robot se trouve en ",robot2.getPos()," et est dirigé vers ",robot2.getDirr())
-for i in range(0,3):
-    robot2.avancer()
-    monde.update(robot2)
-print("\nLe Robot tourne vers la droite\n")
-robot2.tourner('d')
-monde.update(robot2)
-
-for i in range(0,5):
-    robot2.avancer()
-    monde.update(robot2)
+print("Obstacle occupe ces cases :",o.ensPoints(),"\n")
 
 #DETECTER
 
@@ -38,7 +20,7 @@ for i in range(0,5):
 #OBSTACLE
 print("------------LISTE DE POINTS DU ROBOT------------\n")
 o = Obstacle(0,0,2,4)
-print(o.ensPointsObstacle())
+print(o.ensPoints())
 
 #ROTATION
 print("------------ROTATION DU ROBOT------------\n")
