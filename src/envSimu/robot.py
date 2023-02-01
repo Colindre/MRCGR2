@@ -69,13 +69,9 @@ class Robot:
 		x, y      = math.cos(direction), math.sin(direction) 
 		x         = x*cos-y*sin
 		y         = x*sin+y*cos
-		print(angle+self.dirr)
-		print(math.degrees(math.acos(x)))
 		if(((math.degrees(angle)+self.dirr)%360 > 180)):
-			print("a")
 			self.dirr = 360 - math.degrees(math.acos(x))
 		elif((math.degrees(angle)+self.dirr)%360 < (-180)):
-			print("b")
 			self.dirr = 360 - math.degrees(math.acos(x))
 		else:
 			self.dirr = math.degrees(math.acos(x))
