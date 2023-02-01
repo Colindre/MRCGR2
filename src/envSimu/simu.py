@@ -15,7 +15,7 @@ canvas.pack(fill="both",expand=True)
 #Création robot 
 robot1 = Robot(200,0,40,20)
 #Création cercle représentant le robot
-rbt = canvas.create_oval(robot1.posx,robot1.posy,robot1.posx+20,robot1.posy+20,width=2,fill="red") 
+rbt = canvas.create_oval(robot1.posx,robot1.posy,robot1.posx+robot1.rayon,robot1.posy+robot1.rayon,width=2,fill="red") 
 vecteur =(0,0)
 verif = True
 
