@@ -38,7 +38,7 @@ for i in range(0,5):
 #OBSTACLE
 print("------------LISTE DE POINTS DU ROBOT------------\n")
 o = Obstacle(0,0,2,4)
-print(o.listePoints())
+print(o.ensPointsObstacle())
 
 #ROTATION
 print("------------ROTATION DU ROBOT------------\n")
@@ -61,6 +61,3 @@ print("angle du vecteur: ",angleVecteur((1,-1)))
 print("apres deplacement:")
 print("dir: ",robotTest.getDirr())
 print("pos: ",robotTest.getPos())
-
-
-

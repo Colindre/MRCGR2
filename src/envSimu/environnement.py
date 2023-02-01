@@ -1,8 +1,8 @@
 class Environnement:
-    def __init__(self,max_x,max_y,listeObstacle):
+    def __init__(self,max_x,max_y):
         self.max_x= max_x 
         self.max_y=max_y  
-        self.listeObstacle = []
+        self.ensPointsObstacle = set()
 
     def getPos(self):
         return (self.max_x, self.max_y)
@@ -26,14 +26,14 @@ class Environnement:
             if((ox,oy) == l):
                 print("Erreur : il y a deja un obstacle a cette position. Il n'a pas pu etre mis en place")
                 return
-        
-        self.listeObstacle.append((ox,oy))
+        self.ensPointsObstacle.add((ox,oy))
         print("L'obstacle a ete place en ",obstacle.getPos())
         
     def update(self,robot):
         rx , ry = robot.getPos()
         if((rx < 0) or (rx > self.max_x) or (ry < 0) or (ry > self.max_y)):
             print("Erreur : Le robot se trouve en dehors du monde")
+
             return
         print("Le robot se trouve desormais en ",robot.getPos()," et est dirige vers ",robot.getDirr())
         

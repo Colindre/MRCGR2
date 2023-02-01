@@ -1,6 +1,7 @@
 import math
 
 class Robot:
+
 	def __init__(self,posx, posy, dirr,rayon):
 		self.posx = posx					#position du robot sur l'axe des abscisse 
 		self.posy = posy					#position du robot sur l'axe des abscisse 
@@ -27,7 +28,7 @@ class Robot:
 		self.posy = (self.posy + vectY)
 
 		
-	def ensPointsRobots(self):
+	def ensPointsRobots(self):  #fonction pas correcte, a modifier
 		ens=set()
 		for i in range(self.posx, self.posx + self.rayon + 1):
 			for j in range(self.posy, self.posy + self.rayon + 1):
@@ -38,23 +39,25 @@ class Robot:
 				ensN.add((k,l))
 		return ens.union(ensN)
 				
-	def detecter(self, tabPoints, ensPointsRobots, vecteur):					#verifie si le robot detecte un objet devant lui. tabPoints est un tableau de tuple
-
-	                                                       	#regarde si position du robot est dans le tableau de points
-		for p in tabPoints: 
-			for q in ensPointsRobots:
-				if (p == q):
-					print("Robot est sur un obstacle. Suite des operations impossible")
-					return True
-		self.deplacement(vecteur)
-		newEnsPoints=set()
-		newEnsPoints=self.ensPointsRobots()
+	def detecter(self, ensPoints):					#verifie si le robot detecte un objet devant lui. tabPoints est un tableau de tuple
+	                                                        		#regarde si position du robot est dans le tableau de points
+		if (self.getPos() in ensPoints):
+			print("Robot est sur un obstacle.")
+			return True
+			
+			
+		if(self.dirr==1):											#regarde si le prochain deplacement vers l'avant resultera en une collision
+			testPos = (self.posx, self.posy+1)
+		elif(self.dirr==2):
+			testPos = (self.posx+1, self.posy)
+		elif(self.dirr==3):
+			testPos = (self.posx, self.posy -1)
+		else:
+			testPos = (self.posx-1, self.posy)
 		
-		for p in tabPoints: 
-			for q in ensPointsRobots:
-				if (p == q):
-					print("Obstacle devant le robot.")
-					return True
+		if (testPos in ensPoints):	
+			print("Obstacle devant le robot.")
+			return True
 		print("pas d'obstacle devant")
 		return False
 
@@ -89,28 +92,3 @@ def angleVecteur(vecteur):							#calcul l'angle positif du vecteur (par rapport
 	else:
 		return angle
 
-
-
-#TEST 
-
-robot = Robot(2,2,90,3)
-ensPtsRbt= robot.ensPointsRobots()
-print("robot de rayon",robot.getRayon())
-print("le robot est sur les points:",ensPtsRbt)
-ensPtsObs={(6,6)}
-
-robot.detecter(ensPtsRbt,ensPtsObs,(1,1))
-
-
-print("--------------------------------")
-
-robot = Robot(2,2,90)
-
-
-print("direction robot: ",robot.getDirr())
-print("position robot: ",robot.getPos())
-robot.deplacement((1,1))
-print("angle du vecteur: ",angleVecteur((1,1)))
-print("apres deplacement:")
-print("dir: ",robot.getDirr())
-print("pos: ",robot.getPos())
