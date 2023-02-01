@@ -22,7 +22,7 @@ class Environnement:
             print("Erreur : Les positions de l'obstacle sont en dehors du monde. Il n'a pas pu etre mis place")
             return
           
-        for l in self.listeObstacle:
+        for l in self.listeObstacle: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
             if((ox,oy) == l):
                 print("Erreur : il y a deja un obstacle a cette position. Il n'a pas pu etre mis en place")
                 return
@@ -50,7 +50,6 @@ class Obstacle:
 
     def getDimensions(self):                    #retourne les dimensions du rectangle (tailleX, tailleY)
         return self.tailleX, self.tailleY
-        
 
     def listePoints(self):                      #retourne la liste des points qu'occupe l'obstacle (innacessibles aux robots)
         liste=[]
@@ -58,7 +57,3 @@ class Obstacle:
             for j in range(self.posy, self.posy + self.tailleY + 1):
                 liste.append((i,j))
         return liste
-
-#TEST
-o = Obstacle(0,0,2,4)
-print(o.listePoints())
