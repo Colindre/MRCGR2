@@ -4,8 +4,8 @@ from environnement import Environnement, Obstacle
 
 #CREATION OBJET OBSTACLE ENVIRONNEMENT (100,100) ET ROBOT (position 0,0 et regarde vers le haut)
 print("\n------------CREATION OBJETS------------")
-robot1 = Robot(0,0,1)
-robot2 = Robot(96,13,1)
+robot1 = Robot(0,0,1,20)
+robot2 = Robot(96,13,1,20)
 o = Obstacle(3,4,2,1)
 monde = Environnement(100,100)  
 print("\n")
@@ -42,7 +42,7 @@ print(o.ensPointsObstacle())
 
 #ROTATION
 print("------------ROTATION DU ROBOT------------\n")
-robotTest = Robot(2,2,90)
+robotTest = Robot(2,2,90,20)
 print("direction robot: ",robotTest.getDirr())
 print("position robot: ",robotTest.getPos())
 robotTest.rotation(-45)
