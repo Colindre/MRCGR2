@@ -39,8 +39,15 @@ class Robot:
 					ens.add((i,j))
 		return ens
 					
-	#def collision(self, ensPoints):					#verifie si le robot detecte un objet devant lui. ensPoints est un ensemble de tuple
+	def collision(self, ensPoints):					#verifie si le robot detecte un objet devant lui. ensPoints est un ensemble de tuple
 			                                                    		#regarde si position du robot est dans l'ensemble de points
+		for p in ensPoints: 
+			for q in self.ensPointsRobots():
+				if (p == q):
+					print("Robot est sur un obstacle.")
+					return True
+		print("le robot ne se trouve pas sur un obstacle")
+		return False
 
 
 	def rotation(self, angle):						#fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
@@ -70,9 +77,5 @@ class Robot:
 		else:
 			return angle
 			
-			
-#test
-r1=Robot(2,2,90,3)
-print("r1,le robot de rayon",r1	.rayon)
-print("r1 est sur les points:",r1.ensPointsRobots())
+
 
