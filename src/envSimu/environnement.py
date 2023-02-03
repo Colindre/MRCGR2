@@ -1,3 +1,5 @@
+from robot import Robot, angleVecteur
+
 class Environnement:
         """ 
         initialisation de notre environnement avec ses differents parametres
@@ -31,7 +33,20 @@ class Environnement:
                 ens.add((self.max_x,y))
             return ens
 
-        
+        def deplacement(self, robot, vecteur):		
+            """ effectue un déplacement du robot selon un vecteur
+                :param robot: robot qui effectue le deplacement
+                :param vecteur: vecteur (x,y)
+                :retour: rien, cela effectue directement le changement de posx et posy
+            """
+
+            angle = angleVecteur(vecteur)			#calcul la nouvelle direction du robot et le fait tourner en celle-ci
+            robot.rotation(angle - robot.getDirr())
+                                                    #effectue le deplacement
+            vectX, vectY = vecteur
+            posx, posy = robot.getPos()
+            robot.setPos(posx+vectX, posy+vectY)
+            
         def add(self,robot):
             """ajout d'un robot dans le monde
             :retour:rien, ajoute le robot dans ses position x,y et affiche message d'erreur si robot sort du monde

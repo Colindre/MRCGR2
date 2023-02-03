@@ -27,6 +27,15 @@ class Robot:
 		:retour: tuple (posx,posy)
 		"""
 		return (self.posx, self.posy)
+	
+	def setPos(self, x, y):
+		""" modifie la position
+		:param x: nouvelle position du robot en abscisse
+		:param y: nouvelle position du robot en ordonne
+		:retour: vide
+		"""
+		self.posx = x
+		self.posy = y
 			
 	def getDirr(self):
 		""" retourne la direction
@@ -52,21 +61,6 @@ class Robot:
 			:retour: True si elle est en marche,False sinon
 		"""
 		return self.roueG
-		
-	
-	def deplacement(self, vecteur):		
-		""" effectue un déplacement selon un vecteur au robot,en prenant en compte que le point en bas a gauche est (0,0)
-			:param vecteur: vecteur (x,y)
-			:retour:rien, cela effectue directement le changement de posx et posy
-		"""
-
-		angle = angleVecteur(vecteur)			#calcul la nouvelle direction du robot et le fait tourner en celle-ci
-		self.rotation(angle - self.dirr)
-												#effectue le deplacement
-		vectX, vectY = vecteur
-		self.posx = (self.posx + vectX)
-		self.posy = (self.posy + vectY)
-		
 			
 	def ensPointsRobots(self): 
 		""" rend l'ensemble des points ou se trouve le robot
