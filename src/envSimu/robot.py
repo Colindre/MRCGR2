@@ -1,35 +1,77 @@
 import math
 
 class Robot:
+	""" 
+	initialisation de notre robot avec ses différents paramètres
+	
+	:param posx: position en x du robot
+	:param posy: position en y du robot
+	:param dirr: direction du robot, angle en degré
+	:param rayon: rayon du robot, qui est un cercle
+	:param roueD: True si la roue droite est en marche,False sinon
+	:param roueG: True si la roue gauche est en marche,False sinon
+	"""
 
 
-	def __init__(self,posx, posy, dirr,rayon):
+	def __init__(self,posx, posy, dirr,rayon,roueD,roueG):
+
 		self.posx = posx					#position du robot sur l'axe des abscisse 
 		self.posy = posy					#position du robot sur l'axe des abscisse 
 		self.dirr  = dirr%360				#direction du robot (angle en degre)
-		self.rayon=rayon
-		
+		self.rayon=rayon					#rayon du robot (que l'on considère désormais comme un cercle)
+		self.roueD=roueD					#la roue droite tourne-t-elle ? (True pour oui et False pour non)
+		self.roueG=roueG					#la roue gauche tourne-t-elle ? (True pour oui et False pour non)
 
-	def getPos(self):						#retourne la position
+	def getPos(self):
+		""" retourne la position
+		:retour: tuple (posx,posy)
+		"""
 		return (self.posx, self.posy)
 			
-	def getDirr(self):						#retourne la direction
+	def getDirr(self):
+		""" retourne la direction
+		:retour: int, direction du robot
+		"""
 		return self.dirr
 			
 	def getRayon(self):
+		"""	retourne le rayon
+		:retour: int, rayon du robot
+		"""
 		return self.rayon
-
-	def deplacement(self, vecteur):		#change direction du robot et le fait avancer, en prenant en compte que le point en bas a gauche est (0,0)
+	
+	def getRoueD(self):	
+	"""retourne si la roue droite est en marche ou non
+		:retour: True si elle est en marche,False sinon
+	"""
+	
+		return self.roueD
+		
+	def getRoueG(self):
+	"""retourne si la roue gauche est en marche ou non
+		:retour: True si elle est en marche,False sinon
+	"""
+		return self.roueG
+		
+	
+	def deplacement(self, vecteur):		
+		""" effectue un déplacement selon un vecteur au robot,en prenant en compte que le point en bas a gauche est (0,0)
+			:param vecteur: vecteur (x,y)
+			:retour:rien, cela effectue directement le changement de posx et posy
+		"""
 
 		angle = angleVecteur(vecteur)			#calcul la nouvelle direction du robot et le fait tourner en celle-ci
 		self.rotation(angle - self.dirr)
-												#effectu le deplacement
+												#effectue le deplacement
 		vectX, vectY = vecteur
 		self.posx = (self.posx + vectX)
 		self.posy = (self.posy + vectY)
-
+		
 			
-	def ensPointsRobots(self):  #fonction pas correcte, a modifier
+	def ensPointsRobots(self): 
+		""" rend l'ensemble des points ou se trouve le robot
+			:retour: ensemble ens des points ou se trouve le robot
+		"""
 		ens=set()
 		a=self.posx
 		b=self.posy
@@ -39,9 +81,13 @@ class Robot:
 					ens.add((i,j))
 		return ens
 					
-	def collision(self, ensPoints):					#verifie si le robot detecte un objet devant lui. ensPoints est un ensemble de tuple
-			                                                    		#regarde si position du robot est dans l'ensemble de points
-		for p in ensPoints: 
+	def collision(self, ensPointsObstacle):				
+			                                                    		
+		"""détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
+			:param ensPointsObstacle:ensemble des points ou se trouve un obstacle
+			:retour: True si collision, False sinon et affichage si collision ou non
+		"""
+		for p in ensPointsObstacle: 
 			for q in self.ensPointsRobots():
 				if (p == q):
 					print("Robot est sur un obstacle.")
@@ -50,7 +96,11 @@ class Robot:
 		return False
 
 
-	def rotation(self, angle):						#fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
+	def rotation(self, angle):						
+		"""fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
+			:param angle: angle en degré du quel on veut faire tourner le robot
+			:retour: rien, modifie la direction du robot
+		"""
 		angle     = math.radians(angle%360)
 		cos       = math.cos(angle) 
 		sin       = math.sin(angle)
@@ -65,7 +115,12 @@ class Robot:
 		else:
 			self.dirr = math.degrees(math.acos(x))
 
-	def angleVecteur(vecteur):							#calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
+	def angleVecteur(vecteur):	
+		"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
+			:param vecteur: vecteur (x,y)
+			:retour: angle du vecteur
+		"""
+											
 		x1, y1     = vecteur
 		x2, y2     = 1, 0
 		norme1     = math.sqrt(x1**2 + y1**2)
@@ -76,6 +131,21 @@ class Robot:
 			return 360-angle
 		else:
 			return angle
+			
+	"""def deplacement_avec_roues(self, vecteur):
+		if (not self.roueD and not self.roueG):
+			print("pas de déplacement effectué, les roues ne sont pas en marche")
+			
+		if (self.roueD and not self.roueG):
+			angle = angleVecteur(vecteur)			#calcul la nouvelle direction du robot et le fait tourner en celle-ci
+			self.rotation(angle - self.dirr-90)
+												#effectue le deplacement
+			vectX, vectY = vecteur
+			self.posx = (self.posx + vectX)
+			self.posy = (self.posy + vectY)"""
+
+			
+
 			
 
 
