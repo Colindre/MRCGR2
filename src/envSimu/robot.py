@@ -41,16 +41,16 @@ class Robot:
 		return self.rayon
 	
 	def getRoueD(self):	
-	"""retourne si la roue droite est en marche ou non
-		:retour: True si elle est en marche,False sinon
-	"""
+		"""retourne si la roue droite est en marche ou non
+			:retour: True si elle est en marche,False sinon
+		"""
 	
 		return self.roueD
 		
 	def getRoueG(self):
-	"""retourne si la roue gauche est en marche ou non
-		:retour: True si elle est en marche,False sinon
-	"""
+		"""retourne si la roue gauche est en marche ou non
+			:retour: True si elle est en marche,False sinon
+		"""
 		return self.roueG
 		
 	
@@ -115,22 +115,22 @@ class Robot:
 		else:
 			self.dirr = math.degrees(math.acos(x))
 
-	def angleVecteur(vecteur):	
-		"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
-			:param vecteur: vecteur (x,y)
-			:retour: angle du vecteur
-		"""
+def angleVecteur(vecteur):	
+	"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
+		:param vecteur: vecteur (x,y)
+		:retour: angle du vecteur
+	"""
 											
-		x1, y1     = vecteur
-		x2, y2     = 1, 0
-		norme1     = math.sqrt(x1**2 + y1**2)
-		norme2     = math.sqrt(x2**2 + y2**2)
-		scalaire   = x1*x2 + y1*y2
-		angle      = math.degrees(math.acos(scalaire / (norme1*norme2)))
-		if(y1<0):										#permet de calculer l'angle positif
-			return 360-angle
-		else:
-			return angle
+	x1, y1     = vecteur
+	x2, y2     = 1, 0
+	norme1     = math.sqrt(x1**2 + y1**2)
+	norme2     = math.sqrt(x2**2 + y2**2)
+	scalaire   = x1*x2 + y1*y2
+	angle      = math.degrees(math.acos(scalaire / (norme1*norme2)))
+	if(y1<0):										#permet de calculer l'angle positif
+		return 360-angle
+	else:
+		return angle
 			
 	"""def deplacement_avec_roues(self, vecteur):
 		if (not self.roueD and not self.roueG):
