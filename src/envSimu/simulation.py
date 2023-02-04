@@ -19,9 +19,26 @@ def simulation(environnement, robot, temps):
             print("le robot a reculer en: ", robot.getPos())
             vecteur = random.randrange(-9, 10), random.randrange(-9, 10)        #vecteur avec valeures (min -9 et max 9)
         environnement.deplacement(robot, vecteur)       #deplace le robot (possibilite que le robot traverse un obstacle)
-        print("le robot s'est deplacé en: ", robot.getPos())
+        print("le robot s'est deplace en: ", robot.getPos())
         sleep(1)
 
+def carre(environnement, robot):
+    environnement.deplacement(robot, (1,0))         #se deplace a droite
+    #sleep(1)
+    environnement.deplacement(robot, (0,0))         #stop
+    print("le robot s'est deplace en: ", robot.getPos())
+    environnement.deplacement(robot, (0,1))         #se deplace tout droit
+    #sleep(1)
+    environnement.deplacement(robot, (0,0))         #stop
+    print("le robot s'est deplace en: ", robot.getPos())
+    environnement.deplacement(robot, (-1,0))        #se deplace a gauche
+    #sleep(1)
+    environnement.deplacement(robot, (0,0))         #stop  
+    print("le robot s'est deplace en: ", robot.getPos())
+    environnement.deplacement(robot, (0,-1))        #se deplace 
+    #sleep(1)
+    environnement.deplacement(robot, (0,0))         #stop
+    print("le robot s'est deplace en: ", robot.getPos()," carre fini.")
 
 
 
