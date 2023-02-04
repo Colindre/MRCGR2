@@ -68,7 +68,7 @@ class Environnement:
                 print("Erreur : Les positions de l'obstacle sont en dehors du monde. Il n'a pas pu etre mis place")
                 return
             
-            for l in self.listeObstacle:
+            for l in self.ensPointsObstacle:
                 if((ox,oy) == l):
                     print("Erreur : il y a deja un obstacle a cette position. Il n'a pas pu etre mis en place")
                     return

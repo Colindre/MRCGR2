@@ -1,5 +1,5 @@
 import math
-
+import numpy as np
 class Robot:
 	""" 
 	initialisation de notre robot avec ses différents paramètres
@@ -69,8 +69,8 @@ class Robot:
 		ens=set()
 		a=self.posx
 		b=self.posy
-		for i in range(self.posx-self.rayon, self.posx + self.rayon):
-			for j in range(self.posy-self.rayon, self.posy + self.rayon):
+		for i in np.arange(self.posx-self.rayon, self.posx + self.rayon):
+			for j in np.arange(self.posy-self.rayon, self.posy + self.rayon):
 				if(((i - a)**2 + (j - b)**2 )<= self.rayon**2):
 					ens.add((i,j))
 		return ens
