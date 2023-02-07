@@ -5,10 +5,6 @@ from simulation import simulation, carre
 from robot import Robot, angleVecteur
 from environnement import Obstacle, Environnement
 
-global depX,depY
-global dirrRad
-global vecteur
-
 class Simulationtkinter(tk.Tk):
     def __init__(self, robot, obstacle,obstacle2,environnement):
         tk.Tk.__init__(self)
