@@ -4,23 +4,21 @@ from time import sleep
 import math
 import random
 
+def simulation(environnement,robot,temps,obstacle,obs2):
+	dirrRad    = math.radians(robot.getDirr())
+	vecteur    = math.cos(dirrRad), math.sin(dirrRad)       #vecteur du deplacement de depart 
+	depX, depY = vecteur
 
-
-def simulation(environnement, robot, temps):
-    dirrRad    = math.radians(robot.getDirr())
-    vecteur    = math.cos(dirrRad), math.sin(dirrRad)       #vecteur du deplacement de depart 
-    depX, depY = vecteur
-
-    for i in range(temps):
-        if (robot.collision(environnement.ensPointsObstacle) or robot.collision(environnement.getBordures())):      #si collision avec obstacle ou bordures
-            print("collision en: ", robot.getPos())
-
-            environnement.deplacement(robot, (-depX, -depY))        #robot recule
-            print("le robot a reculer en: ", robot.getPos())
-            vecteur = random.randrange(-9, 10), random.randrange(-9, 10)        #vecteur avec valeures (min -9 et max 9)
-        environnement.deplacement(robot, vecteur)       #deplace le robot (possibilite que le robot traverse un obstacle)
-        print("le robot s'est deplace en: ", robot.getPos())
-        sleep(1)
+	for i in range(temps):
+		if robot.collision(obstacle) or robot.collision(obs2):
+		    print("collision en: ", robot.getPos())
+		    environnement.deplacement(robot, (-depX, -depY))        #robot recule
+		    print("le robot a reculer en: ", robot.getPos())
+		    dirrRad    = math.radians(random.uniform(1.0,350.0))        #vecteur avec valeures (min -9 et max 9)
+		    vecteur    = math.cos(dirrRad), math.sin(dirrRad)
+		environnement.deplacement(robot,vecteur)       #deplace le robot (possibilite que le robot traverse un obstacle)
+		print("le robot s'est deplace en: ", robot.getPos())
+		#sleep(1)
 
 def carre(environnement, robot):
     environnement.deplacement(robot, (1,0))         #se deplace a droite
@@ -39,7 +37,6 @@ def carre(environnement, robot):
     #sleep(1)
     environnement.deplacement(robot, (0,0))         #stop
     print("le robot s'est deplace en: ", robot.getPos()," carre fini.")
-
 
 
 

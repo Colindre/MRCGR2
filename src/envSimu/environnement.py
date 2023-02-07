@@ -1,4 +1,6 @@
-from robot import Robot, angleVecteur
+from robot1 import Robot, angleVecteur
+import random
+import numpy as np
 
 class Environnement:
         """ 
@@ -40,12 +42,22 @@ class Environnement:
                 :retour: rien, cela effectue directement le changement de posx et posy
             """
 
-            angle = angleVecteur(vecteur)			#calcul la nouvelle direction du robot et le fait tourner en celle-ci
+            angle = angleVecteur(vecteur)		# calcul la nouvelle direction du robot et le fait tourner en celle-ci
+            if angle == None:
+                return
             robot.rotation(angle - robot.getDirr())
-                                                    #effectue le deplacement
+
+            #effectue le deplacement
             vectX, vectY = vecteur
             posx, posy = robot.getPos()
             robot.setPos(posx+vectX, posy+vectY)
+            #gère les bordures
+            if(robot.posx-robot.rayon <=-robot.rayon+1  or robot.posx + robot.rayon >= self.max_x-1):
+            	robot.rotation(random.uniform(1.0,350.0))
+            	robot.setPos(posx-vectX, posy+vectY)
+            if (robot.posy-robot.rayon <=-robot.rayon+1 or robot.posy + robot.rayon >= self.max_y-1):
+            	robot.rotation(random.uniform(1.0,350.0))
+            	robot.setPos(posx+vectX, posy-vectY)
             
         def add(self,robot):
             """ajout d'un robot dans le monde
@@ -100,11 +112,12 @@ class Obstacle:
         :param tailleX: taille du rectangle en abscisse
         :param tailleY: taille du rectangle en ordonne
         """
-        def __init__(self,posx, posy, tailleX, tailleY):
+        def __init__(self,posx, posy, tailleX, tailleY,rayon):
             self.posx     = posx                     
             self.posy     = posy                    
             self.tailleX = tailleX                   
             self.tailleY  = tailleY 
+            self.rayon = rayon
         
         def getPos(self):
             """retourne la position du rectangle (le point le plus en bas a gauche)
@@ -123,8 +136,12 @@ class Obstacle:
             """retourne la liste des points qu'occupe l'obstacle (innacessibles aux robots)
             :retour:ensemble
             """
-            ens=set()
-            for i in range(self.posx, self.posx + self.tailleX + 1):
-                for j in range(self.posy, self.posy + self.tailleY + 1):
-                    ens.add((i,j))
-            return ens
+            ensobs = set()
+            a = self.posx
+            b = self.posy
+            for i in np.arange(self.posx-self.rayon, self.posx + self.rayon):
+            	for j in np.arange(self.posy-self.rayon, self.posy + self.rayon):
+            		if((i - a)**2 + (j - b)**2) <= self.rayon**2:
+            			ensobs.add((i, j))
+            return ensobs
+

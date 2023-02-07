@@ -1,5 +1,7 @@
 import math
 import numpy as np
+from environnement import Obstacle, Environnement
+
 class Robot:
 	""" 
 	initialisation de notre robot avec ses différents paramètres
@@ -66,45 +68,55 @@ class Robot:
 		""" rend l'ensemble des points ou se trouve le robot
 			:retour: ensemble ens des points ou se trouve le robot
 		"""
-		ens=set()
-		a=self.posx
-		b=self.posy
+		ens = set()
+		a = self.posx
+		b = self.posy
 		for i in np.arange(self.posx-self.rayon, self.posx + self.rayon):
 			for j in np.arange(self.posy-self.rayon, self.posy + self.rayon):
-				if(((i - a)**2 + (j - b)**2 )<= self.rayon**2):
-					ens.add((i,j))
+				if((i - a)**2 + (j - b)**2) <= self.rayon**2:
+					ens.add((i, j))
 		return ens
+
 					
-	def collision(self, ensPointsObstacle):				
+	def collision(self,obstacle):				
 			                                                    		
 		"""détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
 			:param ensPointsObstacle:ensemble des points ou se trouve un obstacle
 			:retour: True si collision, False sinon et affichage si collision ou non
 		"""
-		for p in ensPointsObstacle: 
+		# Calculer la distance entre le centre du robot et celui de l'obstacle
+		distance = math.sqrt((self.posx - obstacle.posx)**2 + (self.posy - obstacle.posy)**2)
+		
+		# Si la distance est inférieure à la somme des rayons, il y a collision
+		if(distance <=obstacle.rayon):
+			return True
+		return False
+
+		"""for p in ensPoints: 
 			for q in self.ensPointsRobots():
 				if (p == q):
 					print("Robot est sur un obstacle.")
 					return True
 		print("le robot ne se trouve pas sur un obstacle")
-		return False
-
+		return False"""
 
 	def rotation(self, angle):						
 		"""fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
 			:param angle: angle en degré du quel on veut faire tourner le robot
 			:retour: rien, modifie la direction du robot
 		"""
-		angle     = math.radians(angle%360)
+		if angle==None:
+			return
+		angle     = math.radians(angle % 360)
 		cos       = math.cos(angle) 
 		sin       = math.sin(angle)
 		direction = math.radians(self.dirr)
 		x, y      = math.cos(direction), math.sin(direction) 
 		x         = x*cos-y*sin
 		y         = x*sin+y*cos
-		if(((math.degrees(angle)+self.dirr)%360 > 180)):
+		if(math.degrees(angle)+self.dirr) % 360 > 180:
 			self.dirr = 360 - math.degrees(math.acos(x))
-		elif((math.degrees(angle)+self.dirr)%360 < (-180)):
+		elif(math.degrees(angle)+self.dirr) % 360 < (-180):
 			self.dirr = 360 - math.degrees(math.acos(x))
 		else:
 			self.dirr = math.degrees(math.acos(x))
@@ -114,32 +126,15 @@ def angleVecteur(vecteur):
 		:param vecteur: vecteur (x,y)
 		:retour: angle du vecteur
 	"""
-											
+	if vecteur==(0,0):
+		return None									
 	x1, y1     = vecteur
 	x2, y2     = 1, 0
 	norme1     = math.sqrt(x1**2 + y1**2)
 	norme2     = math.sqrt(x2**2 + y2**2)
 	scalaire   = x1*x2 + y1*y2
 	angle      = math.degrees(math.acos(scalaire / (norme1*norme2)))
-	if(y1<0):										#permet de calculer l'angle positif
+	if y1 < 0:								# permet de calculer l'angle positif
 		return 360-angle
 	else:
 		return angle
-			
-	"""def deplacement_avec_roues(self, vecteur):
-		if (not self.roueD and not self.roueG):
-			print("pas de déplacement effectué, les roues ne sont pas en marche")
-			
-		if (self.roueD and not self.roueG):
-			angle = angleVecteur(vecteur)			#calcul la nouvelle direction du robot et le fait tourner en celle-ci
-			self.rotation(angle - self.dirr-90)
-												#effectue le deplacement
-			vectX, vectY = vecteur
-			self.posx = (self.posx + vectX)
-			self.posy = (self.posy + vectY)"""
-
-			
-
-			
-
-
