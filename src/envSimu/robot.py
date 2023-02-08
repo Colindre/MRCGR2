@@ -1,6 +1,5 @@
 import math
 import numpy as np
-from environnement import Obstacle, Environnement
 
 class Robot:
 	""" 
