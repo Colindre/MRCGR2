@@ -19,13 +19,11 @@ class TestRobot(unittest.TestCase):
         ens = self.p.ensPointsRobots()
         self.assertNotIn(self.p,ens)
 
-    """def test_collision(self):
-        obstacle1 = Obstacle(10,20,30,10)
-        obstacle2 = Obstacle(80,80,2,2)
-        ens1 = obstacle1.ensPoints()
-        ens2 = obstacle2.ensPoints()
-        self.assertTrue(self.p.collision(ens1))
-        self.assertFalse(self.p.collision(ens2))"""
+    def test_collision(self):
+        obstacle1 = Obstacle(10,20,30,10,3)
+        obstacle2 = Obstacle(80,80,2,2,3)
+        self.assertTrue(self.p.collision(obstacle1))
+        self.assertFalse(self.p.collision(obstacle2))
     
     def test_angle(self):
         self.p.rotation(25)
