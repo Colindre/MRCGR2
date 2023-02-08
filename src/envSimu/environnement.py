@@ -59,14 +59,10 @@ class Environnement:
         	:retour: True si collision, False sinon et affichage si collision ou non
         	"""
         	angle = angleVecteur(vecteur) # calcul la nouvelle direction du robot et le fait tourner en celle-ci
-
         	if angle == None:
         		return
 
-        	robot.rotation(angle - robot.getDirr())
-        	#effectue le deplacement
         	vectX, vectY = vecteur
-        	posx, posy = robot.getPos()
 
         	# Calculer la distance entre le centre du robot et celui de l'obstacle
         	distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)
@@ -78,6 +74,7 @@ class Environnement:
         	if(robot.posx-robot.rayon <=-robot.rayon+1  or robot.posx + robot.rayon >= self.max_x-1):
         		return True
         	if (robot.posy-robot.rayon <=-robot.rayon+1 or robot.posy + robot.rayon >= self.max_y-1):
+
         		return True
         	return False
 
