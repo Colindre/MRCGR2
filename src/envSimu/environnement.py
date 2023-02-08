@@ -1,5 +1,6 @@
-from robot1 import Robot, angleVecteur
+from robot import Robot, angleVecteur
 import random
+import math
 import numpy as np
 
 class Environnement:
@@ -51,13 +52,36 @@ class Environnement:
             vectX, vectY = vecteur
             posx, posy = robot.getPos()
             robot.setPos(posx+vectX, posy+vectY)
-            #gère les bordures
-            if(robot.posx-robot.rayon <=-robot.rayon+1  or robot.posx + robot.rayon >= self.max_x-1):
-            	robot.rotation(random.uniform(1.0,350.0))
-            	robot.setPos(posx-vectX, posy+vectY)
-            if (robot.posy-robot.rayon <=-robot.rayon+1 or robot.posy + robot.rayon >= self.max_y-1):
-            	robot.rotation(random.uniform(1.0,350.0))
-            	robot.setPos(posx+vectX, posy-vectY)
+
+        def collision(self,robot,obstacle,vecteur):	
+        	"""détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
+        	:param ensPointsObstacle:ensemble des points ou se trouve un obstacle
+        	:retour: True si collision, False sinon et affichage si collision ou non
+        	"""
+        	angle = angleVecteur(vecteur) # calcul la nouvelle direction du robot et le fait tourner en celle-ci
+
+        	if angle == None:
+        		return
+
+        	robot.rotation(angle - robot.getDirr())
+        	#effectue le deplacement
+        	vectX, vectY = vecteur
+        	posx, posy = robot.getPos()
+
+        	# Calculer la distance entre le centre du robot et celui de l'obstacle
+        	distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)
+        	# Si la distance est inférieure à la somme des rayons, il y a collision
+        	if(distance <=obstacle.rayon):
+        		return True
+
+        	#gère les bordures
+        	if(robot.posx-robot.rayon <=-robot.rayon+1  or robot.posx + robot.rayon >= self.max_x-1):
+        		return True
+        	if (robot.posy-robot.rayon <=-robot.rayon+1 or robot.posy + robot.rayon >= self.max_y-1):
+        		return True
+        	return False
+
+
             
         def add(self,robot):
             """ajout d'un robot dans le monde
