@@ -1,6 +1,5 @@
 import math
 import numpy as np
-from environnement import Obstacle, Environnement
 
 class Robot:
 	""" 
@@ -63,42 +62,6 @@ class Robot:
 			:retour: True si elle est en marche,False sinon
 		"""
 		return self.roueG
-			
-	def ensPointsRobots(self): 
-		""" rend l'ensemble des points ou se trouve le robot
-			:retour: ensemble ens des points ou se trouve le robot
-		"""
-		ens = set()
-		a = self.posx
-		b = self.posy
-		for i in np.arange(self.posx-self.rayon, self.posx + self.rayon):
-			for j in np.arange(self.posy-self.rayon, self.posy + self.rayon):
-				if((i - a)**2 + (j - b)**2) <= self.rayon**2:
-					ens.add((i, j))
-		return ens
-
-					
-	def collision(self,obstacle):				
-			                                                    		
-		"""détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
-			:param ensPointsObstacle:ensemble des points ou se trouve un obstacle
-			:retour: True si collision, False sinon et affichage si collision ou non
-		"""
-		# Calculer la distance entre le centre du robot et celui de l'obstacle
-		distance = math.sqrt((self.posx - obstacle.posx)**2 + (self.posy - obstacle.posy)**2)
-		
-		# Si la distance est inférieure à la somme des rayons, il y a collision
-		if(distance <=obstacle.rayon):
-			return True
-		return False
-
-		"""for p in ensPoints: 
-			for q in self.ensPointsRobots():
-				if (p == q):
-					print("Robot est sur un obstacle.")
-					return True
-		print("le robot ne se trouve pas sur un obstacle")
-		return False"""
 
 	def rotation(self, angle):						
 		"""fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
