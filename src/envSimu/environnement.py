@@ -1,4 +1,4 @@
-from robot1 import Robot, angleVecteur
+from robot import Robot, angleVecteur
 import random
 import numpy as np
 
