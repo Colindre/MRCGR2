@@ -1,5 +1,4 @@
 import math
-import numpy as np
 
 class Robot:
 	""" 
@@ -9,19 +8,19 @@ class Robot:
 	:param posy: position en y du robot
 	:param dirr: direction du robot, angle en degré
 	:param rayon: rayon du robot, qui est un cercle
-	:param roueD: True si la roue droite est en marche,False sinon
-	:param roueG: True si la roue gauche est en marche,False sinon
+	:param diamR: float representant le diametre des roues
+	:param distR: float representant la distance entre les deux roues
 	"""
 
 
-	def __init__(self,posx, posy, dirr,rayon,roueD,roueG):
+	def __init__(self,posx, posy, dirr,rayon,diamR):
 
-		self.posx = posx					#position du robot sur l'axe des abscisse 
-		self.posy = posy					#position du robot sur l'axe des abscisse 
-		self.dirr  = dirr%360				#direction du robot (angle en degre)
-		self.rayon=rayon					#rayon du robot (que l'on considère désormais comme un cercle)
-		self.roueD=roueD					#la roue droite tourne-t-elle ? (True pour oui et False pour non)
-		self.roueG=roueG					#la roue gauche tourne-t-elle ? (True pour oui et False pour non)
+		self.posx = posx					
+		self.posy = posy					
+		self.dirr = dirr%360				
+		self.rayon=rayon					
+		self.diamR=diamR					
+		self.distR=rayon*2			
 
 	def getPos(self):
 		""" retourne la position
