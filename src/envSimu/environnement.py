@@ -1,7 +1,6 @@
 from robot import Robot, angleVecteur
 import random
 import math
-import numpy as np
 from time import sleep
 class Environnement:
         """ 
@@ -15,8 +14,8 @@ class Environnement:
         def __init__(self,max_x,max_y,temps):
             self.max_x= max_x 
             self.max_y=max_y
-            self.vitesseg = random.uniform(5,8)
-            self.vitessed = random.uniform(1,4)
+            self.vitesseg = 0
+            self.vitessed = 0
             self.temps = temps
             self.ensPointsObstacle = set()
 
@@ -43,8 +42,9 @@ class Environnement:
             if vD == 0 and vG == 0:
                 return
             if vD == vG:
-                robot.posx+= vD*dT
-                robot.posy+= vD*dT
+            	
+                robot.posx+= vD*dT *math.cos(robot.dirr)
+                robot.posy+= vD*dT *math.sin(robot.dirr)
                 return
 
             w = (vD - vG) / robot.distR         #angle de rotation
@@ -103,10 +103,8 @@ class Environnement:
             for i in range(self.temps):
                 for obstacle in self.ensPointsObstacle:
                     if self.collision(robot,obstacle):
-                        #print("collision en: ", robot.getPos())
-                        robot.dirr+= (-2*robot.getDirr())%360
-                        self.deplacement(robot,vitesseg,vitessed,0.01)
-                        #print("le robot a changé sa direction vers: ", robot.getPos())
+                        vitessed = 0
+                        vitesseg = 0
                 self.deplacement(robot,vitesseg,vitessed,0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
                 #print("le robot s'est deplace en: ", robot.getPos())
                 #sleep(1)
@@ -151,17 +149,4 @@ class Obstacle:
             """
             return self.tailleX, self.tailleY
             
-
-        def ensPoints(self):
-            """retourne la liste des points qu'occupe l'obstacle (innacessibles aux robots)
-            :retour:ensemble
-            """
-            ensobs = set()
-            a = self.posx
-            b = self.posy
-            for i in np.arange(self.posx-self.rayon, self.posx + self.rayon):
-            	for j in np.arange(self.posy-self.rayon, self.posy + self.rayon):
-            		if((i - a)**2 + (j - b)**2) <= self.rayon**2:
-            			ensobs.add((i, j))
-            return ensobs
 
