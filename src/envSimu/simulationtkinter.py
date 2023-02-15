@@ -1,71 +1,78 @@
 import tkinter as tk
 import math
 import random
-from simulation import simulation, carre
 from robot import Robot, angleVecteur
 from environnement import Obstacle, Environnement
 
 class Simulationtkinter(tk.Tk):
-    def __init__(self, robot, obstacle,obstacle2,environnement):
+    def __init__(self, robot,environnement):
         tk.Tk.__init__(self)
 #OBJETS
         self.robot = robot
-        self.obstacle = obstacle
-        self.obstacle2=obstacle2
         self.environnement = environnement
-
-        self.temps=5
-        self.running = False
+        self.temps=50
+        self.bool = False
 
 #CANVAS TKINTER
         self.canvas = tk.Canvas(self, bg='white', width=400, height=400)
         self.canvas.pack()
         self.robot_canv = self.canvas.create_oval(robot.posx,robot.posy, robot.posx+robot.rayon, robot.posy+robot.rayon, fill='red')
-        self.obstacle_canv=self.canvas.create_oval(obstacle.posx,obstacle.posy,obstacle.posx+obstacle.rayon,obstacle.posy+obstacle.rayon, fill='blue')
-        self.obstacle2_canv=self.canvas.create_oval(obstacle2.posx,obstacle2.posy,obstacle2.posx+obstacle2.rayon,obstacle2.posy+obstacle.rayon, fill='blue')
+        for i in self.environnement.ensPointsObstacle:
+            obstacle_canv=self.canvas.create_oval(i.posx,i.posy,i.posx+i.rayon,i.posy+i.rayon, fill=i.color)
 
 #BOUTTONS TKINTER
         self.start_button = tk.Button(self, text='Lance Simulation', command=self.start)
         self.start_button.pack()
         self.stop_button = tk.Button(self, text='Stop Simulation', command=self.stop, state='disabled')
         self.stop_button.pack()
+        self.PlusVg = tk.Button(self, text='+ Vg', command=self.environnement.augVg)
+        self.PlusVg.pack(side='right')
+        self.DimVg = tk.Button(self, text='- Vg', command=self.environnement.dimVg)
+        self.DimVg.pack(side='right')
+        self.PlusVd = tk.Button(self, text='+ Vd', command=self.environnement.augVd)
+        self.PlusVd.pack(side='left')
+        self.DimVd = tk.Button(self, text='- Vd', command=self.environnement.dimVd)
+        self.DimVd.pack(side='left')
         self.quit_button = tk.Button(self, text='Quitte Simulation', command=self.quit)
         self.quit_button.pack()
 
 #FONCTION LANCER SIMULATION
     def start(self):
-        self.running = True
+        self.bool = True
         self.start_button['state'] = 'disabled'
         self.stop_button['state'] = 'normal'
         self.step()
 
-#FONCTION ARRETER SIMULATION
+
     def stop(self):
-        self.running = False
+        self.bool = False
         self.start_button['state'] = 'normal'
         self.stop_button['state'] = 'disabled'
 
-#FONCTION QUI AGIT SUR SIMULATION
+
     def step(self):
-        if self.running:
-            simulation(self.environnement,self.robot,self.temps,self.obstacle,self.obstacle2)
+        if self.bool:
+            self.environnement.update(self.robot,self.environnement.vitesseg,self.environnement.vitessed)
             self.update_robot()
             self.after(20, self.step)
 
-#FONCTION QUI MET A JOUR LA SIMULATION
     def update_robot(self):
         x1, y1, x2, y2 = self.canvas.coords(self.robot_canv)
         self.canvas.coords(self.robot_canv, self.robot.posx, self.robot.posy, self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
 
 
-env= Environnement(400, 400)
-rbt = Robot(120,120,45,50, False, False)
-obs = Obstacle(200,200,20,20,50)
-obs2 = Obstacle(0,0,20,20,50)
-env.addObstacle(obs)
-env.addObstacle(obs2)
-env.add(rbt)
-app = Simulationtkinter(rbt,obs,obs2,env)
-app.mainloop()
+env= Environnement(400, 400,40)
+rbt = Robot(120,120,45,50,20)
+obs1 = Obstacle(320,320,20,20,50,'black')
+obs2 = Obstacle(320,70,20,20,50,'yellow')
+#obs3 = Obstacle(random.uniform(50,350),random.uniform(50,350),20,20,random.uniform(20,50))
+#obs4 = Obstacle(random.uniform(50,350),random.uniform(50,350),20,20,random.uniform(20,50))
 
+env.addObstacle(obs1)
+env.addObstacle(obs2)
+#env.addObstacle(obs3)
+#env.addObstacle(obs4)
+env.add(rbt)
+app =Simulationtkinter(rbt,env)
+app.mainloop()
 

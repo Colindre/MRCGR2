@@ -1,7 +1,8 @@
 from robot import Robot, angleVecteur
 import random
+import math
 import numpy as np
-
+from time import sleep
 class Environnement:
         """ 
         initialisation de notre environnement avec ses differents parametres
@@ -11,9 +12,12 @@ class Environnement:
         :param dirr: direction du robot, angle en degre
         :param ensPointsObstacle: ensemble des points ou se trouve un obstacle
         """
-        def __init__(self,max_x,max_y):
+        def __init__(self,max_x,max_y,temps):
             self.max_x= max_x 
-            self.max_y=max_y  
+            self.max_y=max_y
+            self.vitesseg = random.uniform(5,8)
+            self.vitessed = random.uniform(1,4)
+            self.temps = temps
             self.ensPointsObstacle = set()
 
         def getPos(self):
@@ -35,29 +39,47 @@ class Environnement:
                 ens.add((self.max_x,y))
             return ens
 
-        def deplacement(self, robot, vecteur):		
-            """ effectue un déplacement du robot selon un vecteur
-                :param robot: robot qui effectue le deplacement
-                :param vecteur: vecteur (x,y)
-                :retour: rien, cela effectue directement le changement de posx et posy
-            """
-
-            angle = angleVecteur(vecteur)		# calcul la nouvelle direction du robot et le fait tourner en celle-ci
-            if angle == None:
+        def deplacement(self, robot, vG, vD, dT):       #dT en sec   
+            if vD == 0 and vG == 0:
                 return
-            robot.rotation(angle - robot.getDirr())
+            if vD == vG:
+                robot.posx+= vD*dT
+                robot.posy+= vD*dT
+                return
 
-            #effectue le deplacement
-            vectX, vectY = vecteur
-            posx, posy = robot.getPos()
-            robot.setPos(posx+vectX, posy+vectY)
-            #gère les bordures
-            if(robot.posx-robot.rayon <=-robot.rayon+1  or robot.posx + robot.rayon >= self.max_x-1):
-            	robot.rotation(random.uniform(1.0,350.0))
-            	robot.setPos(posx-vectX, posy+vectY)
-            if (robot.posy-robot.rayon <=-robot.rayon+1 or robot.posy + robot.rayon >= self.max_y-1):
-            	robot.rotation(random.uniform(1.0,350.0))
-            	robot.setPos(posx+vectX, posy-vectY)
+            w = (vD - vG) / robot.distR         #angle de rotation
+            r = (robot.distR / 2) * ((vD + vG) / (vD - vG))         #distance entre ICC et milieu des deux roues
+            x, y = robot.getPos()
+            dirr = robot.dirr
+            icc = ((x - r * math.sin(dirr)), y + r * math.cos(dirr))          #point de rotation du robot   /!\robot.dirr en radians 
+            iccX, iccY = icc
+            cos = math.cos(w*dT)
+            sin = math.sin(w*dT)
+            robot.posx = (cos * (x - iccX) - sin * (y - iccY)) + iccX
+            robot.posy = (sin * (x - iccX) + cos * (y - iccY)) + iccY
+            robot.dirr = dirr + w*dT
+
+        def collision(self,robot,obstacle):	
+        	"""détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
+        	:param ensPointsObstacle:ensemble des points ou se trouve un obstacle
+        	:retour: True si collision, False sinon et affichage si collision ou non
+        	"""
+        	# Calculer la distance entre le centre du robot et celui de l'obstacle
+        	distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)
+        	
+        	# Si la distance est inférieure à la somme des rayons, il y a collision
+        	if(distance <obstacle.rayon):
+        		return True
+
+        	#gère les bordures
+        	if(robot.posx-robot.rayon <=-robot.rayon  or robot.posx + robot.rayon >= self.max_x):
+        		return True
+        	if (robot.posy-robot.rayon <=-robot.rayon or robot.posy + robot.rayon >= self.max_y):
+
+        		return True
+        	return False
+
+
             
         def add(self,robot):
             """ajout d'un robot dans le monde
@@ -75,34 +97,31 @@ class Environnement:
             """ajout d'un obstacle dans le monde
             :retour:rien, ajoute l'obstacle dans ses position x,y et affiche message d'erreur si obstacle sort du monde
             """
-            ox , oy = obstacle.getPos()
-            if((ox < 0) or (ox > self.max_x) or (oy < 0) or (oy > self.max_y)):
-                print("Erreur : Les positions de l'obstacle sont en dehors du monde. Il n'a pas pu etre mis place")
-                return
-            
-            for l in self.ensPointsObstacle:
-                if((ox,oy) == l):
-                    print("Erreur : il y a deja un obstacle a cette position. Il n'a pas pu etre mis en place")
-                    return
-            self.ensPointsObstacle.add((ox,oy))
-            print("L'obstacle a ete place en ",obstacle.getPos())
-            
-        def update(self,robot):
-            """nouvel affichage de notre monde
-            affiche si erreur avec le deplacement du robot
-            """
-            rx , ry = robot.getPos()
-            if((rx < 0) or (rx > self.max_x) or (ry < 0) or (ry > self.max_y)):
-                print("Erreur : Le robot se trouve en dehors du monde")
+            self.ensPointsObstacle.add(obstacle)
 
-                return
-            print("Le robot se trouve desormais en ",robot.getPos()," et est dirige vers ",robot.getDirr())
-            
-        
-      
-      
-      
-     
+        def update(self,robot,vitesseg,vitessed):
+            for i in range(self.temps):
+                for obstacle in self.ensPointsObstacle:
+                    if self.collision(robot,obstacle):
+                        #print("collision en: ", robot.getPos())
+                        robot.dirr+= (-2*robot.getDirr())%360
+                        self.deplacement(robot,vitesseg,vitessed,0.01)
+                        #print("le robot a changé sa direction vers: ", robot.getPos())
+                self.deplacement(robot,vitesseg,vitessed,0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
+                #print("le robot s'est deplace en: ", robot.getPos())
+                #sleep(1)
+                
+        def augVg(self):
+            self.vitesseg +=5
+        def augVd(self):
+            self.vitessed +=5
+        def dimVg(self):
+            self.vitesseg +=-5
+        def dimVd(self):
+            self.vitessed +=-5
+
+
+
 class Obstacle:
         """ 
         initialisation d'un obstacle avec ses differents parametres
@@ -112,12 +131,13 @@ class Obstacle:
         :param tailleX: taille du rectangle en abscisse
         :param tailleY: taille du rectangle en ordonne
         """
-        def __init__(self,posx, posy, tailleX, tailleY,rayon):
+        def __init__(self,posx, posy, tailleX, tailleY,rayon,color):
             self.posx     = posx                     
             self.posy     = posy                    
             self.tailleX = tailleX                   
             self.tailleY  = tailleY 
             self.rayon = rayon
+            self.color=color
         
         def getPos(self):
             """retourne la position du rectangle (le point le plus en bas a gauche)

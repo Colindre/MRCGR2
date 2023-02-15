@@ -1,5 +1,5 @@
 import math
-import numpy as np
+
 
 class Robot:
 	""" 
@@ -9,19 +9,19 @@ class Robot:
 	:param posy: position en y du robot
 	:param dirr: direction du robot, angle en degré
 	:param rayon: rayon du robot, qui est un cercle
-	:param roueD: True si la roue droite est en marche,False sinon
-	:param roueG: True si la roue gauche est en marche,False sinon
+	:param diamR: float representant le diametre des roues
+	:param distR: float representant la distance entre les deux roues
 	"""
 
 
-	def __init__(self,posx, posy, dirr,rayon,roueD,roueG):
+	def __init__(self,posx, posy, dirr,rayon,diamR):
 
-		self.posx = posx					#position du robot sur l'axe des abscisse 
-		self.posy = posy					#position du robot sur l'axe des abscisse 
-		self.dirr  = dirr%360				#direction du robot (angle en degre)
-		self.rayon=rayon					#rayon du robot (que l'on considère désormais comme un cercle)
-		self.roueD=roueD					#la roue droite tourne-t-elle ? (True pour oui et False pour non)
-		self.roueG=roueG					#la roue gauche tourne-t-elle ? (True pour oui et False pour non)
+		self.posx = posx					
+		self.posy = posy					
+		self.dirr = dirr%360				
+		self.rayon=rayon					
+		self.diamR=diamR					
+		self.distR=rayon*2			
 
 	def getPos(self):
 		""" retourne la position
@@ -62,42 +62,6 @@ class Robot:
 			:retour: True si elle est en marche,False sinon
 		"""
 		return self.roueG
-			
-	def ensPointsRobots(self): 
-		""" rend l'ensemble des points ou se trouve le robot
-			:retour: ensemble ens des points ou se trouve le robot
-		"""
-		ens = set()
-		a = self.posx
-		b = self.posy
-		for i in np.arange(self.posx-self.rayon, self.posx + self.rayon):
-			for j in np.arange(self.posy-self.rayon, self.posy + self.rayon):
-				if((i - a)**2 + (j - b)**2) <= self.rayon**2:
-					ens.add((i, j))
-		return ens
-
-					
-	def collision(self,obstacle):				
-			                                                    		
-		"""détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
-			:param ensPointsObstacle:ensemble des points ou se trouve un obstacle
-			:retour: True si collision, False sinon et affichage si collision ou non
-		"""
-		# Calculer la distance entre le centre du robot et celui de l'obstacle
-		distance = math.sqrt((self.posx - obstacle.posx)**2 + (self.posy - obstacle.posy)**2)
-		
-		# Si la distance est inférieure à la somme des rayons, il y a collision
-		if(distance <=obstacle.rayon):
-			return True
-		return False
-
-		"""for p in ensPoints: 
-			for q in self.ensPointsRobots():
-				if (p == q):
-					print("Robot est sur un obstacle.")
-					return True
-		print("le robot ne se trouve pas sur un obstacle")
-		return False"""
 
 	def rotation(self, angle):						
 		"""fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
