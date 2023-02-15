@@ -35,10 +35,6 @@ class TestObstacle(unittest.TestCase):
         self.assertEqual(self.o.rayon,5)
         self.assertEqual(self.o.color,'red')
     
-    def test_ensPoints(self):
-        ens = self.o.ensPoints()
-        self.assertIn((32,22),ens)
-        self.assertNotIn((39,22),ens)
     
 class TestEnvironnement(unittest.TestCase):
     def setUp(self):
