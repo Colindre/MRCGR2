@@ -1,4 +1,4 @@
-from robot import Robot, angleVecteur
+from robot import Robot
 import random
 import math
 from time import sleep
@@ -9,21 +9,14 @@ class Environnement:
         :param max_x: max de l'environnement en x
         :param max_y: max de l'environnement en y
         :param dirr: direction du robot, angle en degre
-        :param ensPointsObstacle: ensemble des points ou se trouve un obstacle
+        :param ensObstacle: ensemble des points ou se trouve un obstacle
         """
-        def __init__(self,max_x,max_y,temps):
+        def __init__(self,max_x,max_y,robot):
             self.max_x= max_x 
             self.max_y=max_y
-            self.vitesseg = 0
-            self.vitessed = 0
-            self.temps = temps
-            self.ensPointsObstacle = set()
+            self.robot= None 
+            self.ensObstacle = set()
 
-        def getPos(self):
-            """retourne les données x,y de l'environnement
-            :retour: (max_x,max,y)
-            """
-            return (self.max_x, self.max_y)
 
         def getBordures(self):
             """retourne les bordure de l'environement (arene)
@@ -38,7 +31,9 @@ class Environnement:
                 ens.add((self.max_x,y))
             return ens
 
-        def deplacement(self, robot, vG, vD, dT):       #dT en sec   
+        def deplacement(self, robot,dT):       #dT en sec  
+            vD=robot.velocityD
+            vG=robot.velocityG	 
             if vD == 0 and vG == 0:
                 return
             if vD == vG:
@@ -62,24 +57,23 @@ class Environnement:
             robot.dirr = dirr + w*dT
 
         def collision(self,robot,obstacle):	
-        	"""détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
-        	:param ensPointsObstacle:ensemble des points ou se trouve un obstacle
+            """détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
+        	:param Obstacle:ensemble des points ou se trouve un obstacle
         	:retour: True si collision, False sinon et affichage si collision ou non
         	"""
         	# Calculer la distance entre le centre du robot et celui de l'obstacle
-        	distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)
+            distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)
         	
         	# Si la distance est inférieure à la somme des rayons, il y a collision
-        	if(distance <obstacle.rayon):
-        		return True
+            if(distance <obstacle.rayon):
+                return True
 
         	#gère les bordures
-        	if(robot.posx-robot.rayon <=-robot.rayon  or robot.posx + robot.rayon >= self.max_x):
-        		return True
-        	if (robot.posy-robot.rayon <=-robot.rayon or robot.posy + robot.rayon >= self.max_y):
-
-        		return True
-        	return False
+            if(robot.posx-robot.rayon <=-robot.rayon  or robot.posx + robot.rayon >= self.max_x):
+                return True
+            if (robot.posy-robot.rayon <=-robot.rayon or robot.posy + robot.rayon >= self.max_y):
+                return True
+            return False
 
 
             
@@ -93,17 +87,17 @@ class Environnement:
                 return False
                 
                 
-            print("Le robot a ete place dans le monde en ",robot.getPos()," et est dirige vers ",robot.getDirr())
+            print("Le robot a ete place dans le monde en ",robot.getPos()," et est dirige vers ",robot.dirr)
             return True
             
         def addObstacle(self,obstacle):
             """ajout d'un obstacle dans le monde
             :retour:rien, ajoute l'obstacle dans ses position x,y et affiche message d'erreur si obstacle sort du monde
             """
-            self.ensPointsObstacle.add(obstacle)
+            self.ensObstacle.add(obstacle)
 
         def update(self,robot,vitesseg,vitessed):
-                for obstacle in self.ensPointsObstacle:
+                for obstacle in self.ensObstacle:
                     if self.collision(robot,obstacle):
                         vitessed = 0
                         vitesseg = 0

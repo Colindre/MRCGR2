@@ -14,54 +14,38 @@ class Robot:
 	"""
 
 
-	def __init__(self,posx, posy, dirr,rayon,diamR):
+	def __init__(self,posx, posy, dirr,rayon,diamR,dpsG,dpsD):
 
 		self.posx = posx					
 		self.posy = posy					
 		self.dirr = dirr%360				
 		self.rayon=rayon					
 		self.diamR=diamR					
-		self.distR=rayon*2			
+		self.distR=rayon*2
+		self.dpsG=dpsG
+		self.dpsD=dpsD			
 
 	def getPos(self):
 		""" retourne la position
 		:retour: tuple (posx,posy)
 		"""
 		return (self.posx, self.posy)
-	
-	def setPos(self, x, y):
-		""" modifie la position
-		:param x: nouvelle position du robot en abscisse
-		:param y: nouvelle position du robot en ordonne
-		:retour: vide
-		"""
-		self.posx = x
-		self.posy = y
-			
-	def getDirr(self):
-		""" retourne la direction
-		:retour: int, direction du robot
-		"""
-		return self.dirr
-			
-	def getRayon(self):
-		"""	retourne le rayon
-		:retour: int, rayon du robot
-		"""
-		return self.rayon
-	
-	def getRoueD(self):	
-		"""retourne si la roue droite est en marche ou non
-			:retour: True si elle est en marche,False sinon
-		"""
-	
-		return self.roueD
 		
-	def getRoueG(self):
-		"""retourne si la roue gauche est en marche ou non
-			:retour: True si elle est en marche,False sinon
+	def getPosRd(self):
+		""" retourne la pos de la roue droite
 		"""
-		return self.roueG
+		x,y = self.getPos()
+		dirr=math.radians(self.dirr)
+		return x+self.rayon*math.cos(dirr-math.radians(90)),y+self.rayon*math.sin(dirr-math.radians(90))
+
+	def getPosRg(self):
+		""" retourne la pos de la roue droite
+		"""
+		x,y = self.getPos()
+		dirr=math.radians(self.dirr)
+		return x+self.rayon*math.cos(dirr+math.radians(90)),y+self.rayon*math.sin(dirr+math.radians(90))
+		
+	
 
 	def rotation(self, angle):						
 		"""fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
@@ -83,6 +67,20 @@ class Robot:
 			self.dirr = 360 - math.degrees(math.acos(x))
 		else:
 			self.dirr = math.degrees(math.acos(x))
+	
+	def velocityD(self):
+		"""
+		retourne la vélocité de la roue droite en fonction du dps de celle-ci
+		"""
+		return self.rayon*(self.dpsD/360)*60*0.10472
+		
+	def velocityG(self):
+		"""
+		retourne la vélocité de la roue droite en fonction du dps de celle-ci
+		"""
+		return self.rayon*(self.dpsG/360)*60*0.10472
+		
+	
 
 def angleVecteur(vecteur):	
 	"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
@@ -101,3 +99,5 @@ def angleVecteur(vecteur):
 		return 360-angle
 	else:
 		return angle
+		
+		

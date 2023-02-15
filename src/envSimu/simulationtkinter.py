@@ -17,7 +17,7 @@ class Simulationtkinter(tk.Tk):
         self.canvas = tk.Canvas(self, bg='white', width=400, height=400)
         self.canvas.pack()
         self.robot_canv = self.canvas.create_oval(robot.posx,robot.posy, robot.posx+robot.rayon, robot.posy+robot.rayon, fill='red')
-        for i in self.environnement.ensPointsObstacle:
+        for i in self.environnement.ensObstacle:
             obstacle_canv=self.canvas.create_oval(i.posx,i.posy,i.posx+i.rayon,i.posy+i.rayon, fill=i.color)
 
 #BOUTTONS TKINTER
