@@ -107,7 +107,7 @@ class Environnement:
                     if self.collision(robot,obstacle):
                         vitessed = 0
                         vitesseg = 0
-                self.deplacement(robot,vitesseg,vitessed,0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
+                self.deplacement(robot,vitesseg,vitessed,0.1)       #deplace le robot (possibilite que le robot traverse un obstacle)
                
                 
         def augVg(self):
