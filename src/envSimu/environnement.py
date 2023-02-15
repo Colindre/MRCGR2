@@ -1,7 +1,6 @@
 from robot import Robot, angleVecteur
 import random
 import math
-import numpy as np
 from time import sleep
 class Environnement:
         """ 
@@ -43,8 +42,11 @@ class Environnement:
             if vD == 0 and vG == 0:
                 return
             if vD == vG:
+
+            	
                 robot.posx+= vD*dT *math.cos(robot.dirr)
-                robot.posy+= vD*dT **math.sin(robot.dirr)
+                robot.posy+= vD*dT *math.sin(robot.dirr)
+
                 return
 
             w = (vD - vG) / robot.distR         #angle de rotation
@@ -149,17 +151,4 @@ class Obstacle:
             """
             return self.tailleX, self.tailleY
             
-
-        def ensPoints(self):
-            """retourne la liste des points qu'occupe l'obstacle (innacessibles aux robots)
-            :retour:ensemble
-            """
-            ensobs = set()
-            a = self.posx
-            b = self.posy
-            for i in np.arange(self.posx-self.rayon, self.posx + self.rayon):
-            	for j in np.arange(self.posy-self.rayon, self.posy + self.rayon):
-            		if((i - a)**2 + (j - b)**2) <= self.rayon**2:
-            			ensobs.add((i, j))
-            return ensobs
 
