@@ -1,37 +1,76 @@
 import unittest
+import math
 from robot import Robot
 from environnement import Environnement
 from environnement import Obstacle
 
 class TestRobot(unittest.TestCase):
     def setUp(self):
-        self.p = Robot(10,20,30,40,False,False)
+        self.r = Robot(10,20,50,5,10)
         
-    def test_parametre(self):
-        self.assertEqual(self.p.posx,10)
-        self.assertEqual(self.p.posy,20)
-        self.assertEqual(self.p.dirr,30)
-        self.assertEqual(self.p.rayon,40)
-        self.assertFalse(self.p.roueD)
-        self.assertFalse(self.p.roueG)
+    def test_parametreRobot(self):
+        self.assertEqual(self.r.posx,10)
+        self.assertEqual(self.r.posy,20)
+        self.assertEqual(self.r.dirr,50)
+        self.assertEqual(self.r.rayon,5)
+        self.assertEqual(self.r.diamR,10)
 
-    def test_ensPointsRobots(self):
-        ens = self.p.ensPointsRobots()
-        self.assertNotIn(self.p,ens)
-
-    def test_collision(self):
-        obstacle1 = Obstacle(10,20,30,10,3)
-        obstacle2 = Obstacle(80,80,2,2,3)
-        self.assertTrue(self.p.collision(obstacle1))
-        self.assertFalse(self.p.collision(obstacle2))
+    def test_rotation(self):
+        angle = 20 ; tmp = self.r.dirr 
+        self.r.rotation(angle)
+        self.assertEqual(self.r.dirr,tmp + angle)
+        angle = -10 ; tmp = self.r.dirr
+        self.r.rotation(angle)
+        self.assertAlmostEqual(self.r.dirr,tmp + angle)
     
-    def test_angle(self):
-        self.p.rotation(25)
-        self.assertAlmostEqual(55,self.p.dirr)
-        self.p.rotation(-40)
-        self.assertAlmostEqual(15,self.p.dirr)
+class TestObstacle(unittest.TestCase):
+    def setUp(self):
+        self.o = Obstacle(30,20,5,5,5,'red')
+    
+    def test_parametreObstacle(self):
+        self.assertEqual(self.o.posx,30)
+        self.assertEqual(self.o.posy,20)
+        self.assertEqual(self.o.tailleX,5)
+        self.assertEqual(self.o.tailleY,5)
+        self.assertEqual(self.o.rayon,5)
+        self.assertEqual(self.o.color,'red')
+    
+    def test_ensPoints(self):
+        ens = self.o.ensPoints()
+        self.assertIn((32,22),ens)
+        self.assertNotIn((39,22),ens)
+    
+class TestEnvironnement(unittest.TestCase):
+    def setUp(self):
+        self.e = Environnement(100,100,0.001)
 
+    def test_parametreEnvironnement(self):
+        self.assertEqual(self.e.max_x,100)
+        self.assertEqual(self.e.max_y,100)
+        self.assertEqual(self.e.temps,0.001)
+    
+    def test_deplacement(self):
+        r = Robot(10,20,50,5,10)
+        tmpX = r.posx ; tmpY = r.posy ; tmpDirr = r.dirr
+        self.e.deplacement(r,2,2,0.001)
+        self.assertEqual(r.posx, tmpX + (2*0.001)*math.cos(tmpDirr))
+        self.assertEqual(r.posy, tmpY + (2*0.001)*math.sin(tmpDirr))
+    
+    def test_collision(self):
+        r = Robot(10,20,50,5,10)
+        o = Obstacle(30,20,5,5,5,'red')
+        self.assertFalse(self.e.collision(r,o))
+        r2 = Robot(27,22,50,5,10)
+        o2 = Obstacle(30,20,5,5,5,'red')
+        self.assertTrue(self.e.collision(r2,o2))
+    
+    def test_add(self):
+        r = Robot(10,20,50,5,10)
+        self.assertTrue(self.e.add(r))
+        r2 = Robot(105,20,50,5,10)
+        self.assertFalse(self.e.add(r2))
 
+        
         
 
 
