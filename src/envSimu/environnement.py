@@ -103,7 +103,7 @@ class Environnement:
             for i in range(self.temps):
                 for obstacle in self.ensPointsObstacle:
                     if self.collision(robot,obstacle):
-                        print("collision en: ", robot.getPos())
+                        #print("collision en: ", robot.getPos())
                         robot.dirr+= (-2*robot.getDirr())%360
                         self.deplacement(robot,vitesseg,vitessed,0.01)
                         #print("le robot a changé sa direction vers: ", robot.getPos())
