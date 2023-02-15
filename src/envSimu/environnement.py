@@ -103,14 +103,12 @@ class Environnement:
             self.ensPointsObstacle.add(obstacle)
 
         def update(self,robot,vitesseg,vitessed):
-            for i in range(self.temps):
                 for obstacle in self.ensPointsObstacle:
                     if self.collision(robot,obstacle):
                         vitessed = 0
                         vitesseg = 0
                 self.deplacement(robot,vitesseg,vitessed,0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
-                #print("le robot s'est deplace en: ", robot.getPos())
-                #sleep(1)
+               
                 
         def augVg(self):
             self.vitesseg +=5
