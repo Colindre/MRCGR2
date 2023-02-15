@@ -43,8 +43,8 @@ class Environnement:
             if vD == 0 and vG == 0:
                 return
             if vD == vG:
-                robot.posx+= vD*dT              # /!\ PROBLEME A CORRIGER ICI!!!!!!!
-                robot.posy+= vD*dT
+                robot.posx+= vD*dT *math.cos(robot.dirr)
+                robot.posy+= vD*dT **math.sin(robot.dirr)
                 return
 
             w = (vD - vG) / robot.distR         #angle de rotation
