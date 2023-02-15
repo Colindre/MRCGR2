@@ -1,5 +1,6 @@
 import math
 
+
 class Robot:
 	""" 
 	initialisation de notre robot avec ses différents paramètres
