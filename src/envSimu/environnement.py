@@ -90,11 +90,12 @@ class Environnement:
             rx , ry = robot.getPos()
             if((rx < 0) or (rx > self.max_x) or (ry < 0) or (ry > self.max_y)): #comparaison de la position du robot avec les limites du mondes
                 print("Erreur : Les positions du robots sont en dehors du monde. Il n'a pas pu etre place")
-                return
+                return False
                 
                 
             print("Le robot a ete place dans le monde en ",robot.getPos()," et est dirige vers ",robot.getDirr())
-
+            return True
+            
         def addObstacle(self,obstacle):
             """ajout d'un obstacle dans le monde
             :retour:rien, ajoute l'obstacle dans ses position x,y et affiche message d'erreur si obstacle sort du monde
