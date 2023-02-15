@@ -15,8 +15,8 @@ class Environnement:
         def __init__(self,max_x,max_y,temps):
             self.max_x= max_x 
             self.max_y=max_y
-            self.vitesseg = random.uniform(5,8)
-            self.vitessed = random.uniform(1,4)
+            self.vitesseg = 0
+            self.vitessed = 0
             self.temps = temps
             self.ensPointsObstacle = set()
 
