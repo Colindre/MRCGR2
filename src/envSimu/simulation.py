@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 from robot import Robot, angleVecteur
 from environnement import Obstacle, Environnement
 from simulationtkinter import Simulationtkinter
