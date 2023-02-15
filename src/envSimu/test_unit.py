@@ -66,6 +66,11 @@ class TestEnvironnement(unittest.TestCase):
         r2 = Robot(105,20,50,5,10)
         self.assertFalse(self.e.add(r2))
 
+    def test_addObstacle(self):
+        o = Obstacle(30,20,5,5,5,'red')
+        self.e.addObstacle(o)
+        self.assertIn(o,self.e.ensPointsObstacle)
+
         
         
 
