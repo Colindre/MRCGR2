@@ -2,7 +2,7 @@ from robot import Robot, angleVecteur
 import random
 import math
 import numpy as np
-
+from time import sleep
 class Environnement:
         """ 
         initialisation de notre environnement avec ses differents parametres
@@ -12,9 +12,12 @@ class Environnement:
         :param dirr: direction du robot, angle en degre
         :param ensPointsObstacle: ensemble des points ou se trouve un obstacle
         """
-        def __init__(self,max_x,max_y):
+        def __init__(self,max_x,max_y,temps):
             self.max_x= max_x 
-            self.max_y=max_y  
+            self.max_y=max_y
+            self.vitesseg = random.uniform(5,8)
+            self.vitessed = random.uniform(1,4)
+            self.temps = temps
             self.ensPointsObstacle = set()
 
         def getPos(self):
@@ -96,19 +99,26 @@ class Environnement:
             """
             self.ensPointsObstacle.add(obstacle)
 
-        def update(self,robot,temps):
-            vitesseg = random.uniform(0,10)
-            vitessed = random.uniform(0,10)
-            for i in range(temps):
+        def update(self,robot,vitesseg,vitessed):
+            for i in range(self.temps):
                 for obstacle in self.ensPointsObstacle:
                     if self.collision(robot,obstacle):
                         print("collision en: ", robot.getPos())
-                        robot.dirr+= -2*robot.getDirr()%360
+                        robot.dirr+= (-2*robot.getDirr())%360
                         self.deplacement(robot,vitesseg,vitessed,0.01)
-                        print("le robot a changé sa direction vers: ", robot.getPos())
+                        #print("le robot a changé sa direction vers: ", robot.getPos())
                 self.deplacement(robot,vitesseg,vitessed,0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
-                print("le robot s'est deplace en: ", robot.getPos())
+                #print("le robot s'est deplace en: ", robot.getPos())
                 #sleep(1)
+                
+        def augVg(self):
+            self.vitesseg +=5
+        def augVd(self):
+            self.vitessed +=5
+        def dimVg(self):
+            self.vitesseg +=-5
+        def dimVd(self):
+            self.vitessed +=-5
 
 
 
