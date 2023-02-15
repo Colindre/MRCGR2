@@ -11,6 +11,8 @@ class Robot:
 	:param rayon: rayon du robot, qui est un cercle
 	:param diamR: float representant le diametre des roues
 	:param distR: float representant la distance entre les deux roues
+	:param dpsG: dps de la roue gauche
+	:param dpsD: dps de la roue droite
 	"""
 
 
@@ -44,7 +46,23 @@ class Robot:
 		x,y = self.getPos()
 		dirr=math.radians(self.dirr)
 		return x+self.rayon*math.cos(dirr+math.radians(90)),y+self.rayon*math.sin(dirr+math.radians(90))
-		
+
+	def augDPSg(self):
+		"""augmente de dps de la roue gauche de 5
+		"""
+		self.dpsG +=5
+	def augDPSd(self):
+		"""augmente de dps de la roue droite de 5
+		"""
+		self.dpsD +=5
+	def dimDPSg(self):
+		"""diminue de dps de la roue gauche de 5
+		"""
+		self.dpsG +=-5
+	def dimDPSd(self):
+		"""diminue de dps de la roue droite de 5
+		"""
+		self.dpsD +=-5	
 	
 
 	def rotation(self, angle):						
@@ -100,4 +118,4 @@ def angleVecteur(vecteur):
 	else:
 		return angle
 		
-		
+

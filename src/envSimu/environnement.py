@@ -11,7 +11,7 @@ class Environnement:
         :param dirr: direction du robot, angle en degre
         :param ensObstacle: ensemble des points ou se trouve un obstacle
         """
-        def __init__(self,max_x,max_y,robot):
+        def __init__(self,max_x,max_y):
             self.max_x= max_x 
             self.max_y=max_y
             self.robot= None 
@@ -31,9 +31,10 @@ class Environnement:
                 ens.add((self.max_x,y))
             return ens
 
-        def deplacement(self, robot,dT):       #dT en sec  
-            vD=robot.velocityD
-            vG=robot.velocityG	 
+        def deplacement(self,dT):       #dT en sec
+            robot=self.robot  
+            vD=robot.velocityD()
+            vG=robot.velocityG()	 
             if vD == 0 and vG == 0:
                 return
             if vD == vG:
@@ -56,39 +57,44 @@ class Environnement:
             robot.posy = (sin * (x - iccX) + cos * (y - iccY)) + iccY
             robot.dirr = dirr + w*dT
 
-        def collision(self,robot,obstacle):	
+        def collision(self):	
             """détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
         	:param Obstacle:ensemble des points ou se trouve un obstacle
         	:retour: True si collision, False sinon et affichage si collision ou non
         	"""
-        	# Calculer la distance entre le centre du robot et celui de l'obstacle
-            distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)
-        	
-        	# Si la distance est inférieure à la somme des rayons, il y a collision
-            if(distance <obstacle.rayon):
-                return True
-
-        	#gère les bordures
+            robot = self.robot
+            if robot == None: 
+                print("pas de robot")
+                return
+            #gère les bordures
             if(robot.posx-robot.rayon <=-robot.rayon  or robot.posx + robot.rayon >= self.max_x):
+                print("collision bordure")
                 return True
             if (robot.posy-robot.rayon <=-robot.rayon or robot.posy + robot.rayon >= self.max_y):
+                print("collision bordure")
                 return True
+
+            for obstacle in self.ensObstacle:
+                # Calculer la distance entre le centre du robot et celui de l'obstacle
+                distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)               
+                # Si la distance est inférieure à la somme des rayons, il y a collision
+                if(distance <obstacle.rayon):
+                    print("collision obstacle")
+                    return True	
             return False
 
 
             
-        def add(self,robot):
+        def add(self,robot1):
             """ajout d'un robot dans le monde
             :retour:rien, ajoute le robot dans ses position x,y et affiche message d'erreur si robot sort du monde
             """
-            rx , ry = robot.getPos()
+            rx , ry = robot1.getPos()
             if((rx < 0) or (rx > self.max_x) or (ry < 0) or (ry > self.max_y)): #comparaison de la position du robot avec les limites du mondes
                 print("Erreur : Les positions du robots sont en dehors du monde. Il n'a pas pu etre place")
-                return False
+                return 
                 
-                
-            print("Le robot a ete place dans le monde en ",robot.getPos()," et est dirige vers ",robot.dirr)
-            return True
+            self.robot = robot1
             
         def addObstacle(self,obstacle):
             """ajout d'un obstacle dans le monde
@@ -96,24 +102,15 @@ class Environnement:
             """
             self.ensObstacle.add(obstacle)
 
-        def update(self,robot,vitesseg,vitessed):
-                for obstacle in self.ensObstacle:
-                    if self.collision(robot,obstacle):
-                        vitessed = 0
-                        vitesseg = 0
-                self.deplacement(robot,vitesseg,vitessed,0.1)       #deplace le robot (possibilite que le robot traverse un obstacle)
+        def update(self):
+            robot = self.robot
+            print("pos robot: ",robot.getPos())
+            if self.collision():
+                robot.dpsG = 0
+                robot.dpsD = 0
+            self.deplacement(0.1)       #deplace le robot (possibilite que le robot traverse un obstacle)
+
                
-                
-        def augVg(self):
-            self.vitesseg +=5
-        def augVd(self):
-            self.vitessed +=5
-        def dimVg(self):
-            self.vitesseg +=-5
-        def dimVd(self):
-            self.vitessed +=-5
-
-
 
 class Obstacle:
         """ 
