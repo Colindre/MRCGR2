@@ -5,33 +5,33 @@ from robot import Robot, angleVecteur
 from environnement import Obstacle, Environnement
 
 class Simulationtkinter(tk.Tk):
-    def __init__(self, robot,environnement):
+    def __init__(self,environnement):
         tk.Tk.__init__(self)
 #OBJETS
-        self.robot = robot
         self.environnement = environnement
         self.temps=50
         self.bool = False
-
+        self.robot = self.environnement.robot
 #CANVAS TKINTER
         self.canvas = tk.Canvas(self, bg='white', width=400, height=400)
         self.canvas.pack()
-        self.robot_canv = self.canvas.create_oval(robot.posx,robot.posy, robot.posx+robot.rayon, robot.posy+robot.rayon, fill='red')
+        self.robot_canv = self.canvas.create_oval(self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon, self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon, fill='red')
+        self.line = self.canvas.create_line(self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posx+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
         for i in self.environnement.ensObstacle:
-            obstacle_canv=self.canvas.create_oval(i.posx,i.posy,i.posx+i.rayon,i.posy+i.rayon, fill=i.color)
+            obstacle_canv=self.canvas.create_oval(i.posx-i.rayon,i.posy-i.rayon,i.posx+i.rayon,i.posy+i.rayon, fill=i.color)
 
 #BOUTTONS TKINTER
         self.start_button = tk.Button(self, text='Lance Simulation', command=self.start)
         self.start_button.pack()
         self.stop_button = tk.Button(self, text='Stop Simulation', command=self.stop, state='disabled')
         self.stop_button.pack()
-        self.PlusVg = tk.Button(self, text='+ Vg', command=self.environnement.augVg)
+        self.PlusVg = tk.Button(self, text='+ Vg', command=self.robot.augDPSg)
         self.PlusVg.pack(side='right')
-        self.DimVg = tk.Button(self, text='- Vg', command=self.environnement.dimVg)
+        self.DimVg = tk.Button(self, text='- Vg', command=self.robot.dimDPSg)
         self.DimVg.pack(side='right')
-        self.PlusVd = tk.Button(self, text='+ Vd', command=self.environnement.augVd)
+        self.PlusVd = tk.Button(self, text='+ Vd', command=self.robot.augDPSd)
         self.PlusVd.pack(side='left')
-        self.DimVd = tk.Button(self, text='- Vd', command=self.environnement.dimVd)
+        self.DimVd = tk.Button(self, text='- Vd', command=self.robot.dimDPSd)
         self.DimVd.pack(side='left')
         self.quit_button = tk.Button(self, text='Quitte Simulation', command=self.quit)
         self.quit_button.pack()
@@ -52,27 +52,13 @@ class Simulationtkinter(tk.Tk):
 
     def step(self):
         if self.bool:
-            self.environnement.update(self.robot,self.environnement.vitesseg,self.environnement.vitessed)
+            self.environnement.update()
             self.update_robot()
+            print("direction",self.robot.dirr)
             self.after(20, self.step)
 
     def update_robot(self):
         x1, y1, x2, y2 = self.canvas.coords(self.robot_canv)
-        self.canvas.coords(self.robot_canv, self.robot.posx, self.robot.posy, self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
-
-
-env= Environnement(400, 400,40)
-rbt = Robot(120,120,45,50,20)
-obs1 = Obstacle(320,320,20,20,50,'black')
-obs2 = Obstacle(320,70,20,20,50,'yellow')
-#obs3 = Obstacle(random.uniform(50,350),random.uniform(50,350),20,20,random.uniform(20,50))
-#obs4 = Obstacle(random.uniform(50,350),random.uniform(50,350),20,20,random.uniform(20,50))
-
-env.addObstacle(obs1)
-env.addObstacle(obs2)
-#env.addObstacle(obs3)
-#env.addObstacle(obs4)
-env.add(rbt)
-app =Simulationtkinter(rbt,env)
-app.mainloop()
+        self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
+        self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(45))*self.robot.rayon,self.robot.posy+math.sin(math.radians(45))*self.robot.rayon)
 

@@ -19,7 +19,7 @@ class Environnement:
 
 
         def getBordures(self):
-            """retourne les bordure de l'environement (arene)
+            """retourne les bordure de l'environnement (arene)
             :retour: ensemble des points de la bordure
             """
             ens=set()
@@ -34,28 +34,26 @@ class Environnement:
         def deplacement(self,dT):       #dT en sec
             robot=self.robot  
             vD=robot.velocityD()
-            vG=robot.velocityG()	 
+            vG=robot.velocityG()
+            dirr = math.radians(robot.dirr)	 
             if vD == 0 and vG == 0:
                 return
-            if vD == vG:
-
-            	
-                robot.posx+= vD*dT *math.cos(robot.dirr)
-                robot.posy+= vD*dT *math.sin(robot.dirr)
-
+            if vD == vG:            	
+                robot.posx+= vD*dT *math.cos(dirr)
+                robot.posy+= vD*dT *math.sin(dirr)
                 return
 
             w = (vD - vG) / robot.distR         #angle de rotation
             r = (robot.distR / 2) * ((vD + vG) / (vD - vG))         #distance entre ICC et milieu des deux roues
             x, y = robot.getPos()
-            dirr = robot.dirr
             icc = ((x - r * math.sin(dirr)), y + r * math.cos(dirr))          #point de rotation du robot   /!\robot.dirr en radians 
             iccX, iccY = icc
             cos = math.cos(w*dT)
             sin = math.sin(w*dT)
             robot.posx = (cos * (x - iccX) - sin * (y - iccY)) + iccX
             robot.posy = (sin * (x - iccX) + cos * (y - iccY)) + iccY
-            robot.dirr = dirr + w*dT
+            robot.dirr = math.degrees(dirr + w*dT)%360
+
 
         def collision(self):	
             """détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
@@ -67,10 +65,10 @@ class Environnement:
                 print("pas de robot")
                 return
             #gère les bordures
-            if(robot.posx-robot.rayon <=-robot.rayon  or robot.posx + robot.rayon >= self.max_x):
+            if(robot.posx-robot.rayon <=0 or robot.posx + robot.rayon >= self.max_x):
                 print("collision bordure")
                 return True
-            if (robot.posy-robot.rayon <=-robot.rayon or robot.posy + robot.rayon >= self.max_y):
+            if (robot.posy-robot.rayon <=0 or robot.posy + robot.rayon >= self.max_y):
                 print("collision bordure")
                 return True
 
@@ -78,7 +76,7 @@ class Environnement:
                 # Calculer la distance entre le centre du robot et celui de l'obstacle
                 distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)               
                 # Si la distance est inférieure à la somme des rayons, il y a collision
-                if(distance <obstacle.rayon):
+                if(distance <obstacle.rayon+robot.rayon):
                     print("collision obstacle")
                     return True	
             return False
@@ -108,7 +106,8 @@ class Environnement:
             if self.collision():
                 robot.dpsG = 0
                 robot.dpsD = 0
-            self.deplacement(0.1)       #deplace le robot (possibilite que le robot traverse un obstacle)
+            print(robot.dpsG)
+            self.deplacement(0.05)       #deplace le robot (possibilite que le robot traverse un obstacle)
 
                
 
@@ -140,5 +139,4 @@ class Obstacle:
             :retour: (tailleX,tailleY)
             """
             return self.tailleX, self.tailleY
-            
 
