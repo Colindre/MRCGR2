@@ -27,6 +27,7 @@ class Robot:
 		self.dpsG=0
 		self.dpsD=0			
 
+
 	def getPos(self):
 		""" retourne la position
 		:retour: tuple (posx,posy)
