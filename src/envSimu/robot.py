@@ -25,7 +25,8 @@ class Robot:
 		self.diamR=diamR					
 		self.distR=rayon*2
 		self.dpsG=dpsG
-		self.dpsD=dpsD			
+		self.dpsD=dpsD	
+
 
 	def getPos(self):
 		""" retourne la position
