@@ -42,11 +42,16 @@ class Environnement:
                 robot.posx+= vD*dT *math.cos(dirr)
                 robot.posy+= vD*dT *math.sin(dirr)
                 return
-
-            w = (vD - vG) / robot.distR         #angle de rotation
-            r = (robot.distR / 2) * ((vD + vG) / (vD - vG))         #distance entre ICC et milieu des deux roues
             x, y = robot.getPos()
-            icc = ((x - r * math.sin(dirr)), y + r * math.cos(dirr))          #point de rotation du robot   /!\robot.dirr en radians 
+            w = (vD - vG) / robot.distR         #angle de rotation
+            if vD == 0:
+                icc = robot.getPosRd()          #point de rotation du robot
+            elif vG == 0:
+                icc = robot.getPosRg()
+            else:
+                r = (robot.distR / 2) * ((vD + vG) / (vD - vG))         #distance entre ICC et milieu des deux roues
+                icc = ((x - r * math.sin(dirr)), y + r * math.cos(dirr))          
+
             iccX, iccY = icc
             cos = math.cos(w*dT)
             sin = math.sin(w*dT)
