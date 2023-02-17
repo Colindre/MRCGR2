@@ -107,7 +107,7 @@ class Environnement:
                 robot.dpsG = 0
                 robot.dpsD = 0
             print(robot.dpsG)
-            self.deplacement(0.05)       #deplace le robot (possibilite que le robot traverse un obstacle)
+            self.deplacement(0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
 
                
 

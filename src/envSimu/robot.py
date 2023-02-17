@@ -50,19 +50,19 @@ class Robot:
 	def augDPSg(self):
 		"""augmente de dps de la roue gauche de 5
 		"""
-		self.dpsG +=5
+		self.dpsG +=45
 	def augDPSd(self):
 		"""augmente de dps de la roue droite de 5
 		"""
-		self.dpsD +=5
+		self.dpsD +=45
 	def dimDPSg(self):
 		"""diminue de dps de la roue gauche de 5
 		"""
-		self.dpsG +=-5
+		self.dpsG +=-45
 	def dimDPSd(self):
 		"""diminue de dps de la roue droite de 5
 		"""
-		self.dpsD +=-5	
+		self.dpsD +=-45
 	
 
 	def rotation(self, angle):						

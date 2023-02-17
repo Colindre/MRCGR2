@@ -14,9 +14,9 @@ def simu(simulation, affichage, ia):
             ia.update()
         sleep(1)
 
-env= Environnement(400, 400)
-rbt = Robot(150,350,0,30,5,40,0)
-obs1 = Obstacle(300,230,20,20,50,'black')
+env= Environnement(500, 500)
+rbt = Robot(250,250,270,50,3,0,0)
+obs1 = Obstacle(30,230,20,20,50,'black')
 obs2 = Obstacle(320,70,20,20,50,'yellow')
 env.addObstacle(obs1)
 env.addObstacle(obs2)

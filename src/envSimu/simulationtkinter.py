@@ -60,5 +60,5 @@ class Simulationtkinter(tk.Tk):
     def update_robot(self):
         x1, y1, x2, y2 = self.canvas.coords(self.robot_canv)
         self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
-        self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(45))*self.robot.rayon,self.robot.posy+math.sin(math.radians(45))*self.robot.rayon)
+        self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
 
