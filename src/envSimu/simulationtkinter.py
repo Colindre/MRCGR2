@@ -17,6 +17,9 @@ class Simulationtkinter(tk.Tk):
         self.canvas.pack()
         self.robot_canv = self.canvas.create_oval(self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon, self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon, fill='red')
         self.line = self.canvas.create_line(self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posx+math.sin(math.radians(self.robot.dirr))*self.robot.rayon, arrow="last")
+        self.label = tk.Label( text="Vitesse gauche:         Vitesse droite:0\nAngle: 0\nPosition: (0, 0)")
+        self.label.pack()
+
         for i in self.environnement.ensObstacle:
             obstacle_canv=self.canvas.create_oval(i.posx-i.rayon,i.posy-i.rayon,i.posx+i.rayon,i.posy+i.rayon, fill=i.color)
 
@@ -37,6 +40,8 @@ class Simulationtkinter(tk.Tk):
         self.quit_button.pack()"""
         self.quit_button = tk.Button(self, text="Quitter Simulation", command=self.destroy)
         self.quit_button.pack()
+    """def update_label(self, velocity, angle, position):
+        self.label.config(text=f"Vitesse: {velocity}\nAngle: {angle}\nPosition: {position}")"""
 
 
 
@@ -62,7 +67,11 @@ class Simulationtkinter(tk.Tk):
             self.after(20, self.step)
 
     def update_robot(self):
-        x1, y1, x2, y2 = self.canvas.coords(self.robot_canv)
+        #x1, y1, x2, y2 = self.canvas.coords(self.robot_canv)
         self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
         self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
+        self.label.config(text=f"Vitesse gauche: {self.robot.dpsG}          Vitesse droite: {self.robot.dpsD} \nAngle: {self.robot.dirr}\nPosition: {self.robot.getPos()}")
 
+    def loop(self):
+        self.step
+        self.mainloop()
