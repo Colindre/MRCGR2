@@ -25,3 +25,5 @@ env.add(rbt)
 affi=Simulationtkinter(env)
 #a.mainloop()
 simu(env, affi, None)
+
+

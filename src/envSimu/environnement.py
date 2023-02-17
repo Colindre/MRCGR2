@@ -79,8 +79,7 @@ class Environnement:
 
             for obstacle in self.ensObstacle:
                 # Calculer la distance entre le centre du robot et celui de l'obstacle
-                distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)   
-                print("attention obstacle dans ",distance)            
+                distance = math.sqrt((robot.posx - obstacle.posx)**2 + (robot.posy - obstacle.posy)**2)             
                 # Si la distance est inférieure à la somme des rayons, il y a collision
                 if(distance <obstacle.rayon+robot.rayon):
                     print("collision obstacle")
