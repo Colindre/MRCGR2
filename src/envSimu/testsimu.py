@@ -9,7 +9,7 @@ def simu(simulation, affichage, ia):
     while True:
         simulation.update()
         if affichage != None:
-            affi.mainloop()
+            affi.loop()
         if ia != None:
             ia.update()
         sleep(1)
