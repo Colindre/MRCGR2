@@ -111,7 +111,6 @@ class Environnement:
             if self.collision():
                 robot.dpsG = 0
                 robot.dpsD = 0
-            print(robot.dpsG)
             self.deplacement(0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
 
                
@@ -122,26 +121,18 @@ class Obstacle:
         
         :param pos_x: position du point le plus en bas a gauche du rectangle en abscisse
         :param pos_y: position du point le plus en bas a gauche du rectangle en ordonne
-        :param tailleX: taille du rectangle en abscisse
-        :param tailleY: taille du rectangle en ordonne
+        :param rayon: rayon de l'obstacle
+        :param color: couleur de l'obstacle
         """
-        def __init__(self,posx, posy, tailleX, tailleY,rayon,color):
+        def __init__(self,posx, posy, rayon, color):
             self.posx     = posx                     
             self.posy     = posy                    
-            self.tailleX = tailleX                   
-            self.tailleY  = tailleY 
-            self.rayon = rayon
-            self.color=color
+            self.rayon    = rayon
+            self.color    = color
         
         def getPos(self):
             """retourne la position du rectangle (le point le plus en bas a gauche)
             :retour: (posx,posy)
             """
             return (self.posx, self.posy)
-
-        def getDimensions(self):
-            """retourne les dimensions du rectangle 
-            :retour: (tailleX,tailleY)
-            """
-            return self.tailleX, self.tailleY
 

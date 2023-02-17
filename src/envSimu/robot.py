@@ -16,7 +16,7 @@ class Robot:
 	"""
 
 
-	def __init__(self,posx, posy, dirr,rayon,diamR,dpsG,dpsD):
+	def __init__(self,posx, posy, dirr,rayon,diamR):
 
 		self.posx = posx					
 		self.posy = posy					
@@ -24,8 +24,8 @@ class Robot:
 		self.rayon=rayon					
 		self.diamR=diamR					
 		self.distR=rayon*2
-		self.dpsG=dpsG
-		self.dpsD=dpsD			
+		self.dpsG=0
+		self.dpsD=0			
 
 	def getPos(self):
 		""" retourne la position
@@ -48,19 +48,19 @@ class Robot:
 		return x+self.rayon*math.cos(dirr+math.radians(90)),y+self.rayon*math.sin(dirr+math.radians(90))
 
 	def augDPSg(self):
-		"""augmente de dps de la roue gauche de 5
+		"""augmente de dps de la roue gauche de 45
 		"""
 		self.dpsG +=45
 	def augDPSd(self):
-		"""augmente de dps de la roue droite de 5
+		"""augmente de dps de la roue droite de 45
 		"""
 		self.dpsD +=45
 	def dimDPSg(self):
-		"""diminue de dps de la roue gauche de 5
+		"""diminue de dps de la roue gauche de 45
 		"""
 		self.dpsG +=-45
 	def dimDPSd(self):
-		"""diminue de dps de la roue droite de 5
+		"""diminue de dps de la roue droite de 45
 		"""
 		self.dpsD +=-45
 	
