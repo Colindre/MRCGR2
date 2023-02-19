@@ -57,6 +57,12 @@ class TestEnvironnement(unittest.TestCase):
         self.assertFalse(self.e.collision())
         self.e.addObstacle(Obstacle(10,20,10,'red'))
         self.assertTrue(self.e.collision())
+
+    def test_add(self):
+        r = Robot(10,20,50,5,10)
+        self.e.add(r)
+        self.assertIsNotNone(self.e.robot)
+    
         
         
 
