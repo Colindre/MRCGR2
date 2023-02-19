@@ -52,6 +52,8 @@ class TestEnvironnement(unittest.TestCase):
         self.assertEqual(r.posy , tmpY + (r.velocityG() * dT * math.cos(tmpDirr)))
     
     def test_collision(self):
+        r = Robot(10,20,50,5,10)
+        self.e.add(r)
         self.assertFalse(self.e.collision())
         self.e.addObstacle(Obstacle(10,20,10,'red'))
         self.assertTrue(self.e.collision())
