@@ -45,10 +45,11 @@ class TestEnvironnement(unittest.TestCase):
     
     def test_deplacement(self):
         r = Robot(10,20,50,5,10)
-        tmpX = r.posx ; tmpY = r.posy ; tmpDirr = r.dirr
-        self.e.deplacement(0.01)
-        self.assertEqual(r.posx, tmpX + (2*0.001)*math.cos(tmpDirr))
-        self.assertEqual(r.posy, tmpY + (2*0.001)*math.sin(tmpDirr))
+        tmpX = r.posx ; tmpY = r.posy ; tmpDirr = math.radians(r.dirr) ; dT = 1
+        self.e.add(r)
+        self.e.deplacement(dT)
+        self.assertEqual(r.posx , tmpX + (r.velocityD() * dT * math.cos(tmpDirr)))
+        self.assertEqual(r.posy , tmpY + (r.velocityG() * dT * math.cos(tmpDirr)))
     
     def test_collision(self):
         self.assertFalse(self.e.collision())
