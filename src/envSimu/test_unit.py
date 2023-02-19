@@ -62,6 +62,10 @@ class TestEnvironnement(unittest.TestCase):
         r = Robot(10,20,50,5,10)
         self.e.add(r)
         self.assertIsNotNone(self.e.robot)
+
+    def test_addObstacle(self):
+        o = Obstacle(10,20,10,'red')
+        self.assertEqual(self.e.ensObstacle.add(o) , self.e.addObstacle(o))
     
         
         
