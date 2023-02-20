@@ -1,8 +1,7 @@
 import unittest
 import math
-from robot import Robot
-from environnement import Environnement
-from environnement import Obstacle
+from module.robot import Robot
+from module.environnement import Environnement, Obstacle
 
 class TestRobot(unittest.TestCase):
     def setUp(self):
