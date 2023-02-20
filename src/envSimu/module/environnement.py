@@ -1,4 +1,4 @@
-from robot import Robot
+from module.robot import Robot
 import random
 import math
 from time import sleep

@@ -2,8 +2,8 @@ import tkinter as tk
 import math
 import random
 import threading
-from robot import Robot, angleVecteur
-from environnement import Obstacle, Environnement
+from module.robot import Robot, angleVecteur
+from module.environnement import Obstacle, Environnement
 
 class Simulationtkinter(tk.Tk):
     def __init__(self,environnement):
