@@ -98,7 +98,9 @@ class Robot:
 		retourne la vélocité de la roue droite en fonction du dps de celle-ci
 		"""
 		return self.rayon*(self.dpsG/360)*60*0.10472
-		
+	def getDistance(self,x,y):
+		return math.sqrt((self.posx - x)**2 + (self.posy - y)**2)             
+
 	
 
 def angleVecteur(vecteur):	
