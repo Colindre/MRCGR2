@@ -1,6 +1,7 @@
 from module.robot import Robot
 from module.environnement import Obstacle, Environnement
-from module.simulationtkinter import Simulationtkinter
+from simulationtkinter import Simulationtkinter
+import threading
 from time import sleep
 
 
@@ -9,10 +10,11 @@ def simulation(simulation, affichage, ia):
     while True:
         simulation.update()
         if affichage != None:
-            affi.loop()
+            affichage.loop()
         if ia != None:
             ia.update()
         sleep(0.5)
+  
 
 env= Environnement(700, 500)
 rbt = Robot(250,250,90,50,3)
