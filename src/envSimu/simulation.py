@@ -1,7 +1,6 @@
 from module.robot import Robot
 from module.environnement import Obstacle, Environnement
 from simulationtkinter import Simulationtkinter
-import threading
 from time import sleep
 
 
