@@ -1,29 +1,4 @@
-class controleur_simu:
-    def __init__(self,env):
-        self.env   = env
-        self.robot = env.robot
-
-    def avance_droit(self, dps, dT):
-        self.robot.dpsG = dps
-        self.robot.dpsD = dps
-        self.env.deplacement(dT)
-    
-    def tourne_droite(self, dps, dT):
-        self.robot.dpsG = -dps
-        self.robot.dpsD = dps
-        self.env.deplacement(dT)
-
-    def tourne_gauche(self, dps, dT):
-        self.robot.dpsG = dps
-        self.robot.dpsD = -dps
-        self.env.deplacement(dT)
-
-    def stop(self):
-        self.robot.dpsG = 0
-        self.robot.dpsD = 0
-
-
-class controleur_reel:
+class controleur:
     def init(self, robot):
         self.robot = robot
 
@@ -40,4 +15,6 @@ class controleur_reel:
 
     def stop(self):
          self.robot.stop()
+
+    
         
