@@ -65,6 +65,10 @@ class Robot:
 		"""
 		self.dpsD +=-45
 	
+	def set_motor_dps(self,dpsG,dpsD):
+		self.dpsG = dpsG
+		self.dpsD = dpsD
+
 
 	def rotation(self, angle):						
 		"""fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
@@ -91,18 +95,33 @@ class Robot:
 		"""
 		retourne la vélocité de la roue droite en fonction du dps de celle-ci
 		"""
-		return self.rayon*(self.dpsD/360)*60*0.10472
+		return self.rayon*(self.dpsD/360)*60*0.10472		#formule pour passer de vitesse angulaire à vitesse linéaire roue droite
+
 		
 	def velocityG(self):
 		"""
 		retourne la vélocité de la roue droite en fonction du dps de celle-ci
 		"""
-		return self.rayon*(self.dpsG/360)*60*0.10472
+		return self.rayon*(self.dpsG/360)*60*0.10472		#formule pour passer de vitesse angulaire à vitesse linéaire roue gauche
+
 	def getDistance(self,x,y):
+		""" rôle du capteur, retourne la distance entre le robot et un point x,y devant lui
+		"""
 		return math.sqrt((self.posx - x)**2 + (self.posy - y)**2)             
+	
+	def avance_tout_droit(self,dps):
+		self.set_motor_dps(dps,dps)
+	
+	def tourne_droite(self,dps):
+		self.set_motor_dps(dps,-dps)
+
+	def tourne_gauche(self,dps):
+		self.set_motor_dps(-dps,dps)
+
+	def arret(self):
+		self.set_motor_dps(0,0)
 
 	
-
 def angleVecteur(vecteur):	
 	"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
 		:param vecteur: vecteur (x,y)
