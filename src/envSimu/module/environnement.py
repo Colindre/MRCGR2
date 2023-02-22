@@ -35,40 +35,19 @@ class Environnement(threading.Thread) :
 
         def deplacement(self,dT):       #dT en sec
             robot=self.robot  
-<<<<<<< HEAD
-            vD=robot.velocityD()
-            vG=robot.velocityG()
-            dirr = math.radians(robot.dirr)	 
-            if vD == 0 and vG == 0:
-                return
-            if vD == vG:            	
-=======
+
             vD=robot.velocityD()            #vitesse linéaire roue droite
             vG=robot.velocityG()            #vitesse linéaire roue gauche
             dirr = math.radians(robot.dirr)	 
             if vD == 0 and vG == 0:         #2 roues eteintes donc le robot ne bougent pas    
                 return
             if vD == vG:            	    #2 roues à la même vitesse donc avance tout droit
->>>>>>> dev
                 robot.posx+= vD*dT *math.cos(dirr)
                 robot.posy+= vD*dT *math.sin(dirr)
                 return
             x, y = robot.getPos()
             w = (vD - vG) / robot.distR         #angle de rotation
             if vD == 0:
-<<<<<<< HEAD
-                icc = robot.getPosRd()          #point de rotation du robot
-            elif vG == 0:
-                icc = robot.getPosRg()
-            else:
-                r = (robot.distR / 2) * ((vD + vG) / (vD - vG))         #distance entre ICC et milieu des deux roues
-                icc = ((x - r * math.sin(dirr)), y + r * math.cos(dirr))          
-
-            iccX, iccY = icc
-            cos = math.cos(w*dT)
-            sin = math.sin(w*dT)
-            robot.posx = (cos * (x - iccX) - sin * (y - iccY)) + iccX
-=======
                 icc = robot.getPosRd()          #point de rotation du robot:roue droite car éteinte
             elif vG == 0:
                 icc = robot.getPosRg()          #point de rotation du robot:roue gauche car éteinte
@@ -82,7 +61,6 @@ class Environnement(threading.Thread) :
             cos = math.cos(w*dT)
             sin = math.sin(w*dT)
             robot.posx = (cos * (x - iccX) - sin * (y - iccY)) + iccX       
->>>>>>> dev
             robot.posy = (sin * (x - iccX) + cos * (y - iccY)) + iccY
             robot.dirr = math.degrees(dirr + w*dT)%360
 
@@ -96,11 +74,9 @@ class Environnement(threading.Thread) :
             if robot == None: 
                 print("pas de robot")
                 return
-<<<<<<< HEAD
-            #gère les bordures
-=======
+
             #gère les collisions avec les bordures
->>>>>>> dev
+
             if(robot.posx-robot.rayon <=0 or robot.posx + robot.rayon >= self.max_x):
                 print("collision bordure")
                 return True
@@ -135,29 +111,19 @@ class Environnement(threading.Thread) :
             self.ensObstacle.add(obstacle)
 
         def update(self):
-<<<<<<< HEAD
-=======
             """mise à jour des coordonnées du robot et vérifie s'il y a collision 
             """
->>>>>>> dev
             robot = self.robot
             print("pos robot: ",robot.getPos())
             if self.collision():
                 robot.dpsG = 0
                 robot.dpsD = 0
-<<<<<<< HEAD
-            self.deplacement(0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
-
-
-        def run(self):
-=======
             self.deplacement(0.01)      
 
 
         def run(self):
             """lance la simulation
             """
->>>>>>> dev
             s=0
             while True:
                 self.update()

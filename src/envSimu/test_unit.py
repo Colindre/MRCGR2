@@ -44,10 +44,7 @@ class TestEnvironnement(unittest.TestCase):
     
     def test_deplacement(self):
         r = Robot(10,20,50,5,10)
-<<<<<<< HEAD
-=======
         r.augDPSd = 45 ; r.augDPSg = 45
->>>>>>> dev
         tmpX = r.posx ; tmpY = r.posy ; tmpDirr = math.radians(r.dirr) ; dT = 1
         self.e.add(r)
         self.e.deplacement(dT)
@@ -70,8 +67,6 @@ class TestEnvironnement(unittest.TestCase):
         o = Obstacle(10,20,10,'red')
         self.assertEqual(self.e.ensObstacle.add(o) , self.e.addObstacle(o))
     
-<<<<<<< HEAD
-=======
     def test_update(self):
         r = Robot(10,20,50,5,10)
         self.e.add(r)
@@ -82,7 +77,7 @@ class TestEnvironnement(unittest.TestCase):
         self.assertNotEqual(tmpX , self.e.robot.posx)
         self.assertNotEqual(tmpY , self.e.robot.posy)
     
->>>>>>> dev
+
         
         
 
