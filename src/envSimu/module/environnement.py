@@ -1,8 +1,9 @@
 from module.robot import Robot
 import random
+import threading
 import math
 from time import sleep
-class Environnement:
+class Environnement(threading.Thread) :
         """ 
         initialisation de notre environnement avec ses differents parametres
         
@@ -12,6 +13,7 @@ class Environnement:
         :param ensObstacle: ensemble des points ou se trouve un obstacle
         """
         def __init__(self,max_x,max_y):
+            threading.Thread.__init__(self)
             self.max_x= max_x 
             self.max_y=max_y
             self.robot= None 
@@ -111,7 +113,15 @@ class Environnement:
                 robot.dpsD = 0
             self.deplacement(0.01)       #deplace le robot (possibilite que le robot traverse un obstacle)
 
-               
+
+        def run(self):
+            s=0
+            while True:
+                self.update()
+                sleep(0.01)
+                s=s+1
+                if s>1000:
+                    return False               
 
 class Obstacle:
         """ 
