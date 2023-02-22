@@ -1,5 +1,6 @@
 import unittest
 import math
+import random
 from module.robot import Robot
 from module.environnement import Environnement, Obstacle
 
@@ -72,10 +73,14 @@ class TestEnvironnement(unittest.TestCase):
         self.e.add(r)
         self.e.robot.augDPSd() ; self.e.robot.augDPSg()
         tmpX = self.e.robot.posx ; tmpY = self.e.robot.posy
-        self.e.deplacement(5)
+        random = random.uniform(0.01,5.0)
+        self.e.deplacement(random)
         self.e.update()
         self.assertNotEqual(tmpX , self.e.robot.posx)
         self.assertNotEqual(tmpY , self.e.robot.posy)
+    
+
+    
     
 
         

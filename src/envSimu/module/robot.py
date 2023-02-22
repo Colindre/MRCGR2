@@ -93,14 +93,14 @@ class Robot:
 	
 	def velocityD(self):
 		"""
-		retourne la vélocité de la roue droite en fonction du dps de celle-ci
+		retourne la vitesse de la roue droite en fonction du dps de celle-ci
 		"""
 		return self.rayon*(self.dpsD/360)*60*0.10472		#formule pour passer de vitesse angulaire à vitesse linéaire roue droite
 
 		
 	def velocityG(self):
 		"""
-		retourne la vélocité de la roue droite en fonction du dps de celle-ci
+		retourne la vitesse de la roue droite en fonction du dps de celle-ci
 		"""
 		return self.rayon*(self.dpsG/360)*60*0.10472		#formule pour passer de vitesse angulaire à vitesse linéaire roue gauche
 
@@ -110,15 +110,27 @@ class Robot:
 		return math.sqrt((self.posx - x)**2 + (self.posy - y)**2)             
 	
 	def avance_tout_droit(self,dps):
+		"""
+		definis les dps gauche et droite pour que le robot avance tout droit
+		"""
 		self.set_motor_dps(dps,dps)
 	
 	def tourne_droite(self,dps):
+		"""
+		definis les dps gauche et droite pour que le robot tourne à droite
+		"""
 		self.set_motor_dps(dps,-dps)
 
 	def tourne_gauche(self,dps):
+		"""
+		definis les dps gauche et droite pour que le robot tourne à gauche
+		"""
 		self.set_motor_dps(-dps,dps)
 
 	def arret(self):
+		"""
+		definis les dps gauche et droite pour que le robot s'arrête
+		"""
 		self.set_motor_dps(0,0)
 
 	
