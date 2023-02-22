@@ -2,22 +2,19 @@ from module.robot import Robot
 from module.environnement import Obstacle, Environnement
 from simulationtkinter import Simulationtkinter
 from time import sleep
+import threading
 
 
 def simulation(simulation, affichage, ia):
 
-    while True:
-        simulation.update()
-        if affichage != None:
-            affichage.loop()
-        if ia != None:
-            ia.update()
-        sleep(0.5)
-  
+    t1 = threading.Thread(target=simulation.run)
+    t1.start()
+    affichage.loop()
+
 
 env= Environnement(700, 500)
 rbt = Robot(250,250,90,50,3)
-#rbt.dpsD = 180
+rbt.dpsD = 180
 obs1 = Obstacle(30,230,50,'black')
 obs2 = Obstacle(320,70,30,'yellow')
 

@@ -5,10 +5,11 @@ import threading
 from module.robot import Robot, angleVecteur
 from module.environnement import Obstacle, Environnement
 
-class Simulationtkinter(tk.Tk):
+class Simulationtkinter(tk.Tk,threading.Thread):
     def __init__(self,environnement):
         tk.Tk.__init__(self)
 #OBJETS
+        threading.Thread.__init__(self)
         self.environnement = environnement
         self.bool = False
         self.robot = self.environnement.robot
@@ -58,7 +59,6 @@ class Simulationtkinter(tk.Tk):
         self.line_coord = (x, y, x+w*r, y+z*r)
 
     def update_robot(self):
-        self.environnement.update()
         self.coordrobot()
         self.coordline()
         self.canvas.coords(self.robot_canv,self.robot_coord)
@@ -69,3 +69,4 @@ class Simulationtkinter(tk.Tk):
     def loop(self):
         self.update_robot()   
         self.mainloop()
+        
