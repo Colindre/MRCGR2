@@ -106,9 +106,20 @@ class Robot:
 		""" rôle du capteur, retourne la distance entre le robot et un point x,y devant lui
 		"""
 		return math.sqrt((self.posx - x)**2 + (self.posy - y)**2)             
+	
+	def avance_tout_droit(self,dps):
+		self.set_motor_dps(dps,dps)
+	
+	def tourne_droite(self,dps):
+		self.set_motor_dps(dps,-dps)
+
+	def tourne_gauche(self,dps):
+		self.set_motor_dps(-dps,dps)
+
+	def arret(self):
+		self.set_motor_dps(0,0)
 
 	
-
 def angleVecteur(vecteur):	
 	"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
 		:param vecteur: vecteur (x,y)
