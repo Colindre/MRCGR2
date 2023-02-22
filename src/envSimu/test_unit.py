@@ -1,8 +1,7 @@
 import unittest
 import math
-from robot import Robot
-from environnement import Environnement
-from environnement import Obstacle
+from module.robot import Robot
+from module.environnement import Environnement, Obstacle
 
 class TestRobot(unittest.TestCase):
     def setUp(self):
@@ -25,52 +24,48 @@ class TestRobot(unittest.TestCase):
     
 class TestObstacle(unittest.TestCase):
     def setUp(self):
-        self.o = Obstacle(30,20,5,5,5,'red')
+        self.o = Obstacle(30,20,5,'red')
     
     def test_parametreObstacle(self):
         self.assertEqual(self.o.posx,30)
         self.assertEqual(self.o.posy,20)
-        self.assertEqual(self.o.tailleX,5)
-        self.assertEqual(self.o.tailleY,5)
         self.assertEqual(self.o.rayon,5)
         self.assertEqual(self.o.color,'red')
     
     
 class TestEnvironnement(unittest.TestCase):
     def setUp(self):
-        self.e = Environnement(100,100,0.001)
+        self.e = Environnement(100,100)
+        self.e.addObstacle(Obstacle(50,40,5,'red'))
 
     def test_parametreEnvironnement(self):
         self.assertEqual(self.e.max_x,100)
         self.assertEqual(self.e.max_y,100)
-        self.assertEqual(self.e.temps,0.001)
     
     def test_deplacement(self):
         r = Robot(10,20,50,5,10)
-        tmpX = r.posx ; tmpY = r.posy ; tmpDirr = r.dirr
-        self.e.deplacement(r,2,2,0.001)
-        self.assertEqual(r.posx, tmpX + (2*0.001)*math.cos(tmpDirr))
-        self.assertEqual(r.posy, tmpY + (2*0.001)*math.sin(tmpDirr))
+        tmpX = r.posx ; tmpY = r.posy ; tmpDirr = math.radians(r.dirr) ; dT = 1
+        self.e.add(r)
+        self.e.deplacement(dT)
+        self.assertEqual(r.posx , tmpX + (r.velocityD() * dT * math.cos(tmpDirr)))
+        self.assertEqual(r.posy , tmpY + (r.velocityG() * dT * math.cos(tmpDirr)))
     
     def test_collision(self):
         r = Robot(10,20,50,5,10)
-        o = Obstacle(30,20,5,5,5,'red')
-        self.assertFalse(self.e.collision(r,o))
-        r2 = Robot(27,22,50,5,10)
-        o2 = Obstacle(30,20,5,5,5,'red')
-        self.assertTrue(self.e.collision(r2,o2))
-    
+        self.e.add(r)
+        self.assertFalse(self.e.collision())
+        self.e.addObstacle(Obstacle(10,20,10,'red'))
+        self.assertTrue(self.e.collision())
+
     def test_add(self):
         r = Robot(10,20,50,5,10)
-        self.assertTrue(self.e.add(r))
-        r2 = Robot(105,20,50,5,10)
-        self.assertFalse(self.e.add(r2))
+        self.e.add(r)
+        self.assertIsNotNone(self.e.robot)
 
     def test_addObstacle(self):
-        o = Obstacle(30,20,5,5,5,'red')
-        self.e.addObstacle(o)
-        self.assertIn(o,self.e.ensPointsObstacle)
-
+        o = Obstacle(10,20,10,'red')
+        self.assertEqual(self.e.ensObstacle.add(o) , self.e.addObstacle(o))
+    
         
         
 
