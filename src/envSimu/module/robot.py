@@ -65,6 +65,9 @@ class Robot:
 		"""
 		self.dpsD +=-45
 	
+	def set_motor_dps(self,dpsG,dpsD):
+		self.dpsG = dpsG
+		self.dpsD = dpsD
 
 	def rotation(self, angle):						
 		"""fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
