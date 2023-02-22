@@ -15,6 +15,3 @@ class controleur:
 
     def stop(self):
          self.robot.stop()
-
-    
-        
