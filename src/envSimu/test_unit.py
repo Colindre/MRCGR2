@@ -6,12 +6,12 @@ from module.environnement import Environnement, Obstacle
 
 class TestRobot(unittest.TestCase):
     def setUp(self):
-        self.r = Robot(10,20,50,5,10)
+        self.r = Robot(10,20,90,5,10)
         
     def test_parametreRobot(self):
         self.assertEqual(self.r.posx,10)
         self.assertEqual(self.r.posy,20)
-        self.assertEqual(self.r.dirr,50)
+        self.assertEqual(self.r.dirr,90)
         self.assertEqual(self.r.rayon,5)
         self.assertEqual(self.r.diamR,10)
 
@@ -23,6 +23,22 @@ class TestRobot(unittest.TestCase):
         self.r.rotation(angle)
         self.assertAlmostEqual(self.r.dirr,tmp + angle)
     
+    def testdistanceparcouru(self):
+        self.e = Environnement(100,100)
+        self.e.add(self.r)
+        print("\n avant deplacement:",self.r.getPos())
+        self.r.dpsD =10
+        self.r.dpsG =5
+        self.e.deplacement(10)
+        print("distance :",self.r.distance_parcourue())
+        print("\n apres deplacement:",self.r.getPos())
+        self.r.dpsD =10
+        self.r.dpsG =10
+        self.e.deplacement(10)
+        print("distance2 :",self.r.distance_parcourue())
+        print("\n apres deplacement2:",self.r.getPos())
+
+
 class TestObstacle(unittest.TestCase):
     def setUp(self):
         self.o = Obstacle(30,20,5,'red')

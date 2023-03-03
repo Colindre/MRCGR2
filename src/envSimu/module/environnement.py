@@ -37,6 +37,8 @@ class Environnement(threading.Thread) :
             robot=self.robot  
             vD=robot.velocityD()            #vitesse linéaire roue droite
             vG=robot.velocityG()            #vitesse linéaire roue gauche
+            robot.lastposx = robot.posx
+            robot.lastposy = robot.posy
             dirr = math.radians(robot.dirr)	 
             if vD == 0 and vG == 0:         #2 roues eteintes donc le robot ne bougent pas    
                 return
