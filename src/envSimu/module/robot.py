@@ -69,6 +69,8 @@ class Robot:
 		self.dpsD +=-45
 	
 	def set_motor_dps(self,dpsG,dpsD):
+		self.lastposx = self.posx
+		self.lastposy = self.posy
 		self.dpsG = dpsG
 		self.dpsD = dpsD
 
@@ -134,12 +136,12 @@ class Robot:
 		"""
 		self.set_motor_dps(0,0)
 		
-	def distance_parcourue(self):
+	def distance_parcourue(self,lastposx,lastposy):
 		"""
         Retourne la distance parcourue par le robot depuis la derniere position
         """
 		
-		return math.sqrt((self.posx-self.lastposx)**2+(self.posy-self.lastposy)**2)
+		return math.sqrt((self.posx-lastposx)**2+(self.posy-lastposy)**2)
 
 
 

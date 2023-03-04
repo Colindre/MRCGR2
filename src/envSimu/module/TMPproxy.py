@@ -1,6 +1,8 @@
+import time
+
 class proxy_physique:
 
-    def init(self, robot):
+    def __init__(self, robot):
         self.robot = robot
 
 
@@ -59,27 +61,17 @@ class proxy_physique:
 
 class proxy_virtuel:
 
-    def init(self, env):
-
-        self.robot = env.robot
-        self.env   = env
-
-
+    def __init__(self,robot):
+        self.robot = robot
 
     def avance_droit(self, dps):
-
-        self.robot.set_motor_dps(dps, dps)
-
-
+        self.robot.avance_tout_droit(dps)
 
     def tourne_droite(self, dps):
-
        self.robot.set_motor_dps(-dps, dps)
 
 
-
     def tourne_gauche(self, dps):
-
        self.robot.set_motor_dps(dps, -dps)
 
 
@@ -96,9 +88,8 @@ class proxy_virtuel:
 
 
 
-    def dist_parcourue(self, last_pos):
-
-        pass
+    def dist_parcourue(self,lastposx,lastposy):
+        return self.robot.distance_parcourue(lastposx,lastposy)
 
 
 
