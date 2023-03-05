@@ -33,7 +33,7 @@ class proxy_physique:
 
 
 
-    def proche_mur(self):
+    def proche_obstacle(self):
 
         pass
 
@@ -74,31 +74,17 @@ class proxy_virtuel:
     def tourne_gauche(self, dps):
        self.robot.set_motor_dps(dps, -dps)
 
-
-
     def stop(self):
-
         self.robot.set_motor_dps(0, 0)
 
-
-
-    def proche_mur(self):
-
+    def proche_obstacle(self):
         pass
-
-
 
     def dist_parcourue(self,lastposx,lastposy):
         return self.robot.distance_parcourue(lastposx,lastposy)
 
+    def angle_parcouruD(self, last_dirr):
+        return self.robot.angle_parcourueD(last_dirr)
 
-
-    def angle_parcouruD(self, last_angle):
-
-        pass
-
-
-
-    def angle_parcouruG(self, last_angle):
-
-        pass
+    def angle_parcouruG(self, last_dirr):
+        return self.robot.angle_parcourueD(last_dirr)

@@ -22,7 +22,8 @@ class Robot:
 		self.posy = posy
 		self.lastposx = posx
 		self.lastposy = posy					
-		self.dirr = dirr%360				
+		self.dirr = dirr%360	
+		self.lastdirr = dirr			
 		self.rayon=rayon					
 		self.diamR=diamR
 		self.last_update = 0					
@@ -75,7 +76,7 @@ class Robot:
 		self.dpsD = dpsD
 
 
-	def rotation(self, angle):						
+	def rotation(self, angle):		#ANCIENNE METHODE				
 		"""fait tourner le robot (angle positif pour tourner a gauche, negatif pour a droite)
 			:param angle: angle en degré du quel on veut faire tourner le robot
 			:retour: rien, modifie la direction du robot
@@ -144,11 +145,26 @@ class Robot:
         """
 		
 		return math.sqrt((self.posx-lastposx)**2+(self.posy-lastposy)**2)
-
-
-
 	
-def angleVecteur(vecteur):	
+	def angle_parcouruD(self, last_dirr):
+		angle = (last_dirr - self.dirr)%360			
+		if(angle+self.dirr) % 360 > 180:
+			return 360 - angle
+		elif(angle+self.dirr) % 360 < (-180):
+			return 360 - angle
+		else:
+			return angle
+	
+	def angle_parcouruG(self, last_dirr):
+		angle = (last_dirr - self.dirr)%360
+		if(angle+self.dirr) % 360 > 180:
+			return angle
+		elif(angle+self.dirr) % 360 < (-180):
+			return angle
+		else:
+			return 360 - angle
+			
+def angleVecteur(vecteur):		#ANCIENNE METHODE
 	"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
 		:param vecteur: vecteur (x,y)
 		:retour: angle du vecteur
@@ -167,3 +183,6 @@ def angleVecteur(vecteur):
 		return angle
 		
 
+#rbt = Robot(0,0,90,0,0)
+#print(rbt.angle_parcouruD(0))
+#print(rbt.angle_parcouruG(0))
