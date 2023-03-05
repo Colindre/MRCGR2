@@ -1,10 +1,10 @@
 from module.robot import Robot
 from module.environnement import Obstacle, Environnement
-from simulationtkinter import Simulationtkinter
+from module.simulationtkinter import Simulationtkinter
 from time import sleep
 import threading
-from module.TMPproxy import proxy_virtuel
-from module.TMPia import *
+from module.proxy import proxy_virtuel
+from module.ia import *
 
 def simulation(simulation, affichage):
 
@@ -26,10 +26,13 @@ obs2 = Obstacle(320,70,30,'yellow')
 rbt_simu = proxy_virtuel(rbt)
 
 #ACTION
-act = ParcourirDistance(rbt_simu,30,10)
+act1 = ParcourirDistance(rbt_simu,30,10)
+act2 = Arrete(rbt_simu)
+iaseq = IAseq(rbt_simu, [act1, act2])
+
 
 #IA
-rr = IA(rbt_simu,act)
+rr = IA(rbt_simu,iaseq)
 
 #ENVIRONNEMENT
 env= Environnement(700, 500,rr)

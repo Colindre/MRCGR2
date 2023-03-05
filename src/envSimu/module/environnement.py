@@ -1,9 +1,7 @@
-from module.robot import Robot
 import random
 import threading
 import math
 from time import sleep
-from module.TMPia import *
 
 class Environnement(threading.Thread) :
         """ 
@@ -40,8 +38,8 @@ class Environnement(threading.Thread) :
 
             vD=robot.velocityD()            #vitesse linéaire roue droite
             vG=robot.velocityG()            #vitesse linéaire roue gauche
-            #robot.lastposx = robot.posx
-            #robot.lastposy = robot.posy
+            robot.lastposx = robot.posx
+            robot.lastposy = robot.posy
             dirr = math.radians(robot.dirr)	 
             if vD == 0 and vG == 0:         #2 roues eteintes donc le robot ne bougent pas    
                 return

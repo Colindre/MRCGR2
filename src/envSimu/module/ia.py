@@ -136,7 +136,7 @@ class ParcourirDistance:
 
     def update(self):
         if self.done(): 
-            return None
+            return
         self.proxy.avance_droit(self.dps)
         
     def done(self):
