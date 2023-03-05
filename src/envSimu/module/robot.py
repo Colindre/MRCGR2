@@ -1,5 +1,5 @@
 import math
-
+import time
 
 class Robot:
 	""" 
@@ -19,13 +19,16 @@ class Robot:
 	def __init__(self,posx, posy, dirr,rayon,diamR):
 
 		self.posx = posx					
-		self.posy = posy					
+		self.posy = posy
+		self.lastposx = posx
+		self.lastposy = posy					
 		self.dirr = dirr%360				
 		self.rayon=rayon					
-		self.diamR=diamR					
+		self.diamR=diamR
+		self.last_update = 0					
 		self.distR=rayon*2
 		self.dpsG=0
-		self.dpsD=0			
+		self.dpsD=0	
 
 
 	def getPos(self):
@@ -66,6 +69,8 @@ class Robot:
 		self.dpsD +=-45
 	
 	def set_motor_dps(self,dpsG,dpsD):
+		self.lastposx = self.posx
+		self.lastposy = self.posy
 		self.dpsG = dpsG
 		self.dpsD = dpsD
 
@@ -132,6 +137,15 @@ class Robot:
 		definis les dps gauche et droite pour que le robot s'arrête
 		"""
 		self.set_motor_dps(0,0)
+		
+	def distance_parcourue(self,lastposx,lastposy):
+		"""
+        Retourne la distance parcourue par le robot depuis la derniere position
+        """
+		
+		return math.sqrt((self.posx-lastposx)**2+(self.posy-lastposy)**2)
+
+
 
 	
 def angleVecteur(vecteur):	

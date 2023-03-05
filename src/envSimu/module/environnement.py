@@ -3,6 +3,8 @@ import random
 import threading
 import math
 from time import sleep
+from module.TMPia import *
+
 class Environnement(threading.Thread) :
         """ 
         initialisation de notre environnement avec ses differents parametres
@@ -12,13 +14,13 @@ class Environnement(threading.Thread) :
         :param dirr: direction du robot, angle en degre
         :param ensObstacle: ensemble des points ou se trouve un obstacle
         """
-        def __init__(self,max_x,max_y):
+        def __init__(self,max_x,max_y,ia):
             threading.Thread.__init__(self)
             self.max_x= max_x 
             self.max_y=max_y
             self.robot= None 
             self.ensObstacle = set()
-
+            self.ia = ia
 
         def getBordures(self):
             """retourne les bordure de l'environnement (arene)
@@ -38,6 +40,8 @@ class Environnement(threading.Thread) :
 
             vD=robot.velocityD()            #vitesse linéaire roue droite
             vG=robot.velocityG()            #vitesse linéaire roue gauche
+            #robot.lastposx = robot.posx
+            #robot.lastposy = robot.posy
             dirr = math.radians(robot.dirr)	 
             if vD == 0 and vG == 0:         #2 roues eteintes donc le robot ne bougent pas    
                 return
@@ -111,8 +115,8 @@ class Environnement(threading.Thread) :
             self.ensObstacle.add(obstacle)
 
         def update(self):
-            """mise à jour des coordonnées du robot et vérifie s'il y a collision 
-            """
+            """mise à jour des coordonnées du robot et vérifie s'il y a collision""" 
+            
             robot = self.robot
             print("pos robot: ",robot.getPos())
             if self.collision():
@@ -120,17 +124,13 @@ class Environnement(threading.Thread) :
                 robot.dpsD = 0
             self.deplacement(0.01)      
 
-
         def run(self):
-            """lance la simulation
             """
-            s=0
-            while True:
+            methode utilise lors de la simulation
+            """
+            while not (self.ia.done()):
                 self.update()
-                sleep(0.01)
-                s=s+1
-                if s>1000:
-                    return False               
+                sleep(0.01)            
 
 class Obstacle:
         """ 
