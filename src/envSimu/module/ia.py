@@ -141,7 +141,8 @@ class ParcourirDistance:
         
     def done(self):
         distance_parcourue = self.proxy.dist_parcourue(self.lastposx,self.lastposy)
-        return distance_parcourue >= self.distance
+        self.running = distance_parcourue < self.distance
+        return not (self.running)
 
 
 class Arrete:
@@ -150,14 +151,15 @@ class Arrete:
         self.running = False
 
     def start(self):
-        self.proxy.stop()
         self.running = True
 
     def update(self):
+        self.proxy.stop()
         if self.done(): return
 
     def done(self):
-        return self.running
+        self.running = False
+        return not (self.running)
 
 
 class TournerDroiteAngle:
@@ -171,14 +173,18 @@ class TournerDroiteAngle:
     def start(self):
         self.running = True
 
+
     def update(self):
         if self.done():
-            return
+        	return
         self.proxy.tourne_droite(self.dps)
 
     def done(self):
         angle_parcouru = self.proxy.angle_parcouruD(self.lastdirr)
-        return angle_parcouru > self.angle
+        print("angle parc = ",angle_parcouru)
+        print(" DIRECTION = ",self.proxy.robot.dirr)
+        self.running = angle_parcouru < self.angle
+        return not (self.running) 
     
 
 class TournerGaucheAngle:
@@ -199,7 +205,8 @@ class TournerGaucheAngle:
 
     def done(self):
         angle_parcouru = self.proxy.angle_parcouruG(self.lastdirr)
-        return angle_parcouru > self.angle
+        self.running = angle_parcouru < self.angle
+        return not (self.running)  
     
 
 

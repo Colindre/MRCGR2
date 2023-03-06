@@ -28,7 +28,11 @@ rbt_simu = proxy_virtuel(rbt)
 #ACTION
 act1 = ParcourirDistance(rbt_simu,30,10)
 act2 = Arrete(rbt_simu)
-iaseq = IAseq(rbt_simu, [act1, act2])
+act3 = ParcourirDistance(rbt_simu,90,40)
+act4 = Arrete(rbt_simu)
+act5 = TournerDroiteAngle(rbt_simu,180,50)
+act6 = Arrete(rbt_simu)
+iaseq = IAseq(rbt_simu, [act5,act6])
 
 
 #IA

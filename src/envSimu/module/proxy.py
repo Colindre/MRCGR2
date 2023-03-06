@@ -84,7 +84,7 @@ class proxy_virtuel:
         return self.robot.distance_parcourue(lastposx,lastposy)
 
     def angle_parcouruD(self, last_dirr):
-        return self.robot.angle_parcourueD(last_dirr)
+        return self.robot.angle_parcouruD(last_dirr)
 
     def angle_parcouruG(self, last_dirr):
-        return self.robot.angle_parcourueD(last_dirr)
+        return self.robot.angle_parcouruG(last_dirr)
