@@ -53,6 +53,7 @@ class IAifte:
             return
 
         if self.condition(self.proxy):              #example: distance_parcourue() > 100
+            #self.main_action.running = False       | /!\ : à tester
             if not self.secondary_action.running:
                 self.secondary_action.start()
             self.secondary_action.update()
@@ -60,7 +61,8 @@ class IAifte:
             self.main_action.update()
 
     def done(self):
-        return self.main_action.done() or self.secondary_action.done()
+        self.running = not (self.main_action.done() or self.secondary_action.done())
+        return not self.running
 
     
 
@@ -86,7 +88,8 @@ class IAseq:
         self.list[self.index].update()
 
     def done(self):
-        return self.index >= len(self.list)
+        self.running = self.index < len(self.list)
+        return not self.running
 
     
 
@@ -116,7 +119,7 @@ class IAloop:
             self.loop_action.update()
 
     def done(self):
-        return False
+        return not self.running
 
 
 
