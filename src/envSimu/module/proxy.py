@@ -15,15 +15,15 @@ class proxy_physique:
 
     def tourne_droite(self, dps):
        
-       self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
-       self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
+       self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
+       self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
 
 
 
     def tourne_gauche(self, dps):
 
-       self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
-       self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
+       self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
+       self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
 
 
 
@@ -68,11 +68,11 @@ class proxy_virtuel:
         self.robot.avance_tout_droit(dps)
 
     def tourne_droite(self, dps):
-       self.robot.set_motor_dps(-dps, dps)
+       self.robot.set_motor_dps(dps, -dps)
 
 
     def tourne_gauche(self, dps):
-       self.robot.set_motor_dps(dps, -dps)
+       self.robot.set_motor_dps(-dps, dps)
 
     def stop(self):
         self.robot.set_motor_dps(0, 0)

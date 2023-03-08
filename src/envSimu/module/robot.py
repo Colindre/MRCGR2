@@ -183,6 +183,6 @@ def angleVecteur(vecteur):		#ANCIENNE METHODE
 		return angle
 		
 
-rbt = Robot(0,0,94,0,0)
-print(rbt.angle_parcouruD(90))
+#rbt = Robot(0,0,92,0,0)
+#print(rbt.angle_parcouruD(90))
 #print(rbt.angle_parcouruG(0))

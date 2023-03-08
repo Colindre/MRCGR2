@@ -176,7 +176,7 @@ class TournerDroiteAngle:
 
     def update(self):
         if self.done():
-        	return
+            return
         self.proxy.tourne_droite(self.dps)
 
     def done(self):
