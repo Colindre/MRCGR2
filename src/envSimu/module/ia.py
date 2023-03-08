@@ -123,15 +123,13 @@ class IAloop:
 class ParcourirDistance:
 
     def __init__(self, proxy, distance, dps):
-
         self.proxy    = proxy
         self.distance = distance
         self.dps      = dps
         self.running  = False
-        self.lastposx = self.proxy.robot.lastposx
-        self.lastposy = self.proxy.robot.lastposy
-        
+
     def start(self):
+        self.proxy.resetpos()
         self.running = True
 
     def update(self):
@@ -140,7 +138,7 @@ class ParcourirDistance:
         self.proxy.avance_droit(self.dps)
         
     def done(self):
-        distance_parcourue = self.proxy.dist_parcourue(self.lastposx,self.lastposy)
+        distance_parcourue = self.proxy.dist_parcourue(self.proxy.lastposx,self.proxy.lastposy)
         self.running = distance_parcourue < self.distance
         return not (self.running)
 
@@ -168,7 +166,7 @@ class TournerDroiteAngle:
         self.angle    = angle
         self.dps      = dps
         self.running  = False
-        self.lastdirr = self.proxy.robot.lastdirr
+        self.lastdirr = self.proxy.robot.dirr
 
     def start(self):
         self.running = True

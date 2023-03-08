@@ -26,13 +26,24 @@ obs2 = Obstacle(320,70,30,'yellow')
 rbt_simu = proxy_virtuel(rbt)
 
 #ACTION
-act1 = ParcourirDistance(rbt_simu,30,10)
+act1 = ParcourirDistance(rbt_simu,10,20)
 act2 = Arrete(rbt_simu)
-act3 = ParcourirDistance(rbt_simu,90,40)
+
+act3 = ParcourirDistance(rbt_simu,30,40)
 act4 = Arrete(rbt_simu)
-act5 = TournerDroiteAngle(rbt_simu,180,10)
+
+act5 = TournerDroiteAngle(rbt_simu,90,50)
 act6 = Arrete(rbt_simu)
-iaseq = IAseq(rbt_simu, [act5,act6])
+
+act7 = TournerDroiteAngle(rbt_simu,180,50)
+
+act8 = Arrete(rbt_simu)
+
+act9 = TournerDroiteAngle(rbt_simu,270,50)
+
+
+
+iaseq = IAseq(rbt_simu, [act3,act5,act3,act7,act3,act7,act3,act9,act3,act8])
 
 
 #IA

@@ -63,7 +63,13 @@ class proxy_virtuel:
 
     def __init__(self,robot):
         self.robot = robot
-
+        self.lastposx = self.robot.posx
+        self.lastposy = self.robot.posy
+        
+    def resetpos(self):
+        self.lastposx = self.robot.posx
+        self.lastposy = self.robot.posy
+    
     def avance_droit(self, dps):
         self.robot.avance_tout_droit(dps)
 
