@@ -67,7 +67,32 @@ class Environnement(threading.Thread) :
             robot.dirr = math.degrees(dirr + w*dT)%360
 
 
-        def collision(self):	
+        def collision_limites(self, x, y):
+            if (x<0) or (x>self.max_x) or (y<0) or (y<self.max_y):
+                return True
+            else:
+                return False
+
+        def collision_obstacle(self, x, y):
+            for obstacle in self.ensObstacle:
+                if (math.sqrt((x - obstacle.posx)**2 + (y - obstacle.posy)**2) < obstacle.rayon+self.robot.rayon):
+                    return True
+            return False
+
+        def get_distance(self):     #PREMIERE VERSION A TESTER
+            dist_pas = self.robot.rayon * 3
+            dirr     = math.radians(self.robot.dirr)
+            x, y     = self.robot.getPos()
+            pas      = 0
+
+            while (not(self.collision_limites(x, y) or self.collision_obstacle(x, y))):
+                x = x + dist_pas * math.cos(dirr)
+                y = y + dist_pas * math.sin(dirr)
+                pas += 1
+            return pas
+        
+
+        def collision(self):        #ANCIENNE METHODE
             """détermine si le robot entre en collision avec un obstacle: si l'ensemble des points ou se trouve le robot rencontre l'ensemble des points ou se trouve un obstacle
         	:param Obstacle:ensemble des points ou se trouve un obstacle
         	:retour: True si collision, False sinon et affichage si collision ou non
@@ -120,7 +145,7 @@ class Environnement(threading.Thread) :
             if self.collision():
                 robot.dpsG = 0
                 robot.dpsD = 0
-            self.deplacement(0.01)      
+            self.deplacement(0.01)
 
         def run(self):
             """

@@ -2,8 +2,6 @@ import tkinter as tk
 import math
 import random
 import threading
-from module.robot import Robot, angleVecteur
-from module.environnement import Obstacle, Environnement
 
 class Simulationtkinter(tk.Tk):
     def __init__(self,environnement):
@@ -40,7 +38,7 @@ class Simulationtkinter(tk.Tk):
     def update_robot(self):
         self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
         self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
-        self.label.config(text=f"Vitesse gauche: {self.robot.dpsG}          Vitesse droite: {self.robot.dpsD} \nAngle: {(self.robot.dirr+180)%360}\nPosition: {self.robot.getPos()}")
+        self.label.config(text=f"Vitesse gauche: {self.robot.dpsG}          Vitesse droite: {self.robot.dpsD} \nAngle: {self.robot.dirr}\nPosition: {self.robot.getPos()}")
         self.canvas.after(20, self.update_robot)
 
     def loop(self):
