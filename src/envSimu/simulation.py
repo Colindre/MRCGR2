@@ -43,7 +43,7 @@ act9 = TournerDroiteAngle(rbt_simu,270,50)
 
 
 
-iaseq = IAseq(rbt_simu, [act3,act5,act3,act7,act3,act7,act3,act9,act3,act8])
+iaseq = IAseq(rbt_simu, [act3,act5,act3,act5,act3,act5,act3,act5,act3,act8])
 
 
 #IA

@@ -5,7 +5,8 @@ class proxy_physique:
     def __init__(self, robot):
         self.robot = robot
 
-
+    def reset(self):
+        pass
 
     def avance_droit(self, dps):
 
@@ -65,10 +66,12 @@ class proxy_virtuel:
         self.robot = robot
         self.lastposx = self.robot.posx
         self.lastposy = self.robot.posy
+        self.lastdirr = self.robot.dirr
         
-    def resetpos(self):
+    def reset(self):
         self.lastposx = self.robot.posx
         self.lastposy = self.robot.posy
+        self.lastdirr = self.robot.dirr
     
     def avance_droit(self, dps):
         self.robot.avance_tout_droit(dps)
