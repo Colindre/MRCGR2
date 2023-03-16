@@ -146,23 +146,44 @@ class Robot:
 		
 		return math.sqrt((self.posx-lastposx)**2+(self.posy-lastposy)**2)
 	
-	def angle_parcouruD(self, last_dirr):
+	"""def angle_parcouruD(self, last_dirr):
 		angle = (last_dirr - self.dirr)%360			
-		if(angle+self.dirr) % 360 > 180:
+		if angle%360 > 180:
 			return 360 - angle
-		elif(angle+self.dirr) % 360 < (-180):
+		elif angle%360 < (-180):
 			return 360 - angle
 		else:
 			return angle
-	
+
 	def angle_parcouruG(self, last_dirr):
 		angle = (last_dirr - self.dirr)%360
-		if(angle+self.dirr) % 360 > 180:
+		if angle % 360 > 180:
 			return angle
-		elif(angle+self.dirr) % 360 < (-180):
+		elif angle % 360 < (-180):
 			return angle
 		else:
-			return 360 - angle
+			return 360 - angle"""
+
+	def angle_parcouru_droit(self, last_dirr):
+		last_dirr_rad = math.radians(last_dirr)
+		x1, y1        = math.cos(last_dirr_rad), math.sin(last_dirr_rad)		#points du vecteur a partir de la derniere direction
+		dirr_rad      = math.radians(self.dirr)
+		x2, y2        = math.cos(dirr_rad), math.sin(dirr_rad)					#points du vecteur a partir de la direction actuelle
+		scalaire      = x1*x2 + y1*y2											#calcule produit le produit scalaire
+		determinant   = x1*y2 - y1*x2											#calcule le determinant
+		angle         = math.atan2(determinant, scalaire)						#calcule l'angle parcouru
+		return (360 - math.degrees(angle))%360									#retourne l'angle positif (dans le sens des aiguilles d'une montre)
+
+	def angle_parcouru_gauche(self, last_dirr):
+		last_dirr_rad = math.radians(last_dirr)
+		x1, y1        = math.cos(last_dirr_rad), math.sin(last_dirr_rad) 
+		dirr_rad      = math.radians(self.dirr)
+		x2, y2        = math.cos(dirr_rad), math.sin(dirr_rad) 
+		scalaire      = x1*x2 + y1*y2
+		determinant   = x1*y2 - y1*x2
+		angle         = math.atan2(determinant, scalaire)
+		return math.degrees(angle)%360											#retourne l'angle positif (dans le sens inverse des aiguilles d'une montre)
+		
 			
 def angleVecteur(vecteur):		#ANCIENNE METHODE
 	"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
@@ -183,6 +204,8 @@ def angleVecteur(vecteur):		#ANCIENNE METHODE
 		return angle
 		
 
-#rbt = Robot(0,0,92,0,0)
-#print(rbt.angle_parcouruD(90))
-#print(rbt.angle_parcouruG(0))
+rbt = Robot(0,0,350,0,0)
+#print(rbt.angle_parcouruD(350))
+print(rbt.angle_parcouru_droit(90))
+#print(rbt.angle_parcouruG(350))
+print(rbt.angle_parcouru_gauche(90))

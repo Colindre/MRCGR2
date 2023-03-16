@@ -45,13 +45,13 @@ class proxy_physique:
 
 
 
-    def angle_parcouruD(self):
+    def angle_parcouru_droit(self):
 
         pass
 
 
 
-    def angle_parcouruG(self):
+    def angle_parcouru_gauche(self):
 
         pass
 
@@ -89,8 +89,8 @@ class proxy_virtuel:
     def dist_parcourue(self,lastposx,lastposy):
         return self.robot.distance_parcourue(lastposx,lastposy)
 
-    def angle_parcouruD(self, last_dirr):
-        return self.robot.angle_parcouruD(last_dirr)
+    def angle_parcouru_droit(self, last_dirr):
+        return self.robot.angle_parcouru_droit(last_dirr)
 
-    def angle_parcouruG(self, last_dirr):
-        return self.robot.angle_parcouruG(last_dirr)
+    def angle_parcouru_gauche(self, last_dirr):
+        return self.robot.angle_parcouru_gauche(last_dirr)
