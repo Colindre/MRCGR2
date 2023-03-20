@@ -211,9 +211,31 @@ class TournerGaucheAngle:
         return not (self.running)  
     
 
+class Carre():
+    def __init__(self,proxy):
+        self.index   = 0
+        self.running = False
+        self.proxy    = proxy
+        self.act1 = ParcourirDistance(self.proxy,30,70)
+        self.act2 = TournerDroiteAngle(self.proxy,90,50)
+        self.list = [self.act1,self.act2]*4
 
+    def start(self):
+        self.index   = 0
+        self.list[self.index].start()
+        self.running = True
 
+    def update(self):
+        if self.list[self.index].done():
+            self.index += 1
+            if self.done():
+                return
+            self.list[self.index].start()
+        self.list[self.index].update()
 
+    def done(self):
+        self.running = self.index < len(self.list)
+        return not self.running
 
 
 

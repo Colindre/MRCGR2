@@ -79,7 +79,6 @@ class proxy_virtuel:
     def tourne_droite(self, dps):
        self.robot.set_motor_dps(dps, -dps)
 
-
     def tourne_gauche(self, dps):
        self.robot.set_motor_dps(-dps, dps)
 
