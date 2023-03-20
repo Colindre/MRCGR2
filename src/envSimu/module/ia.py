@@ -237,9 +237,23 @@ class Carre():
         self.running = self.index < len(self.list)
         return not self.running
 
+class Carre2(IAseq):
+    def __init__(self,proxy):
+        IAseq.__init__(self,proxy,list)
+        self.act1 = ParcourirDistance(self.proxy,30,70)
+        self.act2 = TournerDroiteAngle(self.proxy,90,50)
+        self.act3 = Arrete(self.proxy)
+        self.list = [self.act1,self.act2,self.act3]*4
 
+    def start(self):
+        IAseq.start(self)
 
+    def update(self):
+        IAseq.update(self)
 
+    def done(self):
+        if(IAseq.done(self)):
+            return not(self.running)
 
 
 

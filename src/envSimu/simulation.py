@@ -42,12 +42,13 @@ act8 = Arrete(rbt_simu)
 act9 = TournerDroiteAngle(rbt_simu,270,50)
 
 carre = Carre(rbt_simu)
+carre2 = Carre2(rbt_simu)
 
 iaseq = IAseq(rbt_simu, [act5])
 
 
 #IA
-rr = IA(rbt_simu,carre)
+rr = IA(rbt_simu,carre2)
 
 #ENVIRONNEMENT
 env= Environnement(700, 500,rr)
