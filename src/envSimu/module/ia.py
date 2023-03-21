@@ -34,11 +34,12 @@ class IAifte:
 
     def __init__(self, proxy, main_action, secondary_action, condition):
 
-        self.proxy            = proxy
-        self.main_action      = main_action         #example: ParcourirDistance
-        self.secondary_action = secondary_action    #example: TournerDroite
-        self.condition        = condition
-        self.running          = False
+        self.proxy             = proxy
+        self.main_action       = main_action         #example: ParcourirDistance
+        self.secondary_action  = secondary_action    #example: TournerDroite
+        self.condition         = condition
+        self.started_secondary = False
+        self.running           = False
 
     def start(self):
 
@@ -56,12 +57,13 @@ class IAifte:
             #self.main_action.running = False       | /!\ : à tester
             if not self.secondary_action.running:
                 self.secondary_action.start()
+                self.started_secondary = True
             self.secondary_action.update()
         else:
             self.main_action.update()
 
     def done(self):
-        self.running = not (self.main_action.done() or self.secondary_action.done())
+        self.running = not (self.main_action.done() or (self.started_secondary and self.secondary_action.done()))
         return not self.running
 
     

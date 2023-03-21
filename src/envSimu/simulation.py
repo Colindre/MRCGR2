@@ -22,8 +22,14 @@ rbt = Robot(250,250,90,50,100)
 obs1 = Obstacle(30,230,50,'black')
 obs2 = Obstacle(320,70,30,'yellow')
 
+#ENVIRONNEMENT
+env= Environnement(700, 500)
+env.addObstacle(obs1)
+env.addObstacle(obs2)
+env.add(rbt)
+
 #PROXY
-rbt_simu = proxy_virtuel(rbt)
+rbt_simu = proxy_virtuel(env)
 
 #ACTION
 act1 = ParcourirDistance(rbt_simu,10,20)
@@ -49,12 +55,7 @@ iaseq = IAseq(rbt_simu, [act5])
 
 #IA
 rr = IA(rbt_simu,carre2)
-
-#ENVIRONNEMENT
-env= Environnement(700, 500,rr)
-env.addObstacle(obs1)
-env.addObstacle(obs2)
-env.add(rbt)
+env.addIA(rr)
 
 
 affi=Simulationtkinter(env)
