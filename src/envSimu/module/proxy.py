@@ -62,8 +62,9 @@ class proxy_physique:
 
 class proxy_virtuel:
 
-    def __init__(self,robot):
-        self.robot = robot
+    def __init__(self,env):
+        self.env      = env
+        self.robot    = env.robot
         self.lastposx = self.robot.posx
         self.lastposy = self.robot.posy
         self.lastdirr = self.robot.dirr
@@ -86,7 +87,7 @@ class proxy_virtuel:
         self.robot.set_motor_dps(0, 0)
 
     def proche_obstacle(self):
-        pass
+        return self.env.get_distance() < 2
 
     def dist_parcourue(self,lastposx,lastposy):
         return self.robot.distance_parcourue(lastposx,lastposy)

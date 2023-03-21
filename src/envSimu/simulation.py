@@ -52,13 +52,17 @@ carre2 = Carre2(rbt_simu, 100, 50)
 
 iaseq = IAseq(rbt_simu, [act5])
 
+ialoop = IAloop(rbt_simu, ParcourirDistance(rbt_simu,50,50))
+
+iaifte = IAifte(rbt_simu, ialoop, Arrete(rbt_simu), rbt_simu.proche_obstacle())
 
 #IA
-rr = IA(rbt_simu,carre2)
+rr = IA(rbt_simu,iaifte)
 env.addIA(rr)
 
 
 affi=Simulationtkinter(env)
 simulation(env, affi)
 
+#print(env.get_distance())
 

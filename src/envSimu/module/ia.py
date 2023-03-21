@@ -47,13 +47,15 @@ class IAifte:
         self.running = True
 
     def update(self):
-
+        print("ICI!!!!!!!!!!!!!!!!!!!!!!!!!!!!",self.condition)
+        print(self.proxy.proche_obstacle())
+        print("dist: ", self.proxy.env.get_distance())
         if self.done():
             self.main_action.running      = False 
             self.secondary_action.running = False
             return
 
-        if self.condition(self.proxy):              #example: distance_parcourue() > 100
+        if self.condition:          #probleme: la condition est vérifier au lancement puis elle reste telle quel 
             #self.main_action.running = False       | /!\ : à tester
             if not self.secondary_action.running:
                 self.secondary_action.start()
@@ -106,7 +108,7 @@ class IAloop:
 
     def start(self):
 
-        self.main_action.start()
+        self.loop_action.start()
         self.running = True
 
     def update(self):
