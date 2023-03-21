@@ -3,6 +3,8 @@ import math
 import random
 from module.robot import Robot
 from module.environnement import Environnement, Obstacle
+from module.ia import *
+from module.proxy import proxy_virtuel
 
 class TestRobot(unittest.TestCase):
     def setUp(self):
@@ -97,6 +99,38 @@ class TestEnvironnement(unittest.TestCase):
         self.e.update()
         self.assertNotEqual(tmpX , self.e.robot.posx)
         self.assertNotEqual(tmpY , self.e.robot.posy)
+
+class TestIA(unittest.TestCase):
+    def setUp(self):
+        rbt = Robot(250,250,90,50,100)
+        rbt_simu = proxy_virtuel(rbt)
+        carre2 = Carre2(rbt_simu, 100, 50)
+        self.ia = IA(rbt_simu,carre2)
+
+    def test_IAstart(self):
+        self.ia.start()
+        self.assertTrue(self.ia.action.start)
+
+    def test_IAupdate(self):
+        self.ia.update()
+        self.assertTrue(self.ia.action.update)
+    
+    def test_IAdone(self):
+        self.ia.action.done
+        self.assertFalse(self.ia.done())
+
+    def test_IArun(self):
+        self.ia.start()
+        self.assertFalse(self.ia.action.done)
+        time.sleep(0.1)
+        self.ia.update()
+        self.assertFalse(self.ia.action.done)
+        self.ia.action.done = True
+        time.sleep(0.1)
+        self.assertTrue(self.ia.done)
+
+
+    
     
 
     
