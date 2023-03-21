@@ -42,7 +42,7 @@ act8 = Arrete(rbt_simu)
 act9 = TournerDroiteAngle(rbt_simu,270,50)
 
 carre = Carre(rbt_simu)
-carre2 = Carre2(rbt_simu)
+carre2 = Carre2(rbt_simu, 100, 50)
 
 iaseq = IAseq(rbt_simu, [act5])
 
