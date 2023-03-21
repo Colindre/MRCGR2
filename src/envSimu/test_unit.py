@@ -23,20 +23,14 @@ class TestRobot(unittest.TestCase):
         self.r.rotation(angle)
         self.assertAlmostEqual(self.r.dirr,tmp + angle)
     
-    def testdistanceparcouru(self):
-        self.e = Environnement(100,100)
+    def test_distanceparcourue(self):
+        self.e = Environnement(100,100,None)
         self.e.add(self.r)
-        print("\n avant deplacement:",self.r.getPos())
-        self.r.dpsD =10
-        self.r.dpsG =5
-        self.e.deplacement(10)
-        print("distance :",self.r.distance_parcourue())
-        print("\n apres deplacement:",self.r.getPos())
-        self.r.dpsD =10
-        self.r.dpsG =10
-        self.e.deplacement(10)
-        print("distance2 :",self.r.distance_parcourue())
-        print("\n apres deplacement2:",self.r.getPos())
+        lastX = self.r.posx
+        lastY = self.r.posy
+        self.r.posx = 15
+        self.r.posy = 23
+        self.assertAlmostEqual(self.r.distance_parcourue(lastX,lastY),5.830951895)
 
 
 class TestObstacle(unittest.TestCase):
@@ -52,7 +46,7 @@ class TestObstacle(unittest.TestCase):
     
 class TestEnvironnement(unittest.TestCase):
     def setUp(self):
-        self.e = Environnement(100,100)
+        self.e = Environnement(100,100,None)
         self.e.addObstacle(Obstacle(50,40,5,'red'))
 
     def test_parametreEnvironnement(self):
@@ -86,11 +80,11 @@ class TestEnvironnement(unittest.TestCase):
     
     def test_update(self):
         r = Robot(10,20,50,5,10)
+        f = random.uniform(0.01,5.0)
         self.e.add(r)
         self.e.robot.augDPSd() ; self.e.robot.augDPSg()
         tmpX = self.e.robot.posx ; tmpY = self.e.robot.posy
-        random = random.uniform(0.01,5.0)
-        self.e.deplacement(random)
+        self.e.deplacement(f)
         self.e.update()
         self.assertNotEqual(tmpX , self.e.robot.posx)
         self.assertNotEqual(tmpY , self.e.robot.posy)
