@@ -32,6 +32,15 @@ class TestRobot(unittest.TestCase):
         self.r.posy = 23
         self.assertAlmostEqual(self.r.distance_parcourue(lastX,lastY),5.830951895)
 
+    def test_angle_parcouru_droit(self):
+        self.r.lastdirr = self.r.dirr
+        self.r.dirr = 120
+        self.assertEqual(self.r.angle_parcouru_droit(self.r.lastdirr),330)
+
+    def test_angle_parcouru_gauche(self):
+        self.r.lastdirr = self.r.dirr
+        self.r.dirr = 60
+        self.assertEqual(self.r.angle_parcouru_gauche(self.r.lastdirr),330)
 
 class TestObstacle(unittest.TestCase):
     def setUp(self):
