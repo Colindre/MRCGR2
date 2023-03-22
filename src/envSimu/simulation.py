@@ -47,17 +47,16 @@ act8 = Arrete(rbt_simu)
 
 act9 = TournerDroiteAngle(rbt_simu,270,50)
 
-carre = Carre(rbt_simu)
-carre2 = Carre2(rbt_simu, 100, 50)
+carre = Carre(rbt_simu, 100, 50)
 
-iaseq = IAseq(rbt_simu, [act5])
+iaseq = IAseq(rbt_simu, [act5,act1,act4])
 
 ialoop = IAloop(rbt_simu, ParcourirDistance(rbt_simu,50,50))
 
 iaifte = IAifte(rbt_simu, ialoop, Arrete(rbt_simu), rbt_simu.proche_obstacle())
 
 #IA
-rr = IA(rbt_simu,carre2)
+rr = IA(rbt_simu,carre)
 env.addIA(rr)
 
 

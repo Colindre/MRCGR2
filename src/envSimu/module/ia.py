@@ -76,12 +76,10 @@ class IAseq:
         self.proxy   = proxy
         self.list    = list
         self.index   = 0
-        self.running = False
 
     def start(self):
         self.index   = 0
         self.list[self.index].start()
-        self.running = True
 
     def update(self):
         if self.list[self.index].done():
@@ -92,8 +90,7 @@ class IAseq:
         self.list[self.index].update()
 
     def done(self):
-        self.running = self.index < len(self.list)
-        return not self.running
+        return self.index >= len(self.list)
 
     
 
@@ -104,12 +101,10 @@ class IAloop:
 
         self.proxy            = proxy
         self.loop_action      = loop_action
-        self.running          = False
 
     def start(self):
 
         self.loop_action.start()
-        self.running = True
 
     def update(self):
 
@@ -123,7 +118,7 @@ class IAloop:
             self.loop_action.update()
 
     def done(self):
-        return not self.running
+        return False 
 
 
 
@@ -133,11 +128,9 @@ class ParcourirDistance:
         self.proxy    = proxy
         self.distance = distance
         self.dps      = dps
-        self.running  = False
 
     def start(self):
         self.proxy.reset()
-        self.running = True
 
     def update(self):
         if self.done(): 
@@ -146,25 +139,22 @@ class ParcourirDistance:
         
     def done(self):
         distance_parcourue = self.proxy.dist_parcourue(self.proxy.lastposx,self.proxy.lastposy)
-        self.running = distance_parcourue < self.distance
-        return not (self.running)
+        return distance_parcourue >= self.distance
 
 
 class Arrete:
     def __init__(self, proxy):
         self.proxy   = proxy
-        self.running = False
 
     def start(self):
-        self.running = True
+        self.proxy.reset()
 
     def update(self):
         self.proxy.stop()
         if self.done(): return
 
     def done(self):
-        self.running = False
-        return not (self.running)
+        return True
 
 
 class TournerDroiteAngle:
@@ -172,11 +162,9 @@ class TournerDroiteAngle:
         self.proxy    = proxy
         self.angle    = angle
         self.dps      = dps
-        self.running  = False
 
     def start(self):
         self.proxy.reset()
-        self.running = True
 
 
     def update(self):
@@ -189,8 +177,7 @@ class TournerDroiteAngle:
         #print("LAST DIRECTION = ",self.proxy.lastdirr)
         #print("angle parc = ",angle_parcouru)
         #print("DIRECTION = ",self.proxy.robot.dirr)
-        self.running = angle_parcouru < self.angle
-        return not (self.running) 
+        return angle_parcouru >= self.angle
     
 
 class TournerGaucheAngle:
@@ -198,11 +185,9 @@ class TournerGaucheAngle:
         self.proxy    = proxy
         self.angle    = angle
         self.dps      = dps
-        self.running  = False
 
     def start(self):
         self.proxy.reset()
-        self.running = True
 
     def update(self):
         if self.done():
@@ -211,37 +196,10 @@ class TournerGaucheAngle:
 
     def done(self):
         angle_parcouru = self.proxy.angle_parcouru_gauche(self.proxy.lastdirr)
-        self.running = angle_parcouru < self.angle
-        return not (self.running)  
+        return angle_parcouru >= self.angle 
     
 
-class Carre():
-    def __init__(self,proxy):
-        self.index   = 0
-        self.running = False
-        self.proxy    = proxy
-        self.act1 = ParcourirDistance(self.proxy,30,70)
-        self.act2 = TournerDroiteAngle(self.proxy,90,50)
-        self.list = [self.act1,self.act2]*4
-
-    def start(self):
-        self.index   = 0
-        self.list[self.index].start()
-        self.running = True
-
-    def update(self):
-        if self.list[self.index].done():
-            self.index += 1
-            if self.done():
-                return
-            self.list[self.index].start()
-        self.list[self.index].update()
-
-    def done(self):
-        self.running = self.index < len(self.list)
-        return not self.running
-
-class Carre2(IAseq):
+class Carre(IAseq):
     def __init__(self,proxy, distance, dps):
         IAseq.__init__(self,proxy,list)
         self.act1 = ParcourirDistance(self.proxy,distance,dps)
@@ -250,7 +208,6 @@ class Carre2(IAseq):
         self.list = [self.act1,self.act2,self.act3]*4
 
     def start(self):
-        self.running = True 
         IAseq.start(self)
 
     def update(self):
@@ -258,8 +215,8 @@ class Carre2(IAseq):
 
     def done(self):
         if(IAseq.done(self)):
-            self.running = False    
-        return not(self.running)
+            return True    
+        return False
 
 
 
