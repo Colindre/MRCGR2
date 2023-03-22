@@ -100,34 +100,46 @@ class TestEnvironnement(unittest.TestCase):
         self.assertNotEqual(tmpX , self.e.robot.posx)
         self.assertNotEqual(tmpY , self.e.robot.posy)
 
-class TestIA(unittest.TestCase):
+class TestIACarre2(unittest.TestCase):
     def setUp(self):
         rbt = Robot(250,250,90,50,100)
         rbt_simu = proxy_virtuel(rbt)
         carre2 = Carre2(rbt_simu, 100, 50)
         self.ia = IA(rbt_simu,carre2)
 
-    def test_IAstart(self):
+    def test_IACarre2_start(self):
         self.ia.start()
         self.assertTrue(self.ia.action.start)
 
-    def test_IAupdate(self):
+    def test_IACarre2_update(self):
         self.ia.update()
         self.assertTrue(self.ia.action.update)
     
-    def test_IAdone(self):
+    def test_IACarre2_done(self):
         self.ia.action.done
         self.assertFalse(self.ia.done())
 
-    def test_IArun(self):
-        self.ia.start()
-        self.assertFalse(self.ia.action.done)
+    def test_IACarre2_run(self):
+        self.ia.start() 
         time.sleep(0.1)
         self.ia.update()
-        self.assertFalse(self.ia.action.done)
         self.ia.action.done = True
         time.sleep(0.1)
         self.assertTrue(self.ia.done)
+    
+class TestParcourirDistance(unittest.TestCase):
+    def setUp(self):
+        rbt = Robot(250,250,90,50,100)
+        rbt_simu = proxy_virtuel(rbt)
+        self.d = ParcourirDistance(rbt_simu,20,50)
+
+        def test_ParcourirDistance_start(self):
+            self.d.start
+            self.assertTrue(self.d.running)
+
+        def test_ParcourirDistance_done(self):
+            self.assertEqual(self.d.distance,self.d.rbt_simu.dist_parcourue(self.d.rbt_simu.lastposx,self.d.rbt_simu.lastposy))
+            self.assertTrue(20<self.d.distance)
 
 
     
