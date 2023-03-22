@@ -57,7 +57,7 @@ ialoop = IAloop(rbt_simu, ParcourirDistance(rbt_simu,50,50))
 iaifte = IAifte(rbt_simu, ialoop, Arrete(rbt_simu), rbt_simu.proche_obstacle())
 
 #IA
-rr = IA(rbt_simu,iaifte)
+rr = IA(rbt_simu,carre2)
 env.addIA(rr)
 
 
