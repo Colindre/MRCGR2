@@ -138,9 +138,12 @@ class TestParcourirDistance(unittest.TestCase):
             self.assertTrue(self.d.running)
 
         def test_ParcourirDistance_done(self):
-            self.assertEqual(self.d.distance,self.d.rbt_simu.dist_parcourue(self.d.rbt_simu.lastposx,self.d.rbt_simu.lastposy))
-            self.assertTrue(20<self.d.distance)
+            posfinal = (math.sqrt((self.d.rbt_simu.rbt.posx)**2+(self.d.rbt_simu.rbt.posy)**2) + self.d.distance)*(math.cos(self.d.rbt_simu.rbt.dirr)+math.sin(self.d.rbt_simu.rbt.dirr))
+            self.d.done()
+            self.assertEqual(posfinal,self.d.rbt_simu.dist_parcourue(self.d.rbt_simu.lastposx,self.d.rbt_simu.lastposy))
+            self.assertFalse(self.d.running)
 
+     
 
     
     
