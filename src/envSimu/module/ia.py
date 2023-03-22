@@ -250,6 +250,7 @@ class Carre2(IAseq):
         self.list = [self.act1,self.act2,self.act3]*4
 
     def start(self):
+        self.running = True 
         IAseq.start(self)
 
     def update(self):
@@ -257,7 +258,8 @@ class Carre2(IAseq):
 
     def done(self):
         if(IAseq.done(self)):
-            return not(self.running)
+            self.running = False    
+        return not(self.running)
 
 
 
