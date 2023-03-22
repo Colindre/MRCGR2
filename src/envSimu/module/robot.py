@@ -70,6 +70,11 @@ class Robot:
 		self.dpsD +=-45
 	
 	def set_motor_dps(self,dpsG,dpsD):
+		""" modifie le dpsG et dpsD du robot
+			:param dpsG: dpsG du robot
+			:param dpsD: dpsD du robot
+			:retour: rien 
+		"""
 		self.lastposx = self.posx
 		self.lastposy = self.posy
 		self.dpsG = dpsG
@@ -165,6 +170,10 @@ class Robot:
 			return 360 - angle"""
 
 	def angle_parcouru_droit(self, last_dirr):
+		""" retourne l'angle parcouru par le robot à droite
+			:param last_dirr: ancienne direction avec laquelle comparer
+			:retour: angle parcouru à droite
+		"""
 		last_dirr_rad = math.radians(last_dirr)
 		x1, y1        = math.cos(last_dirr_rad), math.sin(last_dirr_rad)		#points du vecteur a partir de la derniere direction
 		dirr_rad      = math.radians(self.dirr)
@@ -175,6 +184,10 @@ class Robot:
 		return (360 - math.degrees(angle))%360									#retourne l'angle positif (dans le sens des aiguilles d'une montre)
 
 	def angle_parcouru_gauche(self, last_dirr):
+		""" retourne l'angle parcouru par le robot à gauche
+		:param last_dirr: ancienne direction avec laquelle comparer
+		:retour: angle parcouru à gauche
+		"""
 		last_dirr_rad = math.radians(last_dirr)
 		x1, y1        = math.cos(last_dirr_rad), math.sin(last_dirr_rad) 
 		dirr_rad      = math.radians(self.dirr)

@@ -33,7 +33,11 @@ class Environnement(threading.Thread) :
                 ens.add((self.max_x,y))
             return ens
 
-        def deplacement(self,dT):       #dT en sec
+        def deplacement(self,dT):       
+            """deplace le robot selon un certain temps dT
+                :param dT: temps en secondes
+                :retour: rien, ça change les données du robot selon le déplacement (posx,posy et dirr)
+            """
             robot=self.robot  
 
             vD=robot.velocityD()            #vitesse linéaire roue droite
@@ -68,18 +72,31 @@ class Environnement(threading.Thread) :
 
 
         def collision_limites(self, x, y):
+            """ verifie si un point peut être le centre du cercle sans collision avec l'extérieur
+                :param x: position abcisse du point cherché
+                :param y: position ordonnée du point cherché
+                :retour: True si le point ne peut pas être le centre du cercle, False sinon
+            """
             if (x<0+self.robot.rayon) or (x>self.max_x-self.robot.rayon) or (y<0+self.robot.rayon) or (y>self.max_y-self.robot.rayon):
                 return True
             else:
                 return False
 
         def collision_obstacle(self, x, y):
+            """verifie si un point donné est en collision avec un obstacle de l'environnement
+                :param x: position abcisse du point cherché
+                :param y: position ordonnée du point cherché
+                :retour: True s'il y a collision, False sinon
+            """
             for obstacle in self.ensObstacle:
                 if (math.sqrt((x - obstacle.posx)**2 + (y - obstacle.posy)**2) < obstacle.rayon+self.robot.rayon):
                     return True
             return False
 
         def get_distance(self):     #PREMIERE VERSION A TESTER
+            """donne la distance entre le robot et la chose la plus proche de lui (obstacle ou limites du monde)
+                :retour: retourne le nb de pas que le robot peut faire avant de toucher quelque chose
+            """
             dist_pas = self.robot.rayon
             dirr     = math.radians(self.robot.dirr)
             x, y     = self.robot.getPos()
@@ -138,10 +155,15 @@ class Environnement(threading.Thread) :
             self.ensObstacle.add(obstacle)
 
         def addIA(self, ia):
+            """ajout d'une IA dans l'environnement
+                :retour: rien
+            """
             self.ia = ia
 
         def update(self):
-            """mise à jour des coordonnées du robot et vérifie s'il y a collision""" 
+            """mise à jour des coordonnées du robot et vérifie s'il y a collision
+                :retour: rien
+            """ 
             
             robot = self.robot
             print("pos robot: ",robot.getPos())
