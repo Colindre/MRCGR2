@@ -68,11 +68,13 @@ class proxy_virtuel:
         self.lastposx = self.robot.posx
         self.lastposy = self.robot.posy
         self.lastdirr = self.robot.dirr
+        self.lasttime = self.env.temps
         
     def reset(self):
         self.lastposx = self.robot.posx
         self.lastposy = self.robot.posy
         self.lastdirr = self.robot.dirr
+        self.lasttime = self.env.temps
     
     def avance_droit(self, dps):
         self.robot.avance_tout_droit(dps)

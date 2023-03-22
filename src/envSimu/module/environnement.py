@@ -1,7 +1,7 @@
 import random
 import threading
 import math
-from time import sleep
+from time import sleep,time
 
 class Environnement(threading.Thread) :
         """ 
@@ -19,6 +19,7 @@ class Environnement(threading.Thread) :
             self.robot= None 
             self.ensObstacle = set()
             self.ia = None
+            self.temps=time()
 
         def getBordures(self):
             """retourne les bordure de l'environnement (arene)
@@ -164,13 +165,16 @@ class Environnement(threading.Thread) :
             """mise à jour des coordonnées du robot et vérifie s'il y a collision
                 :retour: rien
             """ 
-            
+            new_time = time()
+            dT = new_time-self.temps
+            self.temps = new_time
             robot = self.robot
             print("pos robot: ",robot.getPos())
             if self.collision():
                 robot.dpsG = 0
                 robot.dpsD = 0
-            self.deplacement(0.01)
+            self.deplacement(dT)
+
 
         def run(self):
             """
