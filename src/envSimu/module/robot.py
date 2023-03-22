@@ -118,31 +118,8 @@ class Robot:
 	def getDistance(self,x,y):
 		""" rôle du capteur, retourne la distance entre le robot et un point x,y devant lui
 		"""
-		return math.sqrt((self.posx - x)**2 + (self.posy - y)**2)             
+		return math.sqrt((self.posx - x)**2 + (self.posy - y)**2)            
 	
-	def avance_tout_droit(self,dps):
-		"""
-		definis les dps gauche et droite pour que le robot avance tout droit
-		"""
-		self.set_motor_dps(dps,dps)
-	
-	def tourne_droite(self,dps):
-		"""
-		definis les dps gauche et droite pour que le robot tourne à droite
-		"""
-		self.set_motor_dps(dps,-dps)
-
-	def tourne_gauche(self,dps):
-		"""
-		definis les dps gauche et droite pour que le robot tourne à gauche
-		"""
-		self.set_motor_dps(-dps,dps)
-
-	def arret(self):
-		"""
-		definis les dps gauche et droite pour que le robot s'arrête
-		"""
-		self.set_motor_dps(0,0)
 		
 	def distance_parcourue(self,lastposx,lastposy):
 		"""

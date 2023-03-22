@@ -77,7 +77,7 @@ class proxy_virtuel:
         self.lasttime = self.env.temps
     
     def avance_droit(self, dps):
-        self.robot.avance_tout_droit(dps)
+        self.robot.set_motor_dps(dps,dps)
 
     def tourne_droite(self, dps):
        self.robot.set_motor_dps(dps, -dps)
@@ -91,11 +91,11 @@ class proxy_virtuel:
     def proche_obstacle(self):
         return self.env.get_distance() < 2
 
-    def dist_parcourue(self,lastposx,lastposy):
-        return self.robot.distance_parcourue(lastposx,lastposy)
+    def dist_parcourue(self):
+        return self.robot.distance_parcourue(self.lastposx,self.lastposy)
 
-    def angle_parcouru_droit(self, last_dirr):
-        return self.robot.angle_parcouru_droit(last_dirr)
+    def angle_parcouru_droit(self):
+        return self.robot.angle_parcouru_droit(self.lastdirr)
 
-    def angle_parcouru_gauche(self, last_dirr):
-        return self.robot.angle_parcouru_gauche(last_dirr)
+    def angle_parcouru_gauche(self):
+        return self.robot.angle_parcouru_gauche(self.lastdirr)
