@@ -11,7 +11,7 @@ class Simulationtkinter(tk.Tk):
         self.bool = False
         self.robot = self.environnement.robot
 #CANVAS TKINTER
-        self.canvas = tk.Canvas(self, bg='white', width=700, height=500)
+        self.canvas = tk.Canvas(self, bg='white', width=700, height=700)
         self.robot_canv = self.canvas.create_oval(self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon, self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon, fill='red')
         self.line = self.canvas.create_line(self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posx+math.sin(math.radians(self.robot.dirr))*self.robot.rayon, arrow="last")
         self.label = tk.Label( text="Vitesse gauche:         Vitesse droite:0\nAngle: 0\nPosition: (0, 0)")
@@ -37,6 +37,9 @@ class Simulationtkinter(tk.Tk):
 
     def update_robot(self):
         self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
+
+        self.line2 = self.canvas.create_line(self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
+
         self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
         self.label.config(text=f"Vitesse gauche: {self.robot.dpsG}          Vitesse droite: {self.robot.dpsD} \nAngle: {self.robot.dirr}\nPosition: {self.robot.getPos()}")
         self.canvas.after(20, self.update_robot)
