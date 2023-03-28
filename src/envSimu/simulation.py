@@ -16,7 +16,7 @@ def simulation(simulation, affichage):
     affichage.loop()
 
 #ROBOT
-rbt = Robot(250,250,90,50,100)
+rbt = Robot(250,250,180,50,100)
 
 #OBSTACLE
 obs1 = Obstacle(30,230,50,'black')
@@ -53,10 +53,10 @@ iaseq = IAseq(rbt_simu, [act5,act1,act4])
 
 ialoop = IAloop(rbt_simu, ParcourirDistance(rbt_simu,50,50))
 
-iaifte = IAifte(rbt_simu, ialoop, Arrete(rbt_simu), rbt_simu.proche_obstacle())
+iaifte = IAifte(rbt_simu, ialoop, Arrete(rbt_simu), obstacle_proche)
 
 #IA
-rr = IA(rbt_simu,carre)
+rr = IA(rbt_simu,iaifte)
 env.addIA(rr)
 
 

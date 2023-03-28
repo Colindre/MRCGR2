@@ -47,7 +47,7 @@ class IAifte:
         self.running = True
 
     def update(self):
-        print("ICI!!!!!!!!!!!!!!!!!!!!!!!!!!!!",self.condition)
+        #print("ICI!!!!!!!!!!!!!!!!!!!!!!!!!!!!",self.condition)
         print(self.proxy.proche_obstacle())
         print("dist: ", self.proxy.env.get_distance())
         if self.done():
@@ -55,9 +55,9 @@ class IAifte:
             self.secondary_action.running = False
             return
 
-        if self.condition:          #probleme: la condition est vérifier au lancement puis elle reste telle quel 
+        if self.condition(self.proxy):          #probleme: la condition est vérifier au lancement puis elle reste telle quel 
             #self.main_action.running = False       | /!\ : à tester
-            if not self.secondary_action.running:
+            if not self.started_secondary:
                 self.secondary_action.start()
                 self.started_secondary = True
             self.secondary_action.update()
@@ -218,5 +218,5 @@ class Carre(IAseq):
             return True    
         return False
 
-
-
+def obstacle_proche(proxy):
+    return proxy.proche_obstacle()

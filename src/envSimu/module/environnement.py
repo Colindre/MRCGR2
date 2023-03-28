@@ -98,7 +98,7 @@ class Environnement(threading.Thread) :
             """donne la distance entre le robot et la chose la plus proche de lui (obstacle ou limites du monde)
                 :retour: retourne le nb de pas que le robot peut faire avant de toucher quelque chose
             """
-            dist_pas = self.robot.rayon
+            dist_pas = self.robot.rayon / 2
             dirr     = math.radians(self.robot.dirr)
             x, y     = self.robot.getPos()
             pas      = 0

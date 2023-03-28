@@ -89,7 +89,7 @@ class proxy_virtuel:
         self.robot.set_motor_dps(0, 0)
 
     def proche_obstacle(self):
-        return self.env.get_distance() < 2
+        return self.env.get_distance() < 1
 
     def dist_parcourue(self):
         return self.robot.distance_parcourue(self.lastposx,self.lastposy)
