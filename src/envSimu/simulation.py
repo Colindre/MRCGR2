@@ -6,6 +6,9 @@ import threading
 from module.proxy import proxy_virtuel
 from module.ia import *
 
+
+# A SAVOIR: dans l'interface graphique 2D tourner gauche et tourner droite sont inversé.
+
 def simulation(simulation, affichage):
 
     t1 = threading.Thread(target=simulation.run)
@@ -32,28 +35,19 @@ env.add(rbt)
 rbt_simu = proxy_virtuel(env)
 
 #ACTION
-act1 = ParcourirDistance(rbt_simu,10,20)
-act2 = Arrete(rbt_simu)
+dist50 = ParcourirDistance(rbt_simu,50,50)
+stop = Arrete(rbt_simu)
+demitourD = TournerDroiteAngle(rbt_simu,180,50)
+tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
+tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
 
-act3 = ParcourirDistance(rbt_simu,30,40)
-act4 = Arrete(rbt_simu)
+carre = IAseq(rbt_simu, [dist50,tourneD90,dist50,stop]*4)
 
-act5 = TournerDroiteAngle(rbt_simu,90,50)
-act6 = Arrete(rbt_simu)
+iaseq = IAseq(rbt_simu, [dist50,demitourD,dist50,stop])
 
-act7 = TournerDroiteAngle(rbt_simu,180,50)
+ialoop = IAloop(rbt_simu, dist50)
 
-act8 = Arrete(rbt_simu)
-
-act9 = TournerDroiteAngle(rbt_simu,270,50)
-
-carre = Carre(rbt_simu, 100, 50)
-
-iaseq = IAseq(rbt_simu, [act5,act1,act4])
-
-ialoop = IAloop(rbt_simu, ParcourirDistance(rbt_simu,50,50))
-
-iaifte = IAifte(rbt_simu, ialoop, Arrete(rbt_simu), obstacle_proche)
+iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 
 #IA
 rr = IA(rbt_simu,carre)
@@ -63,5 +57,4 @@ env.addIA(rr)
 affi=Simulationtkinter(env)
 simulation(env, affi)
 
-#print(env.get_distance())
 
