@@ -39,12 +39,12 @@ class IAifte:
         self.secondary_action  = secondary_action    #example: TournerDroite
         self.condition         = condition
         self.started_secondary = False
-        self.running           = False
+
 
     def start(self):
 
         self.main_action.start()
-        self.running = True
+
 
     def update(self):
         print(self.proxy.proche_obstacle())
@@ -63,8 +63,8 @@ class IAifte:
             self.main_action.update()
 
     def done(self):
-        self.running = not (self.main_action.done() or (self.started_secondary and self.secondary_action.done()))
-        return not self.running
+        return (self.main_action.done() or (self.started_secondary and self.secondary_action.done()))
+
 
     
 
