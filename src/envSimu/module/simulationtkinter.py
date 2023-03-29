@@ -37,7 +37,7 @@ class Simulationtkinter(tk.Tk):
 #FONCTION LANCER SIMULATION 
 
     def update_robot(self):
-        time.sleep(0.01)
+        time.sleep(0.001)
         self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
 
         self.line2 = self.canvas.create_line(self.robot.lastposx,self.robot.lastposy,self.robot.posx,self.robot.posy)

@@ -182,7 +182,7 @@ class Environnement(threading.Thread) :
             """
             while not (self.ia.done()):
                 self.update()
-                sleep(0.01)            
+                sleep(0.001)            
 
 class Obstacle:
         """ 

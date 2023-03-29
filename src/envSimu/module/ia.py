@@ -24,7 +24,7 @@ class IA(threading.Thread):
         self.start()
         while not (self.done()):
             self.update()
-            time.sleep(0.05)
+            time.sleep(0.0001)
 
 
 
