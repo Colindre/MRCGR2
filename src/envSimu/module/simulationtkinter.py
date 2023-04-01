@@ -40,7 +40,7 @@ class Simulationtkinter(tk.Tk):
         time.sleep(0.001)
         self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
 
-        self.line2 = self.canvas.create_line(self.robot.lastposx,self.robot.lastposy,self.robot.posx,self.robot.posy)
+        self.canvas.create_rectangle(self.robot.lastposx,self.robot.lastposy,self.robot.posx,self.robot.posy)
 
         self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
         self.label.config(text=f"Vitesse gauche: {self.robot.dpsG}          Vitesse droite: {self.robot.dpsD} \nAngle: {self.robot.dirr}\nPosition: {self.robot.getPos()}")
