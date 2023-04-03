@@ -177,6 +177,10 @@ class Robot:
 		angle         = math.atan2(determinant, scalaire)
 		return math.degrees(angle)%360											#retourne l'angle positif (dans le sens inverse des aiguilles d'une montre)
 		
+	def getSignal(self,pos):
+		x, y = pos			
+		return math.sqrt((self.posx - x)**2 + (self.posy - y)**2)
+		
 			
 def angleVecteur(vecteur):		#ANCIENNE METHODE
 	"""calcul l'angle positif du vecteur (par rapport a l'axe des abscisse)
