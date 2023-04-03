@@ -19,8 +19,9 @@ def simulation(simulation, affichage):
 rbt = Robot(250,250,90,50,100)
 
 #OBSTACLE
-obs1 = Obstacle(30,230,50,'black')
-obs2 = Obstacle(320,70,30,'yellow')
+obs1 = Obstacle(25,475,20,'black')
+obs2 = Obstacle(475,475,20,'yellow')
+
 
 #PROXY
 rbt_simu = proxy_virtuel(rbt)
@@ -51,7 +52,7 @@ iaseq = IAseq(rbt_simu, [act5])
 rr = IA(rbt_simu,carre2)
 
 #ENVIRONNEMENT
-env= Environnement(700, 500,rr)
+env= Environnement(500, 500,rr)
 env.addObstacle(obs1)
 env.addObstacle(obs2)
 env.add(rbt)
