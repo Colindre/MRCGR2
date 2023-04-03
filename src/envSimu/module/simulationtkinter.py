@@ -36,16 +36,13 @@ class Simulationtkinter(tk.Tk):
 #FONCTION LANCER SIMULATION 
 
     def update_robot(self):
-        if (self.robot.crayon == False):
-            return
-        else:
-            self.canvas.create_rectangle(self.robot.lastposx,self.robot.lastposy,self.robot.posx,self.robot.posy)    
-            self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
-            self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
-            self.label.config(text=f"Vitesse gauche: {self.robot.dpsG}          Vitesse droite: {self.robot.dpsD} \nAngle: {self.robot.dirr}\nPosition: {self.robot.getPos()}")
-            self.canvas.after(20, self.update_robot)
-            
-
+        self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
+        if (self.robot.crayon == True):
+            self.canvas.create_rectangle(self.robot.lastposx,self.robot.lastposy,self.robot.posx,self.robot.posy)
+        self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
+        self.label.config(text=f"Vitesse gauche: {self.robot.dpsG}          Vitesse droite: {self.robot.dpsD} \nAngle: {self.robot.dirr}\nPosition: {self.robot.getPos()}")
+        self.canvas.after(20, self.update_robot)
+        
     def loop(self):
         self.update_robot()   
         self.mainloop()

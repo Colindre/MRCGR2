@@ -32,3 +32,5 @@ env.addObstacle(obs1)
 env.addObstacle(obs2)
 env.addObstacle(obs3)
 env.addObstacle(obs4)
+
+#Hexagone (1.4)
