@@ -44,6 +44,7 @@ dist50 = ParcourirDistance(rbt_simu,50,50)
 stop = Arrete(rbt_simu)
 demitourD = TournerDroiteAngle(rbt_simu,180,50)
 tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
+tourneG70 = TournerGaucheAngle(rbt_simu,60,50)
 tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
 
 carre = IAseq(rbt_simu, [dist50,tourneD90,dist50,stop]*4)
@@ -54,8 +55,10 @@ ialoop = IAloop(rbt_simu, dist50)
 
 iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 
+hexagone = IAseq(rbt_simu, [dist50,tourneG70,stop]*6)       
+
 #IA
-rr = IA(rbt_simu,carre)
+rr = IA(rbt_simu,hexagone)
 env.addIA(rr)
 
 
