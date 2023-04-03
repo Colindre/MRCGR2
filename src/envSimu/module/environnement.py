@@ -17,6 +17,7 @@ class Environnement(threading.Thread) :
             self.max_x= max_x 
             self.max_y=max_y
             self.robot= None 
+            self.emetteur = None
             self.ensObstacle = set()
             self.ia = None
             self.temps=time()
@@ -148,6 +149,18 @@ class Environnement(threading.Thread) :
                 return 
                 
             self.robot = robot1
+
+        def addem(self,emetteur):
+            """ajout d'un robot dans le monde
+            :retour:rien, ajoute le robot dans ses position x,y et affiche message d'erreur si robot sort du monde
+            """
+            rx , ry = emetteur.getPos()
+            if((rx < 0) or (rx > self.max_x) or (ry < 0) or (ry > self.max_y)): #comparaison de la position du robot avec les limites du mondes
+                print("Erreur : Les positions du robots sont en dehors du monde. Il n'a pas pu etre place")
+                return 
+                
+
+            self.ensObstacle.add(emetteur)
             
         def addObstacle(self,obstacle):
             """ajout d'un obstacle dans le monde
@@ -183,7 +196,19 @@ class Environnement(threading.Thread) :
             while not (self.ia.done()):
                 self.update()
                 sleep(0.001)            
+                
 
+class Emetteur:
+
+        def __init__(self,posx, posy, rayon, color):
+            self.posx     = posx                     
+            self.posy     = posy                    
+            self.rayon    = rayon
+            self.color    = color
+
+        def getPos(self):
+            return (self.posx, self.posy)
+            
 class Obstacle:
         """ 
         initialisation d'un obstacle avec ses differents parametres

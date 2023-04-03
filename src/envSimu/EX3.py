@@ -1,0 +1,55 @@
+from module.robot import Robot
+from module.environnement import Obstacle, Environnement,Emetteur
+from module.simulationtkinter import Simulationtkinter
+from time import sleep
+import threading
+from module.proxy import proxy_virtuel
+from module.ia import *
+
+
+# A SAVOIR: dans l'interface graphique 2D tourner gauche et tourner droite sont inversé.
+
+def simulation(simulation, affichage):
+
+    t1 = threading.Thread(target=simulation.run)
+    t2 = threading.Thread(target=simulation.ia.run)
+    
+    t2.start()
+    t1.start()
+    affichage.loop()
+
+#ROBOT
+rbt = Robot(250,250,90,50,100)
+
+#EMETTEUR
+emt = Emetteur(100,75,50,"black")
+
+#ENVIRONNEMENT
+env= Environnement(700, 500)
+
+env.add(rbt)
+env.addem(emt)
+env.robot.dessine(True)
+#PROXY
+rbt_simu = proxy_virtuel(env)
+
+
+#ACTION
+dist50 = ParcourirDistance(rbt_simu,50,50)
+dist15 = ParcourirDistance(rbt_simu,15,50)
+stop = Arrete(rbt_simu)
+demitourD = TournerDroiteAngle(rbt_simu,180,50)
+tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
+tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
+tourneD45 = TournerDroiteAngle(rbt_simu,45,50)
+
+
+#IA
+rr = IA(rbt_simu,dist50)
+env.addIA(rr)
+
+
+affi=Simulationtkinter(env)
+simulation(env, affi)
+
+
