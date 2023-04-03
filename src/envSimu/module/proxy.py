@@ -39,11 +39,11 @@ class proxy_physique:
 
     def dist_parcourue(self):
 
-        pos_left, pos_right = self.get_motor_position()
+        pos_left, pos_right = self.robot.get_motor_position()
         
         # Calcul de la distance parcourue par chaque roue
-        dist_left = pos_left * self.WHEEL_CIRCUMFERENCE / 360
-        dist_right = pos_right * self.WHEEL_CIRCUMFERENCE / 360
+        dist_left = pos_left * self.robot.WHEEL_CIRCUMFERENCE / 360
+        dist_right = pos_right * self.robot.WHEEL_CIRCUMFERENCE / 360
         
         # Calcul de la distance parcourue par le robot (moyenne des distances des roues)
         distance_parcourue = (dist_left + dist_right) / 2

@@ -19,6 +19,7 @@ class Simulationtkinter(tk.Tk):
         self.label.pack()
         for i in self.environnement.ensObstacle:
             obstacle_canv=self.canvas.create_oval(i.posx-i.rayon,i.posy-i.rayon,i.posx+i.rayon,i.posy+i.rayon, fill=i.color)
+
         self.canvas.pack()
 
 #BOUTTONS TKINTER
@@ -30,6 +31,11 @@ class Simulationtkinter(tk.Tk):
         self.PlusVd.pack(side='left')
         self.DimVd = tk.Button(self, text='- Vg', command=self.robot.dimDPSg)
         self.DimVd.pack(side='left')
+        
+        """self.Crayon = tk.Button(self, text='Crayon', command=self.robot.dessine(True))
+        self.Crayon.pack()
+        self.Crayon2 = tk.Button(self, text='Pas de Crayon', command=self.robot.dessine(False))
+        self.Crayon2.pack()"""
         self.quit_button = tk.Button(self, text="Quitter Simulation", command=self.destroy)
         self.quit_button.pack()
       
@@ -37,10 +43,11 @@ class Simulationtkinter(tk.Tk):
 #FONCTION LANCER SIMULATION 
 
     def update_robot(self):
-        time.sleep(0.001)
+
         self.canvas.coords(self.robot_canv,self.robot.posx-self.robot.rayon,self.robot.posy-self.robot.rayon,self.robot.posx+self.robot.rayon, self.robot.posy+self.robot.rayon)
 
-        self.canvas.create_rectangle(self.robot.lastposx,self.robot.lastposy,self.robot.posx,self.robot.posy)
+        if(self.robot.crayon==True):
+                self.canvas.create_rectangle(self.robot.lastposx,self.robot.lastposy,self.robot.posx,self.robot.posy)
 
         self.canvas.coords(self.line,self.robot.posx,self.robot.posy,self.robot.posx+math.cos(math.radians(self.robot.dirr))*self.robot.rayon,self.robot.posy+math.sin(math.radians(self.robot.dirr))*self.robot.rayon)
         self.label.config(text=f"Vitesse gauche: {self.robot.dpsG}          Vitesse droite: {self.robot.dpsD} \nAngle: {self.robot.dirr}\nPosition: {self.robot.getPos()}")
