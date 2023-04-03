@@ -20,6 +20,7 @@ def simulation(simulation, affichage):
 
 #ROBOT
 rbt = Robot(350,350,180,50,100)
+rbt.dessine(True)
 
 #OBSTACLE
 obs1 = Obstacle(650,100,30,'#FFA500')
@@ -41,7 +42,7 @@ rbt_simu = proxy_virtuel(env)
 
 #ACTION
 dist50 = ParcourirDistance(rbt_simu,50,50)
-dist0 = ParcourirDistance(rbt_simu,0,0)
+dist100 = ParcourirDistance(rbt_simu,100,100)
 stop = Arrete(rbt_simu)
 demitourD = TournerDroiteAngle(rbt_simu,180,50)
 tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
@@ -53,13 +54,16 @@ carre = IAseq(rbt_simu, [dist50,tourneD90,dist50,stop]*4)
 
 iaseq = IAseq(rbt_simu, [dist50,demitourD,dist50,stop])
 
-ialoop = IAloop(rbt_simu, dist0)
+ialoop = IAloop(rbt_simu, dist100)
 
 iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 
 hexagone = IAseq(rbt_simu,[dist50,tourneD60,stop]*6)
+
+dessine_0 = IAseq(rbt_simu,[dist50,tourneD90,stop,dist100,tourneD90,stop]*2)
+dessine_1 = IAseq(rbt_simu,[tourneD90,dist100,stop])
 #IA
-rr = IA(rbt_simu,hexagone)
+rr = IA(rbt_simu,dessine_1)
 env.addIA(rr)
 
 

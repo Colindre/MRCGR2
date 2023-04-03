@@ -122,7 +122,7 @@ class Environnement(threading.Thread) :
 
             #gère les collisions avec les bordures
 
-            if(robot.posx-robot.rayon <=0 or robot.posx + robot.rayon >= self.max_x):
+            """if(robot.posx-robot.rayon <=0 or robot.posx + robot.rayon >= self.max_x):
                 print("collision bordure")
                 return True
             if (robot.posy-robot.rayon <=0 or robot.posy + robot.rayon >= self.max_y):
@@ -134,6 +134,7 @@ class Environnement(threading.Thread) :
                 if(robot.getDistance(obstacle.posx,obstacle.posy) <obstacle.rayon+robot.rayon):
                     print("collision obstacle")
                     return True	
+            """
             return False
 
 

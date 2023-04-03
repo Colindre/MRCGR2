@@ -30,6 +30,11 @@ class Robot:
 		self.distR=rayon*2
 		self.dpsG=0
 		self.dpsD=0	
+		self.dessin= False  
+
+
+	def dessine(self,b):
+		self.dessin = b
 
 
 	def getPos(self):
