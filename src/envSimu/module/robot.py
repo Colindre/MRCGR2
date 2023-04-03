@@ -31,6 +31,7 @@ class Robot:
 		self.dpsG=0
 		self.dpsD=0	
 		self.crayon = False
+		self.signal = 1000		# un signal à 1000 signifie que le récepteur n'a pas encore recu de signal 
 
 	def dessine(self, b):
 		self.crayon = b

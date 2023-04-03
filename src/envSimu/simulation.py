@@ -23,17 +23,17 @@ rbt = Robot(250,250,270,50,100)
 rbt.dessine(True)
 
 #OBSTACLE
-obs1 = Obstacle(50,50,20,'#FFA500')
-obs2 = Obstacle(400,400,20,'#FFA500')
-obs3 = Obstacle(50,400,20,'#FFA500')
-obs4 = Obstacle(400,50,20,'#FFA500')
+#obs1 = Obstacle(50,50,20,'#FFA500')
+#obs2 = Obstacle(400,400,20,'#FFA500')
+#obs3 = Obstacle(50,400,20,'#FFA500')
+#obs4 = Obstacle(400,50,20,'#FFA500')
 
 #ENVIRONNEMENT
 env= Environnement(500, 500)
-env.addObstacle(obs1)
-env.addObstacle(obs2)
-env.addObstacle(obs3)
-env.addObstacle(obs4)
+#env.addObstacle(obs1)
+#env.addObstacle(obs2)
+#env.addObstacle(obs3)
+#env.addObstacle(obs4)
 env.add(rbt)
 env.addEmetteur(0,0)
 
@@ -48,6 +48,7 @@ stop = Arrete(rbt_simu)
 demitourD = TournerDroiteAngle(rbt_simu,180,50)
 tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
 tourneG60 = TournerGaucheAngle(rbt_simu,60,50)
+tourneG25 = TournerGaucheAngle(rbt_simu,25,50)
 tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
 
 carre = IAseq(rbt_simu, [dist50,tourneD90,dist50,stop]*4)
@@ -68,14 +69,16 @@ dessine0_1 = IAseq(rbt_simu, [dessine0, tourneG90, dist100, tourneD90, dessine1]
 
 dessine0_1inf = IAifte(rbt_simu, IAloop(rbt_simu, IAseq(rbt_simu,[dessine0_1,tourneG90, dist100, tourneD90])), stop, obstacle_proche)
 
+atteind_emetteur = IAifte(rbt_simu, IAifte(rbt_simu, IAloop(rbt_simu, dist25), tourneG25, signal_proche), stop, atteint_emetteur)
+
 #IA
-rr = IA(rbt_simu,dessine0_1inf)
+rr = IA(rbt_simu,atteind_emetteur)
 env.addIA(rr)
 
 
 affi=Simulationtkinter(env)
-#simulation(env, affi)
+simulation(env, affi)
 
-print("distance signal: ",rbt.getSignal(env.emetteur))
+#print("distance signal: ",rbt.getSignal(env.emetteur))
 
 

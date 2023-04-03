@@ -76,12 +76,20 @@ class proxy_virtuel:
         self.lastposy = self.robot.posy
         self.lastdirr = self.robot.dirr
         self.lasttime = self.env.temps
+        self.lastsignal = self.robot.signal
         
     def reset(self):
         self.lastposx = self.robot.posx
         self.lastposy = self.robot.posy
         self.lastdirr = self.robot.dirr
         self.lasttime = self.env.temps
+        self.lastsignal = self.robot.signal
+
+    def proche_signal(self):
+        return self.robot.getSignal(self.env.emetteur) < self.lastsignal
+
+    def emetteur_atteint(self):
+        return self.robot.getPos() == self.env.emetteur
     
     def avance_droit(self, dps):
         self.robot.set_motor_dps(dps,dps)

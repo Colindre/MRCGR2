@@ -218,3 +218,9 @@ class Carre(IAseq):
 
 def obstacle_proche(proxy):
     return proxy.proche_obstacle()
+
+def signal_proche(proxy):
+    return proxy.proche_signal()
+
+def atteint_emetteur(self):
+    return self.emetteur_atteint()
