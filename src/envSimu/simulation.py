@@ -50,9 +50,10 @@ iaseq = IAseq(rbt_simu, [act5])
 
 #IA
 rr = IA(rbt_simu,carre2)
+env.addIA(rr)
 
 #ENVIRONNEMENT
-env= Environnement(500, 500,rr)
+env= Environnement(500, 500)
 env.addObstacle(obs1)
 env.addObstacle(obs2)
 env.add(rbt)

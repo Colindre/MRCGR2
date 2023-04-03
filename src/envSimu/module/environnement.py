@@ -12,13 +12,13 @@ class Environnement(threading.Thread) :
         :param dirr: direction du robot, angle en degre
         :param ensObstacle: ensemble des points ou se trouve un obstacle
         """
-        def __init__(self,max_x,max_y,ia):
+        def __init__(self,max_x,max_y):
             threading.Thread.__init__(self)
             self.max_x= max_x 
             self.max_y=max_y
             self.robot= None 
             self.ensObstacle = set()
-            self.ia = ia
+            self.ia = None
 
         def getBordures(self):
             """retourne les bordure de l'environnement (arene)
@@ -136,6 +136,13 @@ class Environnement(threading.Thread) :
             :retour:rien, ajoute l'obstacle dans ses position x,y et affiche message d'erreur si obstacle sort du monde
             """
             self.ensObstacle.add(obstacle)
+
+        
+        def addIA(self, ia):
+            """ajout d'une IA dans l'environnement
+                :retour: rien
+            """
+            self.ia = ia
 
         def update(self):
             """mise à jour des coordonnées du robot et vérifie s'il y a collision""" 
