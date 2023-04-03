@@ -22,13 +22,17 @@ def simulation(simulation, affichage):
 rbt = Robot(250,250,180,50,100)
 
 #OBSTACLE
-obs1 = Obstacle(30,230,50,'black')
-obs2 = Obstacle(320,70,30,'yellow')
+obs1 = Obstacle(50,50,20,'#FFA500')
+obs2 = Obstacle(400,400,20,'#FFA500')
+obs3 = Obstacle(50,400,20,'#FFA500')
+obs4 = Obstacle(400,50,20,'#FFA500')
 
 #ENVIRONNEMENT
-env= Environnement(700, 500)
+env= Environnement(500, 500)
 env.addObstacle(obs1)
 env.addObstacle(obs2)
+env.addObstacle(obs3)
+env.addObstacle(obs4)
 env.add(rbt)
 
 #PROXY
