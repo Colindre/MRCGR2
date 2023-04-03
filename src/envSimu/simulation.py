@@ -19,7 +19,7 @@ def simulation(simulation, affichage):
     affichage.loop()
 
 #ROBOT
-rbt = Robot(250,250,180,50,100)
+rbt = Robot(250,250,270,50,100)
 rbt.dessine(True)
 
 #OBSTACLE
@@ -40,11 +40,13 @@ env.add(rbt)
 rbt_simu = proxy_virtuel(env)
 
 #ACTION
+dist100 = ParcourirDistance(rbt_simu,100,50)
 dist50 = ParcourirDistance(rbt_simu,50,50)
+dist25 = ParcourirDistance(rbt_simu,25,50)
 stop = Arrete(rbt_simu)
 demitourD = TournerDroiteAngle(rbt_simu,180,50)
 tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
-tourneG70 = TournerGaucheAngle(rbt_simu,60,50)
+tourneG60 = TournerGaucheAngle(rbt_simu,60,50)
 tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
 
 carre = IAseq(rbt_simu, [dist50,tourneD90,dist50,stop]*4)
@@ -55,10 +57,18 @@ ialoop = IAloop(rbt_simu, dist50)
 
 iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 
-hexagone = IAseq(rbt_simu, [dist50,tourneG70,stop]*6)       
+hexagone = IAseq(rbt_simu, [dist50,tourneG60,stop]*6)
+
+dessine1 = IAseq(rbt_simu, [dist50,demitourD, dist50, demitourD, stop])
+
+dessine0 = IAseq(rbt_simu, [tourneG90, dist25,tourneD90,dist50,tourneD90,dist25,tourneD90,dist50, demitourD, stop])
+
+dessine0_1 = IAseq(rbt_simu, [dessine0, tourneG90, dist100, tourneD90, dessine1])
+
+dessine0_1inf = IAifte(rbt_simu, IAloop(rbt_simu, IAseq(rbt_simu,[dessine0_1,tourneG90, dist100, tourneD90])), stop, obstacle_proche)
 
 #IA
-rr = IA(rbt_simu,hexagone)
+rr = IA(rbt_simu,dessine0_1inf)
 env.addIA(rr)
 
 
