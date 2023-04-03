@@ -106,3 +106,7 @@ class proxy_virtuel:
 
     def angle_parcouru_gauche(self):
         return self.robot.angle_parcouru_gauche(self.lastdirr)
+    def ecrire(self):
+                self.proxy.robot.dessine(True)
+    def pasecrire(self):
+                self.proxy.robot.dessine(False)

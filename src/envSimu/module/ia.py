@@ -74,7 +74,7 @@ class IAseq:
         self.proxy   = proxy
         self.list    = list
         self.index   = 0
-        self.boolean = True
+        #self.boolean = True
 
     def start(self):
         self.index   = 0
@@ -84,14 +84,14 @@ class IAseq:
     def update(self):
         if self.list[self.index].done():
             self.index += 1
-            self.proxy.robot.dessine(self.boolean)
+            #self.proxy.robot.dessine(self.boolean)
             if self.done():
                 return
             self.list[self.index].start()
         self.list[self.index].update()
 
     def done(self):
-        self.boolean = - self.boolean
+        #self.boolean = - self.boolean
         return self.index >= len(self.list)
 
     
