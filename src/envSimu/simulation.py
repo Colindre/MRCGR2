@@ -23,19 +23,23 @@ rbt = Robot(350,350,180,50,100)
 rbt.dessine(True)
 
 #OBSTACLE
-obs1 = Obstacle(650,100,30,'#FFA500')
+"""obs1 = Obstacle(650,100,30,'#FFA500')
 obs2 = Obstacle(100,650,30,'#FFA500')
 obs3 = Obstacle(650,650,30,'#FFA500')
-obs4 = Obstacle(100,100,30,'#FFA500')
+obs4 = Obstacle(100,100,30,'#FFA500')"""
+
+#EMETTEUR
+e = Emetteur(650,100,30,'black')
 
 
 #ENVIRONNEMENT
 env= Environnement(700, 500)
-env.addObstacle(obs1)
+"""env.addObstacle(obs1)
 env.addObstacle(obs2)
 env.addObstacle(obs3)
-env.addObstacle(obs4)
+env.addObstacle(obs4)"""
 env.add(rbt)
+env.addEmetteur(e)
 
 #PROXY
 rbt_simu = proxy_virtuel(env)
@@ -61,9 +65,12 @@ iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 hexagone = IAseq(rbt_simu,[dist50,tourneD60,stop]*6)
 
 dessine_0 = IAseq(rbt_simu,[dist50,tourneD90,stop,dist100,tourneD90,stop]*2)
-dessine_1 = IAseq(rbt_simu,[tourneD90,dist100,stop])
+dessine_1 = IAseq(rbt_simu,[tourneG90,dist100,stop])
+dessine_0_1 = IAseq(rbt_simu, [dessine_0, tourneG90, tourneG90,dist100, dessine_1])
+
+dessine_0_1v2 = IAloop(rbt_simu,IAseq(rbt_simu,[dessine_0_1,dist100]))
 #IA
-rr = IA(rbt_simu,dessine_1)
+rr = IA(rbt_simu,dessine_0)
 env.addIA(rr)
 
 

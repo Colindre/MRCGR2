@@ -20,6 +20,7 @@ class Environnement(threading.Thread) :
             self.ensObstacle = set()
             self.ia = None
             self.temps=time()
+            self.emetteur = None
 
         def getBordures(self):
             """retourne les bordure de l'environnement (arene)
@@ -156,6 +157,10 @@ class Environnement(threading.Thread) :
             """
             self.ensObstacle.add(obstacle)
 
+        def addEmetteur(self,emetteur1):
+            self.emetteur = emetteur1
+
+
         def addIA(self, ia):
             """ajout d'une IA dans l'environnement
                 :retour: rien
@@ -206,4 +211,22 @@ class Obstacle:
             :retour: (posx,posy)
             """
             return (self.posx, self.posy)
+
+
+class Emetteur:
+        def __init__(self,posx, posy, rayon, color):
+            self.posx     = posx                     
+            self.posy     = posy                    
+            self.rayon    = rayon
+            self.color    = color
+    
+
+        def getPos(self):
+            """retourne la position du rectangle (le point le plus en bas a gauche)
+            :retour: (posx,posy)
+            """
+            return (self.posx, self.posy)
+
+
+
 
