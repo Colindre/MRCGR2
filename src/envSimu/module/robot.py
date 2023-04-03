@@ -35,6 +35,10 @@ class Robot:
 	def dessine(self, b):
 		self.crayon = b
 
+	def getSignal(self,pos):
+		x, y = pos
+		return math.sqrt((self.posx - x)**2 + (self.posy - y)**2)
+
 	def getPos(self):
 		""" retourne la position
 		:retour: tuple (posx,posy)

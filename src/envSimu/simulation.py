@@ -35,6 +35,7 @@ env.addObstacle(obs2)
 env.addObstacle(obs3)
 env.addObstacle(obs4)
 env.add(rbt)
+env.addEmetteur(0,0)
 
 #PROXY
 rbt_simu = proxy_virtuel(env)
@@ -73,6 +74,8 @@ env.addIA(rr)
 
 
 affi=Simulationtkinter(env)
-simulation(env, affi)
+#simulation(env, affi)
+
+print("distance signal: ",rbt.getSignal(env.emetteur))
 
 

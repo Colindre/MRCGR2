@@ -20,6 +20,10 @@ class Environnement(threading.Thread) :
             self.ensObstacle = set()
             self.ia = None
             self.temps=time()
+            self.emetteur = None
+        
+        def addEmetteur(self,x,y):
+            self.emetteur = (x,y)
 
         def getBordures(self):
             """retourne les bordure de l'environnement (arene)
