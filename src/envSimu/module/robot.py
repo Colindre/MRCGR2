@@ -29,7 +29,14 @@ class Robot:
 		self.last_update = 0					
 		self.distR=rayon*2
 		self.dpsG=0
-		self.dpsD=0	
+		self.dpsD=0
+		self.crayon = False #False quand levé et True quand abaissé
+
+	def dessine(self, b):
+		self.crayon = b
+		
+		
+
 
 
 	def getPos(self):

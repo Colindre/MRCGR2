@@ -17,6 +17,7 @@ def simulation(simulation, affichage):
 
 #ROBOT
 rbt = Robot(250,250,90,50,100)
+rbt.dessine(True)
 
 #OBSTACLE
 obs1 = Obstacle(25,475,20,'#FFA500')
