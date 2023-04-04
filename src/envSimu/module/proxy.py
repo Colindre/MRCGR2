@@ -4,32 +4,40 @@ class proxy_physique:
 
     def __init__(self, robot):
         self.robot = robot
+        self.distance_parcourue = 0
+        self.angle_parcouru = 0
+        self.lastAng = (0,0)
+        self.lastupdate = 0
 
-    def reset(self):
-        pass
+    def resetDist(self):
+        self.robot.offset_motor_encode(self.robot.MOTOR_LEFT,self.robot.read_encoders()[0])
+        self.robot.offset_motor_encode(self.robot.MOTOR_RIGHT,self.robot.read_encoders()[1])
+        self.distance_parcourue = 0
+
+    def resetAng(self):
+        self.robot.offset_motor_encode(self.robot.MOTOR_LEFT,self.robot.read_encoders()[0])
+        self.robot.offset_motor_encode(self.robot.MOTOR_RIGHT,self.robot.read_encoders()[1])
+        self.lastAng = 0
+
 
     def avance_droit(self, dps):
-
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
 
 
 
     def tourne_droite(self, dps):
-       
        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
 
 
 
     def tourne_gauche(self, dps):
-
        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
 
 
 
     def stop(self):
-
          self.robot.stop()
 
 
