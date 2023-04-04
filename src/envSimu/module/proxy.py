@@ -19,57 +19,45 @@ class proxy_physique:
         self.robot.offset_motor_encode(self.robot.MOTOR_RIGHT,self.robot.read_encoders()[1])
         self.lastAng = 0
 
-
     def avance_droit(self, dps):
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
-
-
 
     def tourne_droite(self, dps):
        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
 
-
-
     def tourne_gauche(self, dps):
        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
 
-
-
     def stop(self):
          self.robot.stop()
-
-
 
     def proche_obstacle(self):
         pass
 
     def dist_parcourue(self):
+        pos_left, pos_right = self.robot.get_motor_position()
 
-        pos_left, pos_right = self.get_motor_position()
+        dist_left = pos_left * self.robot.WHEEL_CIRCUMFERENCE / 360
+        dist_right = pos_right * self.robot.WHEEL_CIRCUMFERENCE / 360
         
-        # Calcul de la distance parcourue par chaque roue
-        dist_left = pos_left * self.WHEEL_CIRCUMFERENCE / 360
-        dist_right = pos_right * self.WHEEL_CIRCUMFERENCE / 360
-        
-        # Calcul de la distance parcourue par le robot (moyenne des distances des roues)
         distance_parcourue = (dist_left + dist_right) / 2
         
         return distance_parcourue
 
+    def ang_parcouru(self):
+        ang_left, ang_right = self.robot.get_motor_position()
 
-
-
-    def angle_parcouru_droit(self):
-
-        pass
-
-
-
-    def angle_parcouru_gauche(self):
-
-        pass
+        angpar_left = ang_left / 360 * self.robot.WHEEL_CIRCUMFERENCE 
+        angpar_right = ang_right / 360 * self.robot.WHEEL_CIRCUMFERENCE 
+        
+        lastAng = (angpar_left - angpar_right) / self.robot.WHEEL_DIAMETER
+        
+        if(lastAng !=0):
+            self.resetAng()
+        
+        return lastAng
 
 
 
