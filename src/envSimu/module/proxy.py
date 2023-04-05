@@ -6,7 +6,8 @@ class proxy_physique:
         self.robot = robot
         self.distance_parcourue = 0
         self.angle_parcouru = 0
-
+        self.posRL = (0,0)
+        
     def reset(self):
         self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.robot.read_encoders()[0])
         self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.robot.read_encoders()[1])
@@ -27,13 +28,13 @@ class proxy_physique:
          self.robot.stop()
 
     def proche_obstacle(self):
-        pass
+        self.robot.get_distance()< 100
 
     def dist_parcourue(self):
-        posRL = self.robot.get_motor_position()
+        self.posRL = self.robot.get_motor_position()
 
-        dist_left = posRL[0] * self.robot.WHEEL_CIRCUMFERENCE / 360
-        dist_right = posRL[1] * self.robot.WHEEL_CIRCUMFERENCE / 360
+        dist_left = self.posRL[0] * self.robot.WHEEL_CIRCUMFERENCE / 360
+        dist_right = self.posRL[1] * self.robot.WHEEL_CIRCUMFERENCE / 360
         
         distance_parcourue = (dist_left + dist_right) / 2
         
