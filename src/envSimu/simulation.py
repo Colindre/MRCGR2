@@ -58,7 +58,7 @@ dist50reel = ParcourirDistance(rbt_reel,50,50)
 tourneD90reel = TournerDroiteAngle(rbt_reel,50,50)
 
 #IA
-rr = IA(rbt_simu,tourneD90reel)
+rr = IA(rbt_simu,carre)
 env.addIA(rr)
 
 
