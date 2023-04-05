@@ -9,8 +9,8 @@ class proxy_physique:
         self.posRL = (0,0)
         
     def reset(self):
-        self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.robot.read_encoders()[0])
-        self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.robot.read_encoders()[1])
+        self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.robot.get_motor_position())
+        self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.robot.get_motor_position())
         self.distance_parcourue = 0
 
     def avance_droit(self, dps):
