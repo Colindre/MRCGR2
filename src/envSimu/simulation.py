@@ -22,8 +22,6 @@ def simulation(simulation, affichage):
 #ROBOT
 rbt = Robot(250,250,180,50,100)
 
-rbtreel = Robot2IN013()
-
 #OBSTACLE
 obs1 = Obstacle(30,230,50,'black')
 obs2 = Obstacle(320,70,30,'yellow')
@@ -36,7 +34,6 @@ env.add(rbt)
 
 #PROXY
 rbt_simu = proxy_virtuel(env)
-rbt_reel = proxy_physique(rbtreel)
 
 #ACTION VIRTUELLE
 dist50 = ParcourirDistance(rbt_simu,50,50)
@@ -53,9 +50,6 @@ ialoop = IAloop(rbt_simu, dist50)
 
 iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 
-#ACTION REEL
-dist50reel = ParcourirDistance(rbt_reel,50,50)
-tourneD90reel = TournerDroiteAngle(rbt_reel,50,50)
 
 #IA
 rr = IA(rbt_simu,carre)
@@ -64,5 +58,3 @@ env.addIA(rr)
 
 affi=Simulationtkinter(env)
 simulation(env, affi)
-
-
