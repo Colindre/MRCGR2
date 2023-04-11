@@ -9,8 +9,8 @@ class proxy_physique:
         self.posRL = (0,0)
         
     def reset(self):
-        self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.robot.read_encoders()[0])
-        self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.robot.read_encoders()[1])
+        self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.robot.get_motor_position())
+        self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.robot.get_motor_position())
         self.distance_parcourue = 0
         self.angle_parcouru = 0
 
@@ -63,21 +63,28 @@ class proxy_virtuel:
         self.lastposy = self.robot.posy
         self.lastdirr = self.robot.dirr
         self.lasttime = self.env.temps
+        self.distfin  = 0
+        self.anglefin = 0
         
     def reset(self):
         self.lastposx = self.robot.posx
         self.lastposy = self.robot.posy
         self.lastdirr = self.robot.dirr
         self.lasttime = self.env.temps
+        self.distfin  = 0
+        self.anglefin = 0
     
     def avance_droit(self, dps):
         self.robot.set_motor_dps(dps,dps)
+        self.dist_parcourue()
 
     def tourne_droite(self, dps):
        self.robot.set_motor_dps(dps, -dps)
+       self.angle_parcouru_droit()
 
     def tourne_gauche(self, dps):
        self.robot.set_motor_dps(-dps, dps)
+       self.angle_parcouru_gauche()
 
     def stop(self):
         self.robot.set_motor_dps(0, 0)
@@ -86,10 +93,17 @@ class proxy_virtuel:
         return self.env.get_distance() < 1
 
     def dist_parcourue(self):
-        return self.robot.distance_parcourue(self.lastposx,self.lastposy)
+        self.distfin +=self.robot.distance_parcourue(self.lastposx,self.lastposy)
+        self.lastposx = self.robot.posx
+        self.lastposy = self.robot.posy
+        return self.distfin
 
     def angle_parcouru_droit(self):
-        return self.robot.angle_parcouru_droit(self.lastdirr)
+        self.anglefin +=self.robot.angle_parcouru_droit(self.lastdirr)
+        self.lastdirr = self.robot.dirr
+        return self.anglefin
 
     def angle_parcouru_gauche(self):
-        return self.robot.angle_parcouru_gauche(self.lastdirr)
+        self.anglefin +=self.robot.angle_parcouru_gauche(self.lastdirr)
+        self.lastdirr = self.robot.dirr
+        return self.anglefin
