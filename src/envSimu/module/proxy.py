@@ -1,4 +1,5 @@
 import time
+import math
 
 class proxy_physique:
 
@@ -45,7 +46,7 @@ class proxy_physique:
         #Distance parcouru des deux roues
         dist_left = self.posRL[0] * self.robot.WHEEL_CIRCUMFERENCE / 360
         dist_right = self.posRL[1] * self.robot.WHEEL_CIRCUMFERENCE / 360
-        angle_parcouru = (dist_right - dist_left) / self.robot.WHEEL_BASE_WIDTH
+        angle_parcouru = math.degrees((dist_right - dist_left) / self.robot.WHEEL_BASE_WIDTH)
         print("angle parc droit: ",angle_parcouru)
         return angle_parcouru
 
@@ -98,17 +99,17 @@ class proxy_virtuel:
         return self.distfin
 
     def angle_parcouru(self):
-        self.anglefin +=self.robot.angle_parcouru_droit(self.lastdirr)
-        RDx,RDy= self.robot.getPosRd
-        RGx,RGy= self.robot.getPosRg
-        x , y = self.lastposx, self.lastposy
-        dirr = math.radians(lastdirr)
-        lastRDx,lastRDy = x+self.rayon*math.cos(dirr-math.radians(90)),y+self.rayon*math.sin(dirr-math.radians(90))
-        lastRGx,lastRGy = x+self.rayon*math.cos(dirr+math.radians(90)),y+self.rayon*math.sin(dirr+math.radians(90))
-        dRG = math.sqrt((RGx-lastRGx)**2+(RGy-lastRGy)**2)
-        dRD = math.sqrt((RDx-lastRDx)**2+(RDy-lastRDy)**2)
+        RDx,RDy= self.robot.getPosRd()      #Position roue droite
+        RGx,RGy= self.robot.getPosRg()      #Position roue gauche
+        x , y = self.lastposx, self.lastposy        #Derniere pos du robot
+        dirr = math.radians(self.lastdirr)
+        lastRDx,lastRDy = x+self.robot.rayon*math.cos(dirr-math.radians(90)),y+self.robot.rayon*math.sin(dirr-math.radians(90))     #Derniere position roue droite
+        lastRGx,lastRGy = x+self.robot.rayon*math.cos(dirr+math.radians(90)),y+self.robot.rayon*math.sin(dirr+math.radians(90))     #Derniere position roue gauche
+        dRD = math.sqrt((RDx-lastRDx)**2+(RDy-lastRDy)**2)      #distance parcouru par la roue droite
+        dRG = math.sqrt((RGx-lastRGx)**2+(RGy-lastRGy)**2)      #distance parcouru par la roue gauche
+        
+        self.anglefin += math.degrees((dRD-dRG)/self.robot.distR)
         self.lastdirr = self.robot.dirr
-        self.anglefin +=(dRD-dRG)/self.robot.distR
         return self.anglefin
         
         

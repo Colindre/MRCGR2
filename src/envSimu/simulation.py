@@ -1,5 +1,5 @@
 from module.robot import Robot
-from module.robot2IN013 import Robot2IN013
+#from module.robot2IN013 import Robot2IN013
 from module.environnement import Obstacle, Environnement
 from module.simulationtkinter import Simulationtkinter
 from time import sleep
@@ -21,7 +21,7 @@ def simulation(simulation, affichage):
 
 #ROBOT
 rbt = Robot(250,250,180,50,100)
-rbtreel = Robot2IN013()
+#rbtreel = Robot2IN013()
 
 #OBSTACLE
 obs1 = Obstacle(30,230,50,'black')
@@ -52,19 +52,19 @@ ialoop = IAloop(rbt_simu, dist50)
 iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 
 #PROXY
-rbt_reel = proxy_physique(rbtreel)
+#rbt_reel = proxy_physique(rbtreel)
 
 
 #ACTION REEL
-dist50reel = ParcourirDistance(rbt_reel,50,50)
-tourneD90reel = TournerDroiteAngle(rbt_reel,50,50)
-stopreel = Arrete(rbt_reel)
-carrereel = IAseq(rbt_reel, [dist50reel,tourneD90reel,dist50reel,stopreel]*4)
+#dist50reel = ParcourirDistance(rbt_reel,50,50)
+#tourneD90reel = TournerDroiteAngle(rbt_reel,50,50)
+#stopreel = Arrete(rbt_reel)
+#carrereel = IAseq(rbt_reel, [dist50reel,tourneD90reel,dist50reel,stopreel]*4)
 
 #IA
-rr = IA(rbt_reel,carrereel)
+rr = IA(rbt_simu,carre)
 env.addIA(rr)
 
 
-#affi=Simulationtkinter(env)
-simulation(env, None)
+affi=Simulationtkinter(env)
+simulation(env, affi)
