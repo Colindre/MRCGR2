@@ -7,4 +7,4 @@ Compte rendu 9
     -derniers ajustements du proxy reel
     -separation simulation et simulation reelle
         -debut des tests sur le vrai robot
-    -probleme: le robot avance et tourne à l'infini au lieu de faire un carré
+    -probleme: le robot avance un peu et tourne à l'infini au lieu de faire un carré
