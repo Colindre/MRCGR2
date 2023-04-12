@@ -39,19 +39,15 @@ class proxy_physique:
         print("dist parc ", distance_parcourue)
         return distance_parcourue
 
-    def angle_parcouru_gauche(self):
-        ang_left, ang_right = self.robot.get_motor_position()
-        angpar_left = ang_left * self.robot.WHEEL_CIRCUMFERENCE / 360  
-        angle_parcouru = (angpar_left) / self.robot.WHEEL_DIAMETER
-        return angle_parcouru
-
-    def angle_parcouru_droit(self):
+    def angle_parcouru(self):
         ang_left, ang_right = self.robot.get_motor_position()
         print("!!!!!!!!!!!!!!!!!",ang_right)
-        angpar_right = -(ang_right)* self.robot.WHEEL_CIRCUMFERENCE/360
-        #angle_parcouru = (angpar_right) / self.robot.WHEEL_DIAMETER
-        print("angle parc droit: ",angpar_right)
-        return angpar_right
+        #Distance parcouru des deux roues
+        dist_left = self.posRL[0] * self.robot.WHEEL_CIRCUMFERENCE / 360
+        dist_right = self.posRL[1] * self.robot.WHEEL_CIRCUMFERENCE / 360
+        angle_parcouru = (dist_right - dist_left) / self.robot.WHEEL_BASE_WIDTH
+        print("angle parc droit: ",angle_parcouru)
+        return angle_parcouru
 
 
 
@@ -83,11 +79,11 @@ class proxy_virtuel:
 
     def tourne_droite(self, dps):
        self.robot.set_motor_dps(dps, -dps)
-       self.angle_parcouru_droit()
+       self.angle_parcouru()
 
     def tourne_gauche(self, dps):
        self.robot.set_motor_dps(-dps, dps)
-       self.angle_parcouru_gauche()
+       self.angle_parcouru()
 
     def stop(self):
         self.robot.set_motor_dps(0, 0)
@@ -101,12 +97,18 @@ class proxy_virtuel:
         self.lastposy = self.robot.posy
         return self.distfin
 
-    def angle_parcouru_droit(self):
+    def angle_parcouru(self):
         self.anglefin +=self.robot.angle_parcouru_droit(self.lastdirr)
+        RDx,RDy= self.robot.getPosRd
+        RGx,RGy= self.robot.getPosRg
+        x , y = self.lastposx, self.lastposy
+        dirr = math.radians(lastdirr)
+        lastRDx,lastRDy = x+self.rayon*math.cos(dirr-math.radians(90)),y+self.rayon*math.sin(dirr-math.radians(90))
+        lastRGx,lastRGy = x+self.rayon*math.cos(dirr+math.radians(90)),y+self.rayon*math.sin(dirr+math.radians(90))
+        dRG = math.sqrt((RGx-lastRGx)**2+(RGy-lastRGy)**2)
+        dRD = math.sqrt((RDx-lastRDx)**2+(RDy-lastRDy)**2)
         self.lastdirr = self.robot.dirr
+        self.anglefin +=(dRD-dRG)/self.robot.distR
         return self.anglefin
-
-    def angle_parcouru_gauche(self):
-        self.anglefin +=self.robot.angle_parcouru_gauche(self.lastdirr)
-        self.lastdirr = self.robot.dirr
-        return self.anglefin
+        
+        

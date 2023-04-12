@@ -7,14 +7,14 @@ from module.proxy import proxy_virtuel, proxy_physique
 from module.ia import *
 
 
-def simulation(simulation, affichage):
+def simulationtest(simulation, affichage):
 
     t1 = threading.Thread(target=simulation.run)
     t2 = threading.Thread(target=simulation.ia.run)
     
     t2.start()
     t1.start()
-    affichage.loop()
+    #affichage.loop()
 
 #ROBOT
 rbt = Robot(250,250,180,50,100)
@@ -32,12 +32,12 @@ rbt_reel = proxy_physique(rbtreel)
 dist50reel = ParcourirDistance(rbt_reel,50,50)
 tourneD90reel = TournerDroiteAngle(rbt_reel,50,50)
 stopreel = Arrete(rbt_reel)
-carrereel = IAseq(rbt_reel, [dist50reel,tourneD90reel,dist50reel,stopreel]*4)
-
+carrereel = IAseq(rbt_reel, [dist50reel,tourneD90reel,stopreel]*4)
+tournereel = IAseq(rbt_reel, [tourneD90reel,stopreel])
 #IA
-rr = IA(rbt_reel,carrereel)
+rr = IA(rbt_reel,tournereel)
 env.addIA(rr)
 
 
-simulation(env, None)
+simulationtest(env, None)
 
