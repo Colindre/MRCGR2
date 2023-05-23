@@ -64,8 +64,25 @@ class proxy_physique:
         return self.anglefin
 
     def angle_parcouruG(self):
-        self.anglefin += self.robot.angle_parcouru_gauche(self.lastdirr)
-        self.lastdirr = self.robot.dirr 
+        diamRoue = self.WHEEL_DIAMETER/10
+        rayonRobot = self.WHEEL_BASE_WIDTH/20
+        posRoues = self.get_motor_position()
+        pos = posRoues
+        posG = pos[0]/360*diamRoue*math.pi
+        posD = pos[1]/360*diamRoue*math.pi
+        angle = (posD-posG)/(rayonRobot*2)
+
+        last_dirr_rad = math.radians(self.lastdirr)
+        x1, y1        = math.cos(last_dirr_rad), math.sin(last_dirr_rad)		#points du vecteur a partir de la derniere direction
+        dirr_rad      = math.radians(angle)
+        x2, y2        = math.cos(dirr_rad), math.sin(dirr_rad)					#points du vecteur a partir de la direction actuelle
+        scalaire      = x1*x2 + y1*y2											#calcule produit le produit scalaire
+        determinant   = x1*y2 - y1*x2											#calcule le determinant
+        angle         = math.atan2(determinant, scalaire)						#calcule l'angle parcouru
+        res = math.degrees(angle)%360
+
+        self.anglefin += res
+        self.lastdirr = angle
         return self.anglefin
 
 
