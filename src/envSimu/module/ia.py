@@ -140,6 +140,29 @@ class ParcourirDistance:
         print("dist!!!!!!!!!: ",distance_parcourue)
         print("ici!!!!!!!!!: ",distance_parcourue >= self.distance)
         return distance_parcourue >= self.distance
+    
+
+class TestCercle:
+
+    def __init__(self, proxy, distance, dps1, dps2):
+        self.proxy    = proxy
+        self.distance = distance
+        self.dps1     = dps1
+        self.dps2     = dps2
+
+    def start(self):
+        self.proxy.reset()
+
+    def update(self):
+        if self.done(): 
+            return
+        self.proxy.test_cercle(self.dps1, self.dps2)
+        
+    def done(self):
+        distance_parcourue = self.proxy.dist_parcourue()
+        print("dist!!!!!!!!!: ",distance_parcourue)
+        print("ici!!!!!!!!!: ",distance_parcourue >= self.distance)
+        return distance_parcourue >= self.distance
 
 
 class Arrete:

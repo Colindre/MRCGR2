@@ -42,6 +42,8 @@ stop = Arrete(rbt_simu)
 demitourD = TournerDroiteAngle(rbt_simu,180,50)
 tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
 tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
+testcercle = TestCercle(rbt_simu,360, 100, 10)
+testcercle2 = IAseq(rbt_simu, [TestCercle(rbt_simu,100, 100, 10),TestCercle(rbt_simu,360, 10, 100),TestCercle(rbt_simu,180, 100, 10),stop])
 
 carre = IAseq(rbt_simu, [dist50,tourneD90,dist50,stop]*4)
 
@@ -62,7 +64,7 @@ iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 #carrereel = IAseq(rbt_reel, [dist50reel,tourneD90reel,dist50reel,stopreel]*4)
 
 #IA
-rr = IA(rbt_simu,carre)
+rr = IA(rbt_simu,testcercle2)
 env.addIA(rr)
 
 

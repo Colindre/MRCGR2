@@ -113,6 +113,10 @@ class proxy_virtuel:
         self.robot.set_motor_dps(dps,dps)
         self.dist_parcourue()
 
+    def test_cercle(self, dps1, dps2):
+        self.robot.set_motor_dps(dps1,dps2)
+        self.dist_parcourue()
+
     def tourne_droite(self, dps):
        self.robot.set_motor_dps(dps, -dps)
        self.angle_parcouruD()
