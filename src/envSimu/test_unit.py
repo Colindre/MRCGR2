@@ -24,18 +24,20 @@ class TestRobot(unittest.TestCase):
         self.assertAlmostEqual(self.r.dirr,tmp + angle)
     
     def testdistanceparcouru(self):
+        lastposx = self.r.posx
+        lastposy = self.r.posy
         self.e = Environnement(100,100)
         self.e.add(self.r)
         print("\n avant deplacement:",self.r.getPos())
         self.r.dpsD =10
         self.r.dpsG =5
         self.e.deplacement(10)
-        print("distance :",self.r.distance_parcourue())
+        print("distance :",self.r.distance_parcourue(lastposx,lastposy))
         print("\n apres deplacement:",self.r.getPos())
         self.r.dpsD =10
         self.r.dpsG =10
         self.e.deplacement(10)
-        print("distance2 :",self.r.distance_parcourue())
+        print("distance2 :",self.r.distance_parcourue(lastposx,lastposy))
         print("\n apres deplacement2:",self.r.getPos())
 
 
