@@ -89,8 +89,8 @@ class TestEnvironnement(unittest.TestCase):
         self.e.add(r)
         self.e.robot.augDPSd() ; self.e.robot.augDPSg()
         tmpX = self.e.robot.posx ; tmpY = self.e.robot.posy
-        random = random.uniform(0.01,5.0)
-        self.e.deplacement(random)
+        r = random.uniform(0.01,5.0)
+        self.e.deplacement(r)
         self.e.update()
         self.assertNotEqual(tmpX , self.e.robot.posx)
         self.assertNotEqual(tmpY , self.e.robot.posy)
