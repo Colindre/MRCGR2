@@ -99,7 +99,7 @@ class proxy_physique:
         scalaire      = x1*x2 + y1*y2											#calcule produit le produit scalaire
         determinant   = x1*y2 - y1*x2											#calcule le determinant
         angle_parc         = math.atan2(determinant, scalaire)						#calcule l'angle parcouru
-        res = math.degrees(angle_parc)%360
+        res = abs(math.degrees(angle_parc))%360
         print("last dirr",self.lastdirr)
         print("angle réel", angle)
         print("res", res)
