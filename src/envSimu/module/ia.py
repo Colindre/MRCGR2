@@ -137,8 +137,6 @@ class ParcourirDistance:
         
     def done(self):
         distance_parcourue = self.proxy.dist_parcourue()
-        print("dist!!!!!!!!!: ",distance_parcourue)
-        print("ici!!!!!!!!!: ",distance_parcourue >= self.distance)
         return distance_parcourue >= self.distance
     
 
@@ -160,8 +158,6 @@ class TestCercle:
         
     def done(self):
         distance_parcourue = self.proxy.dist_parcourue()
-        print("dist!!!!!!!!!: ",distance_parcourue)
-        print("ici!!!!!!!!!: ",distance_parcourue >= self.distance)
         return distance_parcourue >= self.distance
 
 
@@ -197,7 +193,6 @@ class TournerDroiteAngle:
 
     def done(self):
         angle_parcouru = self.proxy.angle_parcouruD()
-        print("angle parcD dans ia= ",angle_parcouru)
         #print("DIRECTION = ",self.proxy.robot.dirr)
         return angle_parcouru >= self.angle
     
@@ -218,7 +213,6 @@ class TournerGaucheAngle:
 
     def done(self):
         angle_parcouru = self.proxy.angle_parcouruG()
-        print("angle parcG dans ia = ",angle_parcouru)
         return angle_parcouru >= self.angle 
     
 

@@ -52,7 +52,7 @@ class proxy_physique:
         return self.distance_parcourue
 
     def angle_parcouruD(self):
-        print("DroiITTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("----ANGLE PARC DROIT----")
         diamRoue = self.robot.WHEEL_DIAMETER/10
         rayonRobot = self.robot.WHEEL_BASE_WIDTH/20
         posRoues = self.robot.get_motor_position()
@@ -71,18 +71,18 @@ class proxy_physique:
         determinant   = x1*y2 - y1*x2											#calcule le determinant
         angle_parc         = math.atan2(determinant, scalaire)						#calcule l'angle parcouru
         res = (360 - math.degrees(angle_parc)) %360
-        print("DIRR PROXY",self.lastdirr)
-        print("RES: ",res)
-
+        print("last dirr",self.lastdirr)
         print("angle réel", angle)
+        print("res", res)
 
 
         self.angle_parcouru += res
         self.lastdirr = angle
+        print("angle parcouru", self.angle_parcouru)
         return self.angle_parcouru
 
     def angle_parcouruG(self):
-        print("GAUCHE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("----ANGLE PARC GAUCHE----")
         diamRoue = self.robot.WHEEL_DIAMETER/10
         rayonRobot = self.robot.WHEEL_BASE_WIDTH/20
         posRoues = self.robot.get_motor_position()
@@ -100,13 +100,13 @@ class proxy_physique:
         determinant   = x1*y2 - y1*x2											#calcule le determinant
         angle_parc         = math.atan2(determinant, scalaire)						#calcule l'angle parcouru
         res = math.degrees(angle_parc)%360
-        print("DIRR PROXY",self.lastdirr)
-
-        print("RES: ",res)
+        print("last dirr",self.lastdirr)
         print("angle réel", angle)
+        print("res", res)
 
         self.angle_parcouru += res
         self.lastdirr = angle
+        print("angle parcouru", self.angle_parcouru)
         return self.angle_parcouru
 
 
