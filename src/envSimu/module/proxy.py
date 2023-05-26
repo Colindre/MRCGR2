@@ -18,14 +18,22 @@ class proxy_physique:
 
     def avance_droit(self, dps):
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
+        self.dist_parcourue()
+
+    def test_cercle(self, dps1, dps2):
+        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps1)
+        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps2)
+        self.dist_parcourue()
 
     def tourne_droite(self, dps):
        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, dps)
        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, -dps)
+       self.angle_parcouruD()
 
     def tourne_gauche(self, dps):
        self.robot.set_motor_dps(self.robot.MOTOR_LEFT, -dps)
        self.robot.set_motor_dps(self.robot.MOTOR_RIGHT, dps)
+       self.angle_parcouruG()
 
     def stop(self):
          self.robot.stop()
@@ -84,8 +92,6 @@ class proxy_physique:
         self.anglefin += res
         self.lastdirr = angle
         return self.anglefin
-
-
 
 
 
