@@ -3,6 +3,8 @@ import math
 import random
 from module.robot import Robot
 from module.environnement import Environnement, Obstacle
+from module.ia import *
+from module.proxy import proxy_virtuel
 
 class TestRobot(unittest.TestCase):
     def setUp(self):
@@ -24,18 +26,20 @@ class TestRobot(unittest.TestCase):
         self.assertAlmostEqual(self.r.dirr,tmp + angle)
     
     def testdistanceparcouru(self):
+        lastposx = self.r.posx
+        lastposy = self.r.posy
         self.e = Environnement(100,100)
         self.e.add(self.r)
         print("\n avant deplacement:",self.r.getPos())
         self.r.dpsD =10
         self.r.dpsG =5
         self.e.deplacement(10)
-        print("distance :",self.r.distance_parcourue())
+        print("distance :",self.r.distance_parcourue(lastposx,lastposy))
         print("\n apres deplacement:",self.r.getPos())
         self.r.dpsD =10
         self.r.dpsG =10
         self.e.deplacement(10)
-        print("distance2 :",self.r.distance_parcourue())
+        print("distance2 :",self.r.distance_parcourue(lastposx,lastposy))
         print("\n apres deplacement2:",self.r.getPos())
 
 
@@ -89,18 +93,56 @@ class TestEnvironnement(unittest.TestCase):
         self.e.add(r)
         self.e.robot.augDPSd() ; self.e.robot.augDPSg()
         tmpX = self.e.robot.posx ; tmpY = self.e.robot.posy
-        random = random.uniform(0.01,5.0)
-        self.e.deplacement(random)
+        r = random.uniform(0.01,5.0)
+        self.e.deplacement(r)
         self.e.update()
         self.assertNotEqual(tmpX , self.e.robot.posx)
         self.assertNotEqual(tmpY , self.e.robot.posy)
-    
 
-    
-    
+"""class TestIACarre2(unittest.TestCase):
+    def setUp(self):
+        rbt = Robot(250,250,90,50,100)
+        rbt_simu = proxy_virtuel(rbt)
+        carre2 = Carre2(rbt_simu, 100, 50)
+        self.ia = IA(rbt_simu,carre2)
 
-        
-        
+    def test_IACarre2_start(self):
+        self.ia.start()
+        self.assertTrue(self.ia.action.start)
+
+    def test_IACarre2_update(self):
+        self.ia.update()
+        self.assertTrue(self.ia.action.update)
+    
+    def test_IACarre2_done(self):
+        self.ia.action.done
+        self.assertFalse(self.ia.done())
+
+    def test_IACarre2_run(self):
+        self.ia.start() 
+        time.sleep(0.1)
+        self.ia.update()
+        self.ia.action.done = True
+        time.sleep(0.1)
+        self.assertTrue(self.ia.done)
+
+class TestParcourirDistance(unittest.TestCase):
+    def setUp(self):
+        rbt = Robot(250,250,90,50,100)
+        rbt_simu = proxy_virtuel(rbt)
+        self.d = ParcourirDistance(rbt_simu,20,50)
+
+        def test_ParcourirDistance_start(self):
+            self.d.start
+            self.assertTrue(self.d.running)
+
+        def test_ParcourirDistance_done(self):
+            posfinal = (math.sqrt((self.d.rbt_simu.rbt.posx)**2+(self.d.rbt_simu.rbt.posy)**2) + self.d.distance)*(math.cos(self.d.rbt_simu.rbt.dirr)+math.sin(self.d.rbt_simu.rbt.dirr))
+            self.d.done()
+            self.assertEqual(posfinal,self.d.rbt_simu.dist_parcourue(self.d.rbt_simu.lastposx,self.d.rbt_simu.lastposy))
+            self.assertFalse(self.d.running)"""
+
+
 
 
         
