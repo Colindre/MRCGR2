@@ -8,13 +8,16 @@ class proxy_physique:
         self.lastdirr = 0
         self.distance_parcourue = 0
         self.angle_parcouru = 0
-        self.posRL = (0,0)
+        self.lastpos = (0,0)
         
     def reset(self):
         self.robot.offset_motor_encoder(self.robot.MOTOR_LEFT,self.robot.read_encoders()[0])
         self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.robot.read_encoders()[1])
         self.distance_parcourue = 0
         self.angle_parcouru = 0
+        self.lastpos = (0,0)
+        self.lastdirr = 0
+
 
     def avance_droit(self, dps):
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
@@ -42,11 +45,12 @@ class proxy_physique:
         self.robot.get_distance()< 100
 
     def dist_parcourue(self):
-        self.posRL = self.robot.get_motor_position()
-        dist_left = self.posRL[0] * self.robot.WHEEL_CIRCUMFERENCE / 360
-        dist_right = self.posRL[1] * self.robot.WHEEL_CIRCUMFERENCE / 360
+        pos = self.robot.get_motor_position()
+        dist_left = (pos[0] - self.lastpos[0])* self.robot.WHEEL_CIRCUMFERENCE / 360
+        dist_right = (pos[1] - self.lastpos[1]) * self.robot.WHEEL_CIRCUMFERENCE / 360
         self.distance_parcourue += (dist_left + dist_right) / 2
         print("dist parc ", self.distance_parcourue)
+        self.lastpos = pos
         return self.distance_parcourue
 
     def angle_parcouruD(self):
