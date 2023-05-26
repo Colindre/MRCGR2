@@ -29,19 +29,22 @@ rbt_reel = proxy_physique(rbtreel)
 
 
 #ACTION REEL
-testcercle = TestCercle(rbt_reel,1200, 200, 100)
-
+testcercle = TestCercle(rbt_reel,400, 200, 199)
+#1200 cercle
 dist50reel = ParcourirDistance(rbt_reel,200,200)
 tourneD90reel = TournerDroiteAngle(rbt_reel,90+10,100)
+tourneG90reel = TournerGaucheAngle(rbt_reel,90+10,100)
+
 stopreel = Arrete(rbt_reel)
-carrereel = IAseq(rbt_reel, [dist50reel,stopreel,testcercle,stopreel])
+carrereel = IAseq(rbt_reel, [dist50reel,stopreel,tourneG90reel,stopreel])
 tournereel = IAseq(rbt_reel, [tourneD90reel,stopreel])
 avancereel = IAseq(rbt_reel, [dist50reel,stopreel])
-testcercleseq = IAseq(rbt_reel, [testcercle,stopreel])
+testcercleseq = IAseq(rbt_reel, [tourneD90reel,stopreel,tourneG90reel,stopreel])
+tourneGreel = IAseq(rbt_reel, [tourneG90reel,stopreel])
 
 
 #IA
-rr = IA(rbt_reel,avancereel)
+rr = IA(rbt_reel,testcercleseq)
 env.addIA(rr)
 
 

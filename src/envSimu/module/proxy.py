@@ -15,9 +15,7 @@ class proxy_physique:
         self.robot.offset_motor_encoder(self.robot.MOTOR_RIGHT,self.robot.read_encoders()[1])
         self.distance_parcourue = 0
         self.angle_parcouru = 0
-        self.lastpos = (0,0)
         self.lastdirr = 0
-
 
     def avance_droit(self, dps):
         self.robot.set_motor_dps(self.robot.MOTOR_LEFT + self.robot.MOTOR_RIGHT, dps)
@@ -54,9 +52,41 @@ class proxy_physique:
         return self.distance_parcourue
 
     def angle_parcouruD(self):
+        print("DroiITTE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         diamRoue = self.robot.WHEEL_DIAMETER/10
         rayonRobot = self.robot.WHEEL_BASE_WIDTH/20
         posRoues = self.robot.get_motor_position()
+        pos = posRoues
+        print("POS ROUES;   ", posRoues)
+
+        posG = pos[0]/360*diamRoue*math.pi
+        posD = pos[1]/360*diamRoue*math.pi
+        angle = math.degrees((posD-posG)/(rayonRobot*2))
+
+        last_dirr_rad = math.radians(self.lastdirr)
+        x1, y1        = math.cos(last_dirr_rad), math.sin(last_dirr_rad)		#points du vecteur a partir de la derniere direction
+        dirr_rad      = math.radians(angle)
+        x2, y2        = math.cos(dirr_rad), math.sin(dirr_rad)					#points du vecteur a partir de la direction actuelle
+        scalaire      = x1*x2 + y1*y2											#calcule produit le produit scalaire
+        determinant   = x1*y2 - y1*x2											#calcule le determinant
+        angle_parc         = math.atan2(determinant, scalaire)						#calcule l'angle parcouru
+        res = (360 - math.degrees(angle_parc)) %360
+        print("DIRR PROXY",self.lastdirr)
+        print("RES: ",res)
+
+        print("angle réel", angle)
+
+
+        self.angle_parcouru += res
+        self.lastdirr = angle
+        return self.angle_parcouru
+
+    def angle_parcouruG(self):
+        print("GAUCHE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        diamRoue = self.robot.WHEEL_DIAMETER/10
+        rayonRobot = self.robot.WHEEL_BASE_WIDTH/20
+        posRoues = self.robot.get_motor_position()
+        print("POS ROUES;   ", posRoues)
         pos = posRoues
         posG = pos[0]/360*diamRoue*math.pi
         posD = pos[1]/360*diamRoue*math.pi
@@ -69,32 +99,11 @@ class proxy_physique:
         scalaire      = x1*x2 + y1*y2											#calcule produit le produit scalaire
         determinant   = x1*y2 - y1*x2											#calcule le determinant
         angle_parc         = math.atan2(determinant, scalaire)						#calcule l'angle parcouru
-        res = (360 - math.degrees(angle_parc))%360
-        print("DIRR PROXY",self.lastdirr)
-        print("angle réel", angle)
-
-
-        self.angle_parcouru += res
-        self.lastdirr = angle
-        return self.angle_parcouru
-
-    def angle_parcouruG(self):
-        diamRoue = self.robot.WHEEL_DIAMETER/10
-        rayonRobot = self.robot.WHEEL_BASE_WIDTH/20
-        posRoues = self.robot.get_motor_position()
-        pos = posRoues
-        posG = pos[0]/360*diamRoue*math.pi
-        posD = pos[1]/360*diamRoue*math.pi
-        angle = (posD-posG)/(rayonRobot*2)
-
-        last_dirr_rad = math.radians(self.lastdirr)
-        x1, y1        = math.cos(last_dirr_rad), math.sin(last_dirr_rad)		#points du vecteur a partir de la derniere direction
-        dirr_rad      = math.radians(angle)
-        x2, y2        = math.cos(dirr_rad), math.sin(dirr_rad)					#points du vecteur a partir de la direction actuelle
-        scalaire      = x1*x2 + y1*y2											#calcule produit le produit scalaire
-        determinant   = x1*y2 - y1*x2											#calcule le determinant
-        angle_parc         = math.atan2(determinant, scalaire)						#calcule l'angle parcouru
         res = math.degrees(angle_parc)%360
+        print("DIRR PROXY",self.lastdirr)
+
+        print("RES: ",res)
+        print("angle réel", angle)
 
         self.angle_parcouru += res
         self.lastdirr = angle
