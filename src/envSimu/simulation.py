@@ -46,7 +46,7 @@ tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
 tourneD45 = TournerDroiteAngle(rbt_simu,45,50)
 demitourD = TournerDroiteAngle(rbt_simu,180,50)
 
-testcercle = TestCercle(rbt_simu,360, 100, 10)
+testcercle = TestCercle(rbt_simu,390, 100, 10)
 
 
 
