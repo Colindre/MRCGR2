@@ -1,10 +1,10 @@
 import unittest
 import math
 import random
-from module.robot import Robot
-from module.environnement import Environnement, Obstacle
-from module.ia import *
-from module.proxy import proxy_virtuel
+from module.outils.robot import Robot
+from module.outils.environnement import Environnement, Obstacle
+from module.ia.ia import *
+from module.outils.proxy import proxy_virtuel
 
 class TestRobot(unittest.TestCase):
     def setUp(self):
