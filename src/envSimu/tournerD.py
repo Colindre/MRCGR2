@@ -44,7 +44,7 @@ tourneGreel = IAseq(rbt_reel, [tourneG90reel,stopreel])
 
 
 #IA
-rr = IA(rbt_reel,avancereel)
+rr = IA(rbt_reel,tournereel)
 env.addIA(rr)
 
 

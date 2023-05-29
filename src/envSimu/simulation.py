@@ -1,11 +1,10 @@
-from module.robot import Robot
-#from module.robot2IN013 import Robot2IN013
-from module.environnement import Obstacle, Environnement
-from module.simulationtkinter import Simulationtkinter
+from module.outils.robot import Robot
+from module.outils.environnement import Obstacle, Environnement
+from module.affichage.simulationtkinter import Simulationtkinter
 from time import sleep
 import threading
-from module.proxy import proxy_virtuel, proxy_physique
-from module.ia import *
+from module.outils.proxy import proxy_virtuel, proxy_physique
+from module.ia.ia import *
 
 
 # A SAVOIR: dans l'interface graphique 2D tourner gauche et tourner droite sont inversé.
@@ -38,33 +37,30 @@ rbt_simu = proxy_virtuel(env)
 
 #ACTION VIRTUELLE
 dist50 = ParcourirDistance(rbt_simu,50,50)
+dist75 = ParcourirDistance(rbt_simu,75,50)
+
 stop = Arrete(rbt_simu)
-demitourD = TournerDroiteAngle(rbt_simu,180,50)
 tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
+tourneG45 = TournerGaucheAngle(rbt_simu,45,50)
+tourneD135 = TournerDroiteAngle(rbt_simu,135,50)
 tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
+tourneD45 = TournerDroiteAngle(rbt_simu,45,50)
+demitourD = TournerDroiteAngle(rbt_simu,180,50)
+
 testcercle = TestCercle(rbt_simu,360, 100, 10)
+
+
+
+#IA SEQ/LOOP/IFTE
 testcercle2 = IAseq(rbt_simu, [TestCercle(rbt_simu,100, 100, 10),TestCercle(rbt_simu,360, 10, 100),TestCercle(rbt_simu,180, 100, 10),stop])
-
 carre = IAseq(rbt_simu, [dist50,tourneD90,dist50,stop]*4)
-
 iaseq = IAseq(rbt_simu, [dist50,demitourD,dist50,stop])
-
 ialoop = IAloop(rbt_simu, dist50)
-
 iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 
-#PROXY
-#rbt_reel = proxy_physique(rbtreel)
-
-
-#ACTION REEL
-#dist50reel = ParcourirDistance(rbt_reel,50,50)
-#tourneD90reel = TournerDroiteAngle(rbt_reel,50,50)
-#stopreel = Arrete(rbt_reel)
-#carrereel = IAseq(rbt_reel, [dist50reel,tourneD90reel,dist50reel,stopreel]*4)
 
 #IA
-rr = IA(rbt_simu,testcercle2)
+rr = IA(rbt_simu,iaifte)
 env.addIA(rr)
 
 

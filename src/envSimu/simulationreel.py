@@ -1,10 +1,11 @@
-from module.robot import Robot
-from module.robot2IN013 import Robot2IN013
-from module.environnement import Obstacle, Environnement
+from module.outils.robot import Robot
+from module.outils.robot2IN013 import Robot2IN013
+from module.outils.environnement import Environnement
 from time import sleep
 import threading
-from module.proxy import proxy_virtuel, proxy_physique
-from module.ia import *
+from module.outils.proxy import proxy_physique
+from module.ia.ia import *
+
 
 
 def simulationtest(simulation, affichage):
@@ -41,8 +42,6 @@ tournereel = IAseq(rbt_reel, [tourneD90reel,stopreel])
 avancereel = IAseq(rbt_reel, [dist50reel,stopreel])
 testcercleseq = IAseq(rbt_reel, [tourneD90reel,stopreel,tourneG90reel,stopreel])
 tourneGreel = IAseq(rbt_reel, [tourneG90reel,stopreel])
-#stopobstacle = IAifte(rbt_reel, IAloop(rbt_reel, dist50reel), obstacle_proche)
-
 
 #IA
 rr = IA(rbt_reel,carrereel)
