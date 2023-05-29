@@ -20,7 +20,6 @@ def simulation(simulation, affichage):
 
 #ROBOT
 rbt = Robot(250,250,180,50,100)
-#rbtreel = Robot2IN013()
 
 #OBSTACLE
 obs1 = Obstacle(30,230,50,'black')
@@ -35,14 +34,14 @@ env.add(rbt)
 #PROXY
 rbt_simu = proxy_virtuel(env)
 
-#ACTION VIRTUELLE
+#ACTIONS VIRTUELLE
 dist50 = ParcourirDistance(rbt_simu,50,50)
-dist75 = ParcourirDistance(rbt_simu,75,50)
 
 stop = Arrete(rbt_simu)
+
 tourneG90 = TournerGaucheAngle(rbt_simu,90,50)
 tourneG45 = TournerGaucheAngle(rbt_simu,45,50)
-tourneD135 = TournerDroiteAngle(rbt_simu,135,50)
+
 tourneD90 = TournerDroiteAngle(rbt_simu,90,50)
 tourneD45 = TournerDroiteAngle(rbt_simu,45,50)
 demitourD = TournerDroiteAngle(rbt_simu,180,50)
@@ -51,18 +50,22 @@ testcercle = TestCercle(rbt_simu,360, 100, 10)
 
 
 
-#IA SEQ/LOOP/IFTE
-testcercle2 = IAseq(rbt_simu, [TestCercle(rbt_simu,100, 100, 10),TestCercle(rbt_simu,360, 10, 100),TestCercle(rbt_simu,180, 100, 10),stop])
+#IA SEQ
 carre = IAseq(rbt_simu, [dist50,tourneD90,dist50,stop]*4)
 iaseq = IAseq(rbt_simu, [dist50,demitourD,dist50,stop])
+testcercle2 = IAseq(rbt_simu, [TestCercle(rbt_simu,100, 100, 10),TestCercle(rbt_simu,360, 10, 100),TestCercle(rbt_simu,180, 100, 10),stop])
+
+#IA LOOP
 ialoop = IAloop(rbt_simu, dist50)
+
+#IA IFTE
 iaifte = IAifte(rbt_simu, ialoop, IAloop(rbt_simu, tourneG90), obstacle_proche)
 
-
-#IA
+#Ajout IA dans l'environnement
 rr = IA(rbt_simu,iaifte)
 env.addIA(rr)
 
-
+#Affichage graphique
 affi=Simulationtkinter(env)
+
 simulation(env, affi)

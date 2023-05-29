@@ -29,7 +29,7 @@ env.add(rbt)
 rbt_reel = proxy_physique(rbtreel)
 
 
-#ACTION REEL
+#ACTIONS REEL
 testcercle = TestCercle(rbt_reel,400, 200, 100)
 #1200 cercle
 dist50reel = ParcourirDistance(rbt_reel,100,200)
@@ -37,6 +37,8 @@ tourneD90reel = TournerDroiteAngle(rbt_reel,90+10,100)
 tourneG90reel = TournerGaucheAngle(rbt_reel,90+10,100)
 
 stopreel = Arrete(rbt_reel)
+
+#IA SEQ
 carrereel = IAseq(rbt_reel, [dist50reel,stopreel,tourneG90reel,stopreel]*5)
 tournereel = IAseq(rbt_reel, [tourneD90reel,stopreel])
 avancereel = IAseq(rbt_reel, [dist50reel,stopreel])
